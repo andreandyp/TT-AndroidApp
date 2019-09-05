@@ -5,4 +5,5 @@
     <color name="colorAccent">#FC4A1A</color>
     <color name="colorSecondary">#F7B733</color>
     <color name="fondo">#FFFFFF</color>
+    <color name="pulse">#4ABDAC</color>
 </resources>
