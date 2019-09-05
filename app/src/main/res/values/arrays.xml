@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="personalidades">
+        <item>¿Cómo te describirias?</item>
+        <item>Serio</item>
+        <item>Nervioso</item>
+        <item>Amable</item>
+    </string-array>
+</resources>

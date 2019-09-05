@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">AXDecor</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tagEdad">Edad</string>
+    <string name="tagPresupuesto">Prespuesto($)</string>
+    <string name="ingresaDatos">Ingresa tus datos:</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="nombre_completo">Nombre Completo</string>
+    <string name="descipcionIMNombre">Imagen para indicar nombre.</string>
+    <string name="descipcionIMEdad">Imagen para indicar edad.</string>
+    <string name="conocer">Queremos conocerte un poco más.</string>
+    <string name="soy">Soy:</string>
+    <string name="presupuesto">Presupuesto:</string>
+    <string name="ListaPersonalidad">¿Cómo te describirias?</string>
 </resources>
