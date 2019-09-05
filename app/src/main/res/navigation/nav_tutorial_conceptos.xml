@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/navigation_graph"
+        app:startDestination="@id/bienvenidaConceptosFragment">
+    <fragment
+            android:id="@+id/bienvenidaConceptosFragment"
+            android:name="com.apptt.axdecor.fragments.BienvenidaConceptosFragment"
+            android:label="fragment_bienvenida_conceptos"
+            tools:layout="@layout/fragment_bienvenida_conceptos" >
+        <action
+                android:id="@+id/action_bienvenidaConceptosFragment_to_conceptosFragment"
+                app:destination="@id/conceptosFragment"
+                app:popUpTo="@+id/bienvenidaConceptosFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/conceptosFragment"
+            android:name="com.apptt.axdecor.fragments.ConceptosFragment"
+            android:label="ConceptosFragment" />
+</navigation>
