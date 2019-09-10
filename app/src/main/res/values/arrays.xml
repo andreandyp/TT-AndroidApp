@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="personalidades">
-        <item>¿Cómo te describirias?</item>
-        <item>Serio</item>
-        <item>Nervioso</item>
-        <item>Amable</item>
+    <string-array name="colores">
+        <item>¿Cúal es tu color preferido?</item>
+        <item>Rojo-Fuego</item>
+        <item>Amarillo-Sol</item>
+        <item>Verde-Tierra</item>
+        <item>Azul-Agua Fría</item>
+    </string-array>
+    <string-array name="edades">
+        <item>¿Qué edad tienes?</item>
+        <item>Entre 18 y 30 años</item>
+        <item>Entre 31 y 40 años</item>
+        <item>Entre 40 y 50 años</item>
+        <item>Más de 50 años</item>
     </string-array>
 </resources>

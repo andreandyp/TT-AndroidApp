@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/datos1Fragment"
-            android:name="fragments.Datos1Fragment"
+            android:name="com.apptt.axdecor.fragments.Datos1Fragment"
             android:label="fragment_datos1"
             tools:layout="@layout/fragment_datos1" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
             android:id="@+id/datos2Fragment"
-            android:name="fragments.Datos2Fragment"
+            android:name="com.apptt.axdecor.fragments.Datos2Fragment"
             android:label="fragment_datos2"
             tools:layout="@layout/fragment_datos2" >
         <argument

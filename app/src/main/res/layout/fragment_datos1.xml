@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="fragments.Datos1Fragment">
+        tools:context=".fragments.Datos1Fragment">
 
     <TextView
             android:id="@+id/textView"
@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/txtEdad" />
+            app:layout_constraintTop_toBottomOf="@+id/spnEdad" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -67,7 +67,7 @@
 
     <ImageView
             android:contentDescription="@string/descipcionIMNombre"
-            android:id="@+id/imPersonalidad"
+            android:id="@+id/imColor"
             android:layout_width="31dp"
             android:layout_height="51dp"
             android:layout_marginTop="76dp"
@@ -78,15 +78,15 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
-            android:contentDescription="@string/descipcionIMEdad"
             android:id="@+id/imPresupuesto"
             android:layout_width="31dp"
             android:layout_height="51dp"
             android:layout_marginTop="60dp"
             android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/txtEdad"
+            android:contentDescription="@string/descipcionIMEdad"
+            app:layout_constraintEnd_toStartOf="@+id/spnEdad"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/imPersonalidad"
+            app:layout_constraintTop_toBottomOf="@+id/imColor"
             app:srcCompat="@drawable/birthday" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -94,10 +94,10 @@
             android:id="@+id/txtNombre"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/imPersonalidad"
+            app:layout_constraintBottom_toBottomOf="@+id/imColor"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toEndOf="@+id/imPersonalidad"
-            app:layout_constraintTop_toTopOf="@+id/imPersonalidad">
+            app:layout_constraintStart_toEndOf="@+id/imColor"
+            app:layout_constraintTop_toTopOf="@+id/imColor">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etxtNombre"
@@ -108,23 +108,13 @@
                 android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/txtEdad"
+    <Spinner
+            android:id="@+id/spnEdad"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/tagEdad"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/imPresupuesto"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toEndOf="@+id/imPresupuesto"
-            app:layout_constraintTop_toTopOf="@+id/imPresupuesto">
-
-        <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etxtEdad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toTopOf="@+id/imPresupuesto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context="fragments.Datos2Fragment">
+        android:textAlignment="center"
+        tools:context=".fragments.Datos2Fragment">
 
     <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="56dp"
             android:text="@string/conocer"
             android:textAlignment="center"
             android:textColor="#009688"
@@ -27,8 +28,8 @@
             android:text="@string/siguiente"
             app:layout_constraintBottom_toTopOf="@+id/guideline7"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/txtPresupuesto" />
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -65,58 +66,54 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="20dp" />
 
-    <ImageView
-            android:id="@+id/imPersonalidad"
-            android:layout_width="31dp"
-            android:layout_height="51dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/descipcionIMNombre"
-            android:src="@drawable/personality"
-            app:layout_constraintEnd_toStartOf="@+id/spnPersonalidad"
+    <Spinner
+            android:id="@+id/spnColores"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:prompt="@string/ListaPersonalidad"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ImageView
-            android:contentDescription="@string/descipcionIMEdad"
-            android:id="@+id/imPresupuesto"
-            android:layout_width="31dp"
-            android:layout_height="51dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/txtPresupuesto"
+            android:id="@+id/imColores"
+            android:layout_width="175dp"
+            android:layout_height="165dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/pantone"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/imPersonalidad"
-            app:srcCompat="@drawable/moneybag" />
+            app:layout_constraintTop_toBottomOf="@+id/spnColores" />
 
-    <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/txtPresupuesto"
+    <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtPersonalidad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/tagPresupuesto"
-            app:layout_constraintBottom_toBottomOf="@+id/imPresupuesto"
+            android:layout_marginTop="48dp"
+            android:justificationMode="inter_word"
+            android:text="Selecciona un color..."
+            android:textSize="18sp"
+            android:textStyle="normal"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toEndOf="@+id/imPresupuesto"
-            app:layout_constraintTop_toTopOf="@+id/imPresupuesto">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/txtTituloP" />
 
-        <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etxtPresupuesto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Spinner
-            android:id="@+id/spnPersonalidad"
+    <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtTituloP"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:prompt="@string/ListaPersonalidad"
-            android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="@+id/imPersonalidad"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Personalidad"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toEndOf="@+id/imPersonalidad"
-            app:layout_constraintTop_toTopOf="@+id/imPersonalidad" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/imColores" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
