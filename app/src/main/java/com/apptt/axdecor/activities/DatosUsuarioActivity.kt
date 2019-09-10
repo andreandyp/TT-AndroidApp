@@ -1,11 +1,8 @@
 package com.apptt.axdecor.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
-import kotlinx.android.synthetic.main.activity_datos_usuario.*
 
 class DatosUsuarioActivity : AppCompatActivity() {
 
