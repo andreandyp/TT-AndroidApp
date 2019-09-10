@@ -1,13 +1,12 @@
-package com.apptt.axdecor
+package com.apptt.axdecor.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.apptt.axdecor.activities.DatosUsuarioActivity
-import com.apptt.axdecor.fragments.Datos1Fragment
+import com.apptt.axdecor.R
 
-class splashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
     val splash = 2000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
