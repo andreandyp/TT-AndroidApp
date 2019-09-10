@@ -1,6 +1,7 @@
 package com.apptt.axdecor.fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.apptt.axdecor.R
+import com.apptt.axdecor.activities.TutorialConceptosActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_datos2.*
 
@@ -39,7 +41,9 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
                 Snackbar.make(btnSiguiente, "Parece que olvidas algo.", Snackbar.LENGTH_SHORT)
                     .show()
             } else {
-                    ///INICIA NUEVO ACTIVITY
+                    ///INICIA NUEVO ACTIVITY (TEMPORALMENTE)
+                val intento = Intent(activity,TutorialConceptosActivity::class.java)
+                startActivity(intento)
             }
         }
     }
