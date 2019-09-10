@@ -2,13 +2,12 @@ package fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-
 import com.apptt.axdecor.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_datos1.*

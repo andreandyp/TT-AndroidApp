@@ -12,10 +12,12 @@
         <action
                 android:id="@+id/action_bienvenidaConceptosFragment_to_conceptosFragment"
                 app:destination="@id/conceptosFragment"
+                app:enterAnim="@anim/fragment_fade_enter"
                 app:popUpTo="@+id/bienvenidaConceptosFragment" />
     </fragment>
     <fragment
             android:id="@+id/conceptosFragment"
             android:name="com.apptt.axdecor.fragments.ConceptosFragment"
-            android:label="ConceptosFragment" />
+            android:label="ConceptosFragment"
+            tools:layout="@layout/fragment_conceptos"/>
 </navigation>

@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="conceptosViewModel"
+                type="com.apptt.axdecor.viewmodels.ConceptosViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -15,20 +23,18 @@
                 android:layout_marginTop="@dimen/margin_top"
 
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toTopOf="parent"
                 app:pulse_color="@color/pulse"
-                app:pulse_count="2"
-                app:pulse_duration="750"
+                app:pulse_count="1"
+                app:pulse_duration="800"
                 app:pulse_interpolator="Linear"
                 app:pulse_repeat="0"
-                app:pulse_startFromScratch="false">
+                app:pulse_startFromScratch="true">
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/informacion"
-                    
                     android:src="@drawable/informacion"
                     app:srcCompat="@drawable/informacion" />
         </pl.bclogic.pulsator4droid.library.PulsatorLayout>
@@ -40,20 +46,18 @@
                 android:layout_marginEnd="@dimen/margin_end"
 
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintTop_toBottomOf="@+id/info_img"
                 app:pulse_color="@color/pulse"
-                app:pulse_count="4"
-                app:pulse_duration="1000"
+                app:pulse_count="1"
+                app:pulse_duration="800"
                 app:pulse_interpolator="Linear"
                 app:pulse_repeat="0"
-                app:pulse_startFromScratch="false">
+                app:pulse_startFromScratch="true">
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/que_quiero"
-                    
                     android:src="@drawable/quiero"
                     app:srcCompat="@drawable/quiero" />
 
@@ -64,22 +68,22 @@
                 android:layout_width="@dimen/iconos_conceptos"
                 android:layout_height="@dimen/iconos_conceptos"
                 android:layout_marginStart="@dimen/margin_start"
-                
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/quiero_img"
 
                 app:pulse_color="@color/pulse"
-                app:pulse_count="4"
-                app:pulse_duration="1000"
+                app:pulse_count="1"
+                app:pulse_duration="800"
                 app:pulse_interpolator="Linear"
                 app:pulse_repeat="0"
-                app:pulse_startFromScratch="false">
+                app:pulse_startFromScratch="true">
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/decoracion"
-                    
+
                     android:src="@drawable/decoracion"
                     app:srcCompat="@drawable/decoracion" />
 
@@ -90,22 +94,20 @@
                 android:layout_width="@dimen/iconos_conceptos"
                 android:layout_height="@dimen/iconos_conceptos"
                 android:layout_marginEnd="@dimen/margin_end"
-                
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/decoracion_img"
-
                 app:pulse_color="@color/pulse"
-                app:pulse_count="4"
-                app:pulse_duration="1000"
+                app:pulse_count="1"
+                app:pulse_duration="800"
                 app:pulse_interpolator="Linear"
                 app:pulse_repeat="0"
-                app:pulse_startFromScratch="false">
+                app:pulse_startFromScratch="true">
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/cotizacion"
-                    
                     android:src="@drawable/cotizacion"
                     app:srcCompat="@drawable/cotizacion" />
         </pl.bclogic.pulsator4droid.library.PulsatorLayout>
@@ -115,22 +117,21 @@
                 android:layout_width="@dimen/iconos_conceptos"
                 android:layout_height="@dimen/iconos_conceptos"
                 android:layout_marginStart="@dimen/margin_start"
-                
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cotizacion_img"
 
                 app:pulse_color="@color/pulse"
-                app:pulse_count="4"
-                app:pulse_duration="1000"
+                app:pulse_count="1"
+                app:pulse_duration="800"
                 app:pulse_interpolator="Linear"
                 app:pulse_repeat="0"
-                app:pulse_startFromScratch="false">
+                app:pulse_startFromScratch="true">
 
             <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/guardar_compartir"
-                    
                     android:src="@drawable/compartir"
                     app:srcCompat="@drawable/compartir" />
         </pl.bclogic.pulsator4droid.library.PulsatorLayout>
@@ -194,6 +195,46 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cotizacion_img"
                 app:srcCompat="@drawable/flecha_azul" />
+
+        <TextView
+                android:id="@+id/titulo_concepto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{conceptosViewModel.tituloConcepto}"
+                android:textSize="24sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.40"/>
+
+        <TextView
+                android:id="@+id/explicacion_concepto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start"
+                android:layout_marginEnd="@dimen/margin_end"
+                android:text="@{conceptosViewModel.explicacionConcepto}"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.50" />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/atras_conceptos"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/atras"
+
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

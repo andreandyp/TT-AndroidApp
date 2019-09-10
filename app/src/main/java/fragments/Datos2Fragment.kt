@@ -3,15 +3,12 @@ package fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.core.view.get
-
+import androidx.fragment.app.Fragment
 import com.apptt.axdecor.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_datos2.*
