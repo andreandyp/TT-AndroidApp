@@ -1,7 +1,6 @@
 package com.apptt.axdecor.fragments
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.apptt.axdecor.R
-import com.apptt.axdecor.activities.TutorialConceptosActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_datos2.*
 
@@ -25,8 +24,6 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args = Datos2FragmentArgs.fromBundle(arguments!!)
-        Log.i("APPP", args.nombre)
-        Log.i("APPP", args.edad.toString())
         ArrayAdapter.createFromResource(
             this.requireContext(),
             R.array.colores,
@@ -36,14 +33,15 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
             spnColores.adapter = adapter
         }
         spnColores.onItemSelectedListener = this
+        imColores.setOnClickListener {
+            spnColores.performClick()
+        }
         btnSiguiente.setOnClickListener {
             if (spnColores.selectedItemPosition.equals(0)) {
                 Snackbar.make(btnSiguiente, "Parece que olvidas algo.", Snackbar.LENGTH_SHORT)
                     .show()
             } else {
-                    ///INICIA NUEVO ACTIVITY (TEMPORALMENTE)
-                val intento = Intent(activity,TutorialConceptosActivity::class.java)
-                startActivity(intento)
+               view.findNavController().navigate(Datos2FragmentDirections.actionDatos2FragmentToDatos3Fragment(args.edad,args.nombre,spnColores.selectedItem.toString()))
             }
         }
     }

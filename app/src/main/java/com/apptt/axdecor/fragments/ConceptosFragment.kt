@@ -13,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.apptt.axdecor.R
 import com.apptt.axdecor.databinding.FragmentConceptosBinding
@@ -38,6 +39,10 @@ class ConceptosFragment : Fragment() {
             inflater,
             R.layout.fragment_conceptos, container, false
         )
+
+        binding.siguienteFragmento.setOnClickListener {
+            it.findNavController().navigate(ConceptosFragmentDirections.actionConceptosFragmentToModoDecoracionFragment())
+        }
 
         conceptosViewModel = ViewModelProviders.of(this).get(ConceptosViewModel::class.java)
         binding.conceptosViewModel = conceptosViewModel

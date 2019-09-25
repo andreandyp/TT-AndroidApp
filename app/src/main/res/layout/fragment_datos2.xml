@@ -10,7 +10,6 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
             android:text="@string/conocer"
             android:textAlignment="center"
             android:textColor="#009688"
@@ -19,7 +18,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
     <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSiguiente"
@@ -50,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.12" />
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline7"
@@ -59,15 +58,9 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.9" />
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="20dp" />
-
     <Spinner
             android:id="@+id/spnColores"
+            style="@android:style/Widget.Material.Light.Spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -83,6 +76,8 @@
             android:layout_width="175dp"
             android:layout_height="165dp"
             android:layout_marginTop="32dp"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@drawable/pantone"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -92,7 +87,7 @@
             android:id="@+id/txtPersonalidad"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="40dp"
             android:justificationMode="inter_word"
             android:text="Selecciona un color..."
             android:textSize="18sp"
@@ -106,7 +101,7 @@
             android:id="@+id/txtTituloP"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="4dp"
             android:text="Personalidad"
             android:textAlignment="center"
             android:textSize="18sp"

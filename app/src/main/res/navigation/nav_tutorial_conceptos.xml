@@ -13,11 +13,34 @@
                 android:id="@+id/action_bienvenidaConceptosFragment_to_conceptosFragment"
                 app:destination="@id/conceptosFragment"
                 app:enterAnim="@anim/fragment_fade_enter"
+                app:exitAnim="@anim/fragment_fade_exit"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim"
                 app:popUpTo="@+id/bienvenidaConceptosFragment" />
+        <action
+                android:id="@+id/action_bienvenidaConceptosFragment_to_modoDecoracionFragment"
+                app:destination="@id/modoDecoracionFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
             android:id="@+id/conceptosFragment"
             android:name="com.apptt.axdecor.fragments.ConceptosFragment"
             android:label="ConceptosFragment"
-            tools:layout="@layout/fragment_conceptos"/>
+            tools:layout="@layout/fragment_conceptos">
+        <action
+                android:id="@+id/action_conceptosFragment_to_modoDecoracionFragment"
+                app:destination="@id/modoDecoracionFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+            android:id="@+id/modoDecoracionFragment"
+            android:name="com.apptt.axdecor.fragments.ModoDecoracionFragment"
+            android:label="fragment_modo_decoracion"
+            tools:layout="@layout/fragment_modo_decoracion" />
 </navigation>

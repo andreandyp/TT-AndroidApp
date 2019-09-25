@@ -1,6 +1,5 @@
 package com.apptt.axdecor.fragments
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,10 +30,10 @@ class Datos1Fragment : Fragment(){
         }
 
         btnSiguiente.setOnClickListener {
-            if (nombre.text.toString().equals("") || spnEdad.selectedItemPosition == 0) {
+            if (nombre.text.toString() == "" || spnEdad.selectedItemPosition == 0) {
                 Snackbar.make(btnSiguiente, "Parece que olvidas algo.", Snackbar.LENGTH_SHORT).show()
             } else {
-                it.findNavController().navigate(actionDatos1FragmentToDatos2Fragment(nombre.text.toString(), spnEdad.selectedItemPosition))
+                it.findNavController().navigate(actionDatos1FragmentToDatos2Fragment(nombre.text.toString(), spnEdad.selectedItem.toString()))
             }
         }
     }

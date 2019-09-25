@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         package="com.apptt.axdecor">
-
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.ar" />
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_decorax"
@@ -11,7 +12,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SplashActivity"
+        <meta-data android:name="com.google.ar.core" android:value="required" />
+        <activity android:name=".activities.ARCrearActivity"></activity>
+        <activity
+                android:name=".activities.SplashActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,10 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TutorialConceptosActivity">
-
-        </activity>
-        <activity android:name=".activities.DatosUsuarioActivity"></activity>
+        <activity
+                android:name=".activities.TutorialConceptosActivity"
+                android:screenOrientation="portrait"></activity>
+        <activity
+                android:name=".activities.DatosUsuarioActivity"
+                android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@
     <string name="presupuesto">Presupuesto:</string>
     <string name="ListaPersonalidad">¿Cómo te describirias?</string>
     <string name="conceptosInicio">Veamos un pequeño tutorial</string>
+    <string name="selectHabitacion">¿Qué habitación desearías decorar?</string>
     <string name="omitir">Omitir</string>
     <string name="conceptoTitulo">Empecemos con...</string>
 
@@ -22,4 +23,5 @@
     <string name="que_quiero">¿Qué quiero?</string>
     <string name="informacion">Información</string>
     <string name="atras">Atrás</string>
+    <string name="selectmodo">Ya casi terminamos. Selecciona un modo de decoración y comencemos...</string>
 </resources>

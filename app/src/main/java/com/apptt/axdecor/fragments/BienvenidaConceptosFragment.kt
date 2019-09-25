@@ -1,6 +1,7 @@
 package com.apptt.axdecor.fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,6 @@ import androidx.navigation.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.databinding.FragmentBienvenidaConceptosBinding
 
-/**
- * A simple [Fragment] subclass.
- */
 class BienvenidaConceptosFragment : Fragment() {
 
     override fun onCreateView(
@@ -29,6 +27,9 @@ class BienvenidaConceptosFragment : Fragment() {
         binding.verTutorialButton.setOnClickListener {
             it.findNavController()
                 .navigate(BienvenidaConceptosFragmentDirections.actionBienvenidaConceptosFragmentToConceptosFragment())
+        }
+        binding.omitirButton.setOnClickListener {
+            it.findNavController().navigate(BienvenidaConceptosFragmentDirections.actionBienvenidaConceptosFragmentToModoDecoracionFragment())
         }
 
         return binding.root
