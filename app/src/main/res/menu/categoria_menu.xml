@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/itemLamparas"
+            android:icon="@drawable/iluminacion"
+            android:title="Lamparas"/>
+
+    <item android:id="@+id/itemMuebles"
+            android:icon="@drawable/muebles"
+            android:title="Muebles"/>
+
+    <item android:id="@+id/itemPisos"
+            android:title="Pisos"
+            android:icon="@drawable/pisos"/>
+
+
+    <item android:id="@+id/itemAdornos"
+            android:title="Adornos"
+            android:icon="@drawable/adornos"/>
+
+    <item android:id="@+id/itemColores"
+            android:title="Colores"
+            android:icon="@drawable/colores"/>
+</menu>

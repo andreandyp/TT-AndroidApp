@@ -24,4 +24,6 @@
     <string name="informacion">Información</string>
     <string name="atras">Atrás</string>
     <string name="selectmodo">Ya casi terminamos. Selecciona un modo de decoración y comencemos...</string>
+    <string name="abre">Abre Drawer</string>
+    <string name="cierra">Cierra Drawer</string>
 </resources>

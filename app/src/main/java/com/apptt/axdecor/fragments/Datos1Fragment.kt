@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.fragments.Datos1FragmentDirections.actionDatos1FragmentToDatos2Fragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_datos1.*
 
 class Datos1Fragment : Fragment(){
@@ -18,6 +19,8 @@ class Datos1Fragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        var flecha = activity?.imgMenu
+        flecha?.visibility = View.INVISIBLE
         return inflater.inflate(R.layout.fragment_datos1, container, false)
     }
 

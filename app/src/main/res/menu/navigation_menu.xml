@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/itemModo"
+            android:title="Modo de decoración"/>
+
+        <item android:id="@+id/itemPreguntas"
+                android:title="Preguntas Frecuentes"/>
+
+        <item android:id="@+id/itemhabitacion"
+                android:title="Selecciona habitación"/>
+
+        <item android:id="@+id/itemContacto"
+                android:title="Contacto"/>
+    </group>
+</menu>

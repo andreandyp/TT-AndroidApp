@@ -12,12 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.apptt.axdecor.R
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_datos2.*
 
 class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        var flecha = activity?.imgMenu
+        flecha?.visibility = View.VISIBLE
         return inflater.inflate(R.layout.fragment_datos2, container, false)
     }
 
@@ -54,7 +57,7 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
             }
             1 -> {
                 imColores.setImageResource(R.drawable.red_circle)
-                txtPersonalidad.text = "Positiva, audaz, Firme, Enérgica; Competitiva, Exigente, Decidida, Con gran fuerza de voluntad, Con propósito."
+                txtPersonalidad.text = "Positiva, Audaz, Firme, Enérgica; Competitiva, Exigente, Decidida, Con gran fuerza de voluntad, Con propósito."
             }
             2 -> {
                 imColores.setImageResource(R.drawable.yellow_circle)
