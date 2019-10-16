@@ -21,7 +21,7 @@ class ModoDecoracionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         cardCrear.setOnClickListener {
-            var intento = Intent(activity?.applicationContext,ARCrearActivity::class.java)
+            val intento = Intent(activity?.applicationContext,ARCrearActivity::class.java)
             startActivity(intento)
         }
     }

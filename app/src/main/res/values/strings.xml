@@ -26,4 +26,13 @@
     <string name="selectmodo">Ya casi terminamos. Selecciona un modo de decoración y comencemos...</string>
     <string name="abre">Abre Drawer</string>
     <string name="cierra">Cierra Drawer</string>
+
+    <string name="preference_file_key_datos">com.apptt.axdecor.Datos_Usuario</string>
+    <string name="user_Name">user_name</string>
+    <string name="age_key">age_key</string>
+    <string name="color_key">color_key</string>
+    <string name="room_key">room_key</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -14,4 +14,11 @@
         <item>Entre 40 y 50 años</item>
         <item>Más de 50 años</item>
     </string-array>
+    <string-array name="Habitaciones">
+        <item>Baño</item>
+        <item>Cocina</item>
+        <item>Comedor</item>
+        <item>Sala</item>
+        <item>Recamara</item>
+    </string-array>
 </resources>

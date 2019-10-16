@@ -44,7 +44,7 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
                 Snackbar.make(btnSiguiente, "Parece que olvidas algo.", Snackbar.LENGTH_SHORT)
                     .show()
             } else {
-               view.findNavController().navigate(Datos2FragmentDirections.actionDatos2FragmentToDatos3Fragment(args.edad,args.nombre,spnColores.selectedItem.toString()))
+                it.findNavController().navigate(Datos2FragmentDirections.actionDatos2FragmentToDatos3Fragment(args.edad,args.nombre,spnColores.selectedItem.toString()))
             }
         }
     }

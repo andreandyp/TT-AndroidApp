@@ -31,7 +31,6 @@
                     android:id="@+id/materialTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="104dp"
                     android:text="AXDecor"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -40,10 +39,10 @@
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
-                    app:layout_constraintHorizontal_bias="0.991"
+                    app:layout_constraintHorizontal_bias="0.524"
                     app:layout_constraintStart_toEndOf="@+id/imgMenu"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                     android:id="@+id/imgMenu"
