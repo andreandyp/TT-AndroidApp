@@ -34,6 +34,7 @@ import com.google.ar.sceneform.assets.RenderableSource
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
+import kotlinx.android.synthetic.main.activity_arcrear.*
 
 class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
@@ -41,12 +42,13 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var toolbar: AppBarLayout
     lateinit var botonMenu: ImageView
     lateinit var toogle: ActionBarDrawerToggle
-    lateinit var bottomNavigate:BottomNavigationView
+    lateinit var bottomNavigate: BottomNavigationView
     private var arFragment: ArFragment? = null
     private var Modelo: ModelRenderable? = null
     private var arsesion: Session? = null
     private var conf: Config? = null
-    private val GLTF_ASSET = "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
+    private val GLTF_ASSET =
+        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
     private var mUserRequestedInstall = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +56,12 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return
         }
-        val sharePref = this.getSharedPreferences(getString(R.string.preference_file_key_datos),Context.MODE_PRIVATE)?: return
-        val nombre = sharePref.getString(getString(R.string.user_Name),"")
-        val habitacion = sharePref.getString(getString(R.string.room_key),"")
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        val nombre = sharePref.getString(getString(R.string.user_Name), "")
+        val habitacion = sharePref.getString(getString(R.string.room_key), "")
         toolbar = findViewById(R.id.appBarMenu)
         drawerLayout = findViewById(R.id.drawerLayout)
         botonMenu = findViewById(R.id.imgMenu)
@@ -64,22 +69,32 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         bottomNavigate = findViewById(R.id.bottomNav)
         bottomNavigate.visibility = View.VISIBLE
         navigationView.setNavigationItemSelectedListener(this)
-        toogle = ActionBarDrawerToggle(this,drawerLayout,R.string.abre, R.string.cierra)
+        toogle = ActionBarDrawerToggle(this, drawerLayout, R.string.abre, R.string.cierra)
         drawerLayout.setDrawerListener(toogle)
         toogle.syncState()
         var headervIew = navigationView.getHeaderView(0)
         var txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
         var txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
         txtUser.text = nombre
-        txtHabit.text = "Decorando: "+ habitacion
+        txtHabit.text = "Decorando: " + habitacion
         //TODO Botones de navegacion entre catalogos
         bottomNavigate.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.itemLamparas ->{Toast.makeText(this,"Lamparas",Toast.LENGTH_SHORT).show();true}
-                R.id.itemMuebles ->{Toast.makeText(this,"Muebles",Toast.LENGTH_SHORT).show();true}
-                R.id.itemPisos ->{Toast.makeText(this,"Pisos",Toast.LENGTH_SHORT).show();true}
-                R.id.itemAdornos ->{Toast.makeText(this,"Adornos",Toast.LENGTH_SHORT).show();true}
-                R.id.itemColores ->{Toast.makeText(this,"Colores",Toast.LENGTH_SHORT).show();true}
+            when (it.itemId) {
+                R.id.itemLamparas -> {
+                    Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show();true
+                }
+                R.id.itemMuebles -> {
+                    Toast.makeText(this, "Muebles", Toast.LENGTH_SHORT).show();true
+                }
+                R.id.itemPisos -> {
+                    Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show();true
+                }
+                R.id.itemAdornos -> {
+                    Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show();true
+                }
+                R.id.itemColores -> {
+                    Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show();true
+                }
                 else -> false
             }
         }
@@ -88,20 +103,20 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
-}
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.itemModo ->{
+        when (item.itemId) {
+            R.id.itemModo -> {
                 navigateToFragment(ModoDecoracionFragment())
             }
-            R.id.itemPreguntas ->{
+            R.id.itemPreguntas -> {
                 Toast.makeText(this, "Preguntas Frecuentes", Toast.LENGTH_SHORT).show()
             }
-            R.id.itemhabitacion ->{
+            R.id.itemhabitacion -> {
                 openDialogRooms()
             }
-            R.id.itemContacto ->{
+            R.id.itemContacto -> {
                 Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
             }
         }
@@ -109,6 +124,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
+
     private fun navigateToFragment(fragmentToNavigate: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.contenedorFR, fragmentToNavigate)
@@ -116,6 +132,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
     private fun checkIsSupportedDeviceOrFinish(activity: Activity): Boolean {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             Log.e("LOGAXDECOR", "Sceneform requires Android N or later")
@@ -144,9 +161,9 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         //Asegurarse que Google Play Sevices para AR esta instalado y actualizado
         try {
-            if(arsesion == null){
-                when(ArCoreApk.getInstance().requestInstall(this,mUserRequestedInstall)){
-                    ArCoreApk.InstallStatus.INSTALLED ->{
+            if (arsesion == null) {
+                when (ArCoreApk.getInstance().requestInstall(this, mUserRequestedInstall)) {
+                    ArCoreApk.InstallStatus.INSTALLED -> {
                         arsesion = Session(this)
                         conf = Config(arsesion)
                         conf!!.setPlaneFindingMode(Config.PlaneFindingMode.HORIZONTAL_AND_VERTICAL)
@@ -154,18 +171,18 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                         arsesion!!.configure(conf)
                         arFragment?.arSceneView?.setupSession(arsesion)
                     }
-                    ArCoreApk.InstallStatus.INSTALL_REQUESTED ->{
+                    ArCoreApk.InstallStatus.INSTALL_REQUESTED -> {
                         mUserRequestedInstall = false
                     }
                 }
             }
-        }catch (e: UnavailableUserDeclinedInstallationException){
-            Toast.makeText(this,"Error:"+e,Toast.LENGTH_SHORT).show()
+        } catch (e: UnavailableUserDeclinedInstallationException) {
+            Toast.makeText(this, "Error:" + e, Toast.LENGTH_SHORT).show()
             return
         }
 
-        val toast = Toast.makeText(this,"Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.TOP,0,250)
+        val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
+        toast.setGravity(Gravity.TOP, 0, 250)
         toast.show()
         ModelRenderable.builder()
             .setSource(
@@ -189,7 +206,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 null
             }
         arFragment?.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
-            if (Modelo == null){
+            if (Modelo == null) {
                 return@setOnTapArPlaneListener
             }
             //Crear Anchor
@@ -201,11 +218,28 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             mod.setParent(anchorNode)
             mod.renderable = Modelo
             mod.select()
+            mod.setOnTapListener { hitTestResult, motionEvent ->
+                btnRemove.visibility = View.VISIBLE
+                btnRemove.setOnClickListener {
+                    removeObject(anchorNode)
+                }
+            }
         }
     }
 
-    private fun openDialogRooms(){
+    private fun openDialogRooms() {
         val ventana = RoomsSelectDialog()
-        ventana.show(supportFragmentManager,"Selecciona Habitacion")
+        ventana.show(supportFragmentManager, "Selecciona Habitacion")
+    }
+
+    private fun removeObject(nodo:AnchorNode){
+        if (nodo != null) {
+            arFragment?.getArSceneView()?.getScene()?.removeChild(nodo)
+            nodo.getAnchor()?.detach()
+            nodo.setParent(null)
+            Toast.makeText(this, "Test Delete - anchorNode removed", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Test Delete - markAnchorNode was null", Toast.LENGTH_SHORT).show();
+        }
     }
 }

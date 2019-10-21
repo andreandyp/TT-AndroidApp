@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/itemModo"
-            android:title="Modo de decoración"
-                android:icon="@drawable/ic_crear"/>
+        <item
+                android:id="@+id/itemModo"
+                android:icon="@drawable/ic_crear"
+                android:title="Modo de decoración" />
 
-        <item android:id="@+id/itemPreguntas"
-                android:title="Preguntas Frecuentes"
-                android:icon="@drawable/information"/>
+        <item
+                android:id="@+id/itemPreguntas"
+                android:icon="@drawable/information"
+                android:title="Preguntas Frecuentes" />
 
-        <item android:id="@+id/itemhabitacion"
-                android:title="Selecciona habitación"
-                android:icon="@drawable/muebles"/>
+        <item
+                android:id="@+id/itemhabitacion"
+                android:icon="@drawable/muebles"
+                android:title="Selecciona habitación" />
 
-        <item android:id="@+id/itemContacto"
-                android:title="Contacto"
-                android:icon="@drawable/support"/>
+        <item
+                android:id="@+id/itemContacto"
+                android:icon="@drawable/support"
+                android:title="Contacto" />
     </group>
 </menu>

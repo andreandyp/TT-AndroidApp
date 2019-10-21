@@ -7,13 +7,13 @@ import android.os.Handler
 import com.apptt.axdecor.R
 
 class SplashActivity : AppCompatActivity() {
-    val splash = 2000
+    val splash = 500
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed({
-            val Intent = Intent(this,DatosUsuarioActivity::class.java)
+            val Intent = Intent(this, DatosUsuarioActivity::class.java)
             startActivity(Intent)
             finish()
         }, splash.toLong())

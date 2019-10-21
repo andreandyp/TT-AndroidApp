@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
 
 class DatosUsuarioActivity : AppCompatActivity() {
-    lateinit var flechaAtras:ImageView
+    lateinit var flechaAtras: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_datos_usuario)

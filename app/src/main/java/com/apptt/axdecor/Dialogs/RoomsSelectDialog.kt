@@ -17,25 +17,38 @@ class RoomsSelectDialog : DialogFragment() {
             builder.setTitle("¿Qué habitación desearías decorar?")
                 .setIcon(R.drawable.ic_logo_fondo_02)
                 .setItems(R.array.Habitaciones, DialogInterface.OnClickListener { dialog, which ->
-                    when(which){
-                        0 -> {updateRoom("Baño")}       //Baño
-                        1 -> {updateRoom("Cocina")}     //Cocina
-                        2 -> {updateRoom("Comedor")}    //Comedor
-                        3 -> {updateRoom("Sala")}       //Sala
-                        4 -> {updateRoom("Recamara")}   //Recamara
+                    when (which) {
+                        0 -> {
+                            updateRoom("Baño")
+                        }
+                        1 -> {
+                            updateRoom("Cocina")
+                        }
+                        2 -> {
+                            updateRoom("Comedor")
+                        }
+                        3 -> {
+                            updateRoom("Sala")
+                        }
+                        4 -> {
+                            updateRoom("Recamara")
+                        }
                     }
                 })
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    private fun updateRoom(Room:String){
-        val sharePref = activity?.getSharedPreferences(getString(R.string.preference_file_key_datos),Context.MODE_PRIVATE)?: return
-        with(sharePref.edit()){
-            putString(getString(R.string.room_key),Room)
+    private fun updateRoom(Room: String) {
+        val sharePref = activity?.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        with(sharePref.edit()) {
+            putString(getString(R.string.room_key), Room)
             commit()
         }
-        val inten = Intent(activity,ARCrearActivity::class.java)
+        val inten = Intent(activity, ARCrearActivity::class.java)
         startActivity(inten)
     }
 }

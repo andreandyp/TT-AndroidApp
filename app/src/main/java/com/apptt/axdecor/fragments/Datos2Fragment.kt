@@ -15,7 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.android.synthetic.main.fragment_datos2.*
 
-class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
+class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -44,35 +44,47 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener{
                 Snackbar.make(btnSiguiente, "Parece que olvidas algo.", Snackbar.LENGTH_SHORT)
                     .show()
             } else {
-                it.findNavController().navigate(Datos2FragmentDirections.actionDatos2FragmentToDatos3Fragment(args.edad,args.nombre,spnColores.selectedItem.toString()))
+                it.findNavController().navigate(
+                    Datos2FragmentDirections.actionDatos2FragmentToDatos3Fragment(
+                        args.edad,
+                        args.nombre,
+                        spnColores.selectedItem.toString()
+                    )
+                )
             }
         }
     }
+
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        Log.i("posicion",p2.toString())
-        when(p2){
+        Log.i("posicion", p2.toString())
+        when (p2) {
             0 -> {
                 imColores.setImageResource(R.drawable.pantone)
                 txtPersonalidad.text = "Selecciona un color..."
             }
             1 -> {
                 imColores.setImageResource(R.drawable.red_circle)
-                txtPersonalidad.text = "Positiva, Audaz, Firme, Enérgica; Competitiva, Exigente, Decidida, Con gran fuerza de voluntad, Con propósito."
+                txtPersonalidad.text =
+                    "Positiva, Audaz, Firme, Enérgica; Competitiva, Exigente, Decidida, Con gran fuerza de voluntad, Con propósito."
             }
             2 -> {
                 imColores.setImageResource(R.drawable.yellow_circle)
-                txtPersonalidad.text = "Alegre, Inspiradora, Animada, Optimista; Sociable, Dinámica, Entusiasta, Persuasiva."
+                txtPersonalidad.text =
+                    "Alegre, Inspiradora, Animada, Optimista; Sociable, Dinámica, Entusiasta, Persuasiva."
             }
             3 -> {
                 imColores.setImageResource(R.drawable.green_circle)
-                txtPersonalidad.text = "Callada, Tranquila, Serena, Conciliadora, Solícita, Que comparte, Paciente, Relajada."
+                txtPersonalidad.text =
+                    "Callada, Tranquila, Serena, Conciliadora, Solícita, Que comparte, Paciente, Relajada."
             }
             4 -> {
                 imColores.setImageResource(R.drawable.blue_circle)
-                txtPersonalidad.text = "Imparcial, Objetiva, Analítica, Formal.  Prudente, Precisa, Reflexiva."
+                txtPersonalidad.text =
+                    "Imparcial, Objetiva, Analítica, Formal.  Prudente, Precisa, Reflexiva."
             }
         }
     }
+
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
     }
