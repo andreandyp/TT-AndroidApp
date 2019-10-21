@@ -233,13 +233,9 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun removeObject(nodo:AnchorNode){
-        if (nodo != null) {
-            arFragment?.getArSceneView()?.getScene()?.removeChild(nodo)
-            nodo.getAnchor()?.detach()
-            nodo.setParent(null)
-            Toast.makeText(this, "Test Delete - anchorNode removed", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Test Delete - markAnchorNode was null", Toast.LENGTH_SHORT).show();
-        }
+        arFragment?.arSceneView?.scene?.removeChild(nodo)
+        nodo.anchor?.detach()
+        nodo.setParent(null)
+        Toast.makeText(this, "Test Delete - anchorNode removed", Toast.LENGTH_SHORT).show();
     }
 }
