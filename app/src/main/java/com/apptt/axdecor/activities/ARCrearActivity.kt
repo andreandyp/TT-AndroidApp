@@ -31,6 +31,7 @@ import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
+import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
@@ -47,8 +48,8 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var Modelo: ModelRenderable? = null
     private var arsesion: Session? = null
     private var conf: Config? = null
-    private val GLTF_ASSET =
-        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
+    private val Lampara_asset = "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
+    private val espejo_asset = "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/1%2F6%2Fespejo_1.glb?alt=media&token=0abdad72-d201-4fad-9862-bf2a605d2595"
     private var mUserRequestedInstall = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +82,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         bottomNavigate.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.itemLamparas -> {
+                    defineMOdelo(Lampara_asset)
                     Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show();true
                 }
                 R.id.itemMuebles -> {
@@ -90,6 +92,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show();true
                 }
                 R.id.itemAdornos -> {
+                    defineMOdelo(espejo_asset)
                     Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show();true
                 }
                 R.id.itemColores -> {
@@ -184,23 +187,27 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.TOP, 0, 250)
         toast.show()
+        defineMOdelo(Lampara_asset)
+    }
+
+    private fun defineMOdelo(modelURL:String){
         ModelRenderable.builder()
             .setSource(
                 this, RenderableSource.builder().setSource(
                     this,
-                    Uri.parse(GLTF_ASSET),
+                    Uri.parse(modelURL),
                     RenderableSource.SourceType.GLB
                 )
                     .setScale(0.5f)  // Scale the original model to 50%.
                     .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                     .build()
             )
-            .setRegistryId(GLTF_ASSET)
+            .setRegistryId(modelURL)
             .build()
             .thenAccept { renderable -> Modelo = renderable }
             .exceptionally { throwable ->
                 val toast =
-                    Toast.makeText(this, "Unable to load renderable $GLTF_ASSET", Toast.LENGTH_LONG)
+                    Toast.makeText(this, "Unable to load renderable $modelURL", Toast.LENGTH_LONG)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
                 null
@@ -216,6 +223,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             //Crear transformable y añadir a Anchor
             val mod = TransformableNode(arFragment?.transformationSystem)
             mod.setParent(anchorNode)
+            mod.localScale = Vector3(0.1f, 0.1f, 0.1f)
             mod.renderable = Modelo
             mod.select()
             mod.setOnTapListener { hitTestResult, motionEvent ->

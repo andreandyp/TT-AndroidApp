@@ -5,21 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import androidx.room.Room
 import com.apptt.axdecor.R
 import com.apptt.axdecor.database.AXDecorDatabase
-import com.apptt.axdecor.database.DAO.AXDecorDao
+import com.apptt.axdecor.database.AXDecorRepository
+import com.apptt.axdecor.database.Entities.Model
 
 class SplashActivity : AppCompatActivity() {
-    val splash = 500
+    private val splash = 500
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        val db = Room.databaseBuilder(this,AXDecorDatabase::class.java,"AXDecorDatabase")
-            .allowMainThreadQueries()
-            .build()
-        val axdecordao = db.axdecorDao()
-        Log.i("TESTDB",axdecordao.getAllModels().toString())
+        val repo = AXDecorRepository(application)
+        repo.insertModel(Model("1","Prueba1","Mueble","Baño","qqqq","125.00","LELE","qqq"))
+        Log.i("TESTDB",repo.getAllModels().toString())
         Handler().postDelayed({
             val Intent = Intent(this, DatosUsuarioActivity::class.java)
             startActivity(Intent)
