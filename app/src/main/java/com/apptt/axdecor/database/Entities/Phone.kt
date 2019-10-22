@@ -2,6 +2,7 @@ package com.apptt.axdecor.database.Entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import org.jetbrains.annotations.NotNull
 
@@ -9,5 +10,13 @@ import org.jetbrains.annotations.NotNull
 data class Phone(
     @ColumnInfo(name = "id_phone") @PrimaryKey @NotNull val idPhone:Int,
     @ColumnInfo(name = "phone") val phone:String,
-    @ColumnInfo(name = "id_store") val idStore:Int
+    @ColumnInfo(name = "id_store")
+    @ForeignKey(
+        entity = Store::class,
+        parentColumns = ["id_store"],
+        childColumns = ["id_store"],
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE
+    )
+    val idStore:Int
 )

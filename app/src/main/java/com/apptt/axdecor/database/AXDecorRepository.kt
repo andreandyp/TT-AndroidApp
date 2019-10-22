@@ -4,6 +4,8 @@ import android.app.Application
 import android.os.AsyncTask
 import com.apptt.axdecor.database.DAO.ModelDAO
 import com.apptt.axdecor.database.Entities.Model
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AXDecorRepository(application: Application) {
     private val modelDAO: ModelDAO
@@ -19,8 +21,10 @@ class AXDecorRepository(application: Application) {
         return listaModelos
     }
 
-    fun deleteAllModels(){
-        modelDAO.deleteAllModels()
+    suspend fun deleteAllModels(){
+        withContext(Dispatchers.IO){
+            modelDAO.deleteAllModels()
+        }
     }
 
     fun insertModel(model: Model){
