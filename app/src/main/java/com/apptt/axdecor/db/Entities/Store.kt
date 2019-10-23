@@ -1,15 +1,15 @@
-package com.apptt.axdecor.database.Entities
+package com.apptt.axdecor.db.Entities
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 @Entity
-data class SocialNetwork(
-    @ColumnInfo(name = "id_social_network") @PrimaryKey @NotNull val idSocialNetwork: Int,
-    @ColumnInfo(name = "social_network_url") val socialNetworkURL:String,
+data class Store(
+    @ColumnInfo(name = "id_store") @PrimaryKey @NonNull val idStore:Int,
+    @ColumnInfo(name = "address")  val address:String,
     @ColumnInfo(name = "id_provider")
     @ForeignKey(
         entity = Provider::class,

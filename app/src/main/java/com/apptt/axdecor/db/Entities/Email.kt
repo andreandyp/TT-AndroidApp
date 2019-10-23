@@ -1,15 +1,15 @@
-package com.apptt.axdecor.database.Entities
+package com.apptt.axdecor.db.Entities
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 
 @Entity
 data class Email(
-    @ColumnInfo(name = "id_email") @PrimaryKey @NotNull val idEmail:Int,
+    @ColumnInfo(name = "id_email") @PrimaryKey @NonNull val idEmail:Int,
     @ColumnInfo(name = "email") val email:String,
     @ColumnInfo(name = "id_store")
     @ForeignKey(

@@ -7,18 +7,20 @@
                 android:title="Modo de decoración" />
 
         <item
-                android:id="@+id/itemPreguntas"
-                android:icon="@drawable/information"
-                android:title="Preguntas Frecuentes" />
-
-        <item
                 android:id="@+id/itemhabitacion"
                 android:icon="@drawable/muebles"
                 android:title="Selecciona habitación" />
-
+        <item
+                android:id="@+id/itemcambiacolor"
+                android:icon="@drawable/colores"
+                android:title="Selecciona color de sugerencias" />
         <item
                 android:id="@+id/itemContacto"
                 android:icon="@drawable/support"
                 android:title="Contacto" />
+        <item
+                android:id="@+id/itemPreguntas"
+                android:icon="@drawable/information"
+                android:title="Preguntas Frecuentes" />
     </group>
 </menu>

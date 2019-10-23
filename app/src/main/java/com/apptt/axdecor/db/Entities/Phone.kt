@@ -1,14 +1,14 @@
-package com.apptt.axdecor.database.Entities
+package com.apptt.axdecor.db.Entities
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 @Entity
 data class Phone(
-    @ColumnInfo(name = "id_phone") @PrimaryKey @NotNull val idPhone:Int,
+    @ColumnInfo(name = "id_phone") @PrimaryKey @NonNull val idPhone:Int,
     @ColumnInfo(name = "phone") val phone:String,
     @ColumnInfo(name = "id_store")
     @ForeignKey(

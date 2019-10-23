@@ -1,12 +1,12 @@
-package com.apptt.axdecor.database.Entities
+package com.apptt.axdecor.db.Entities
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 @Entity
 data class PredefinedStyle(
-    @ColumnInfo(name = "id_predefined_style") @PrimaryKey @NotNull val idPredefinedStyle: Int,
+    @ColumnInfo(name = "id_predefined_style") @PrimaryKey @NonNull val idPredefinedStyle: Int,
     @ColumnInfo(name = "style") val style: String
 )

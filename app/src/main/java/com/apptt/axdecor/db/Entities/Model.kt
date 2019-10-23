@@ -1,4 +1,4 @@
-package com.apptt.axdecor.database.Entities
+package com.apptt.axdecor.db.Entities
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
@@ -10,12 +10,12 @@ import androidx.room.PrimaryKey
 data class Model(
     @ColumnInfo(name = "id_model") @PrimaryKey @NonNull val idModel: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "type") val type: String,
-    @ColumnInfo(name = "category") val category: String,
+    @ColumnInfo(name = "style") val style: String,
     @ColumnInfo(name = "fileAR") val fileAR: String,
     @ColumnInfo(name = "price") val price: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "file2D") val file2D: String,
+    @ColumnInfo(name = "color") val color: String,
     @ColumnInfo(name = "id_provider")
     @ForeignKey(
         entity = Provider::class,
@@ -23,5 +23,14 @@ data class Model(
         childColumns = ["id_provider"],
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE
-    ) val idProvider: Int
+    ) val idProvider: Int,
+    @ColumnInfo(name = "id_type")
+    @ForeignKey(
+        entity = Type::class,
+        parentColumns = ["id_type"],
+        childColumns = ["id_type"],
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE
+    ) val idType: Int
+
 )

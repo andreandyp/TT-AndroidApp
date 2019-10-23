@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/itemLamparas"
             android:icon="@drawable/iluminacion"
-            android:title="Lamparas"/>
+            android:title="Iluminacion"/>
 
     <item android:id="@+id/itemMuebles"
             android:icon="@drawable/muebles"
@@ -18,6 +18,6 @@
             android:icon="@drawable/adornos"/>
 
     <item android:id="@+id/itemColores"
-            android:title="Colores"
+            android:title="Pinturas"
             android:icon="@drawable/colores"/>
 </menu>

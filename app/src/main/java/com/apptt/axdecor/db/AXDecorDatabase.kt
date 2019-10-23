@@ -1,13 +1,13 @@
-package com.apptt.axdecor.database
+package com.apptt.axdecor.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.apptt.axdecor.database.DAO.ModelDAO
-import com.apptt.axdecor.database.Entities.*
+import com.apptt.axdecor.db.DAO.ModelDAO
+import com.apptt.axdecor.db.Entities.*
 
-@Database(entities = arrayOf(Model::class, Provider::class, ARScene::class, SocialNetwork::class, Store::class, Color::class, Email::class, Phone::class, PredefinedStyle::class), version = 1)
+@Database(entities = arrayOf(Model::class, Provider::class, ARScene::class, SocialNetwork::class, Store::class, Paint::class, Email::class, Phone::class, PredefinedStyle::class), version = 1)
 public abstract class AXDecorDatabase : RoomDatabase() {
     abstract fun modelDAO(): ModelDAO
 

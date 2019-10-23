@@ -1,9 +1,9 @@
-package com.apptt.axdecor.database.DAO
+package com.apptt.axdecor.db.DAO
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.apptt.axdecor.database.Entities.Model
+import com.apptt.axdecor.db.Entities.Model
 
 @Dao
 interface ModelDAO {
@@ -11,8 +11,8 @@ interface ModelDAO {
     fun getAllModels(): List<Model>
 
     @Query("DELETE FROM Model")
-    fun deleteAllModels()
+    suspend fun deleteAllModels()
 
     @Insert
-    fun insertModel(model: Model)
+    suspend fun insertModel(model: Model)
 }

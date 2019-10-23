@@ -1,4 +1,4 @@
-package com.apptt.axdecor.database.Entities
+package com.apptt.axdecor.db.Entities
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
@@ -15,8 +15,7 @@ data class Provider(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "rfc") val rfc: String,
     @ColumnInfo(name = "razon_social") val razonSocial: String,
-    @ColumnInfo(name = "tipo") val tipo:String,
     @ColumnInfo(name = "persona") val persona: String,
-    @ColumnInfo(name = "categoria") val categoria: String
+    @ColumnInfo(name = "rango") val rango: String
 
 )
