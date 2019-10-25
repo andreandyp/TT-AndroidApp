@@ -1,41 +1,52 @@
 package com.apptt.axdecor.activities
 
-import android.app.Activity
-import android.app.ActivityManager
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.HandlerThread
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.PixelCopy
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.FileProvider
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.Dialogs.RoomsSelectDialog
 import com.apptt.axdecor.R
+import com.apptt.axdecor.Utilities.ARCoreUtils
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
-import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.ModelRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
@@ -44,41 +55,30 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     lateinit var botonMenu: ImageView
     lateinit var toogle: ActionBarDrawerToggle
     lateinit var bottomNavigate: BottomNavigationView
+    lateinit var botonFoto: FloatingActionButton
     private var arFragment: ArFragment? = null
     private var Modelo: ModelRenderable? = null
     private var arsesion: Session? = null
     private var conf: Config? = null
-    private val Lampara_asset = "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
-    private val espejo_asset = "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/1%2F6%2Fespejo_1.glb?alt=media&token=0abdad72-d201-4fad-9862-bf2a605d2595"
+    private val Lampara_asset =
+        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
+    private val espejo_asset =
+        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/1%2F6%2Fespejo_1.glb?alt=media&token=0abdad72-d201-4fad-9862-bf2a605d2595"
     private var mUserRequestedInstall = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
-        if (!checkIsSupportedDeviceOrFinish(this)) {
+        if (!ARCoreUtils.checkIsSupportedDeviceOrFinish(this)) {
             return
         }
-        val sharePref = this.getSharedPreferences(
-            getString(R.string.preference_file_key_datos),
-            Context.MODE_PRIVATE
-        ) ?: return
-        val nombre = sharePref.getString(getString(R.string.user_Name), "")
-        val habitacion = sharePref.getString(getString(R.string.room_key), "")
-        toolbar = findViewById(R.id.appBarMenu)
-        drawerLayout = findViewById(R.id.drawerLayout)
-        botonMenu = findViewById(R.id.imgMenu)
-        navigationView = findViewById(R.id.navigationView)
-        bottomNavigate = findViewById(R.id.bottomNav)
-        bottomNavigate.visibility = View.VISIBLE
-        navigationView.setNavigationItemSelectedListener(this)
-        toogle = ActionBarDrawerToggle(this, drawerLayout, R.string.abre, R.string.cierra)
-        drawerLayout.setDrawerListener(toogle)
-        toogle.syncState()
-        var headervIew = navigationView.getHeaderView(0)
-        var txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
-        var txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
-        txtUser.text = nombre
-        txtHabit.text = "Decorando: " + habitacion
-        //TODO Botones de navegacion entre catalogos
+        arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
+        botonFoto = findViewById(R.id.btnPhoto)
+        botonFoto.setOnClickListener { takePhoto() }
+        inicializaNavigationDrawer()
+        navegacionDeCatalogos()
+    }
+
+    private fun navegacionDeCatalogos() {
         bottomNavigate.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.itemLamparas -> {
@@ -101,11 +101,33 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 else -> false
             }
         }
+    }
+
+    private fun inicializaNavigationDrawer() {
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        val nombre = sharePref.getString(getString(R.string.user_Name), "")
+        val habitacion = sharePref.getString(getString(R.string.room_key), "")
+        toolbar = findViewById(R.id.appBarMenu)
+        drawerLayout = findViewById(R.id.drawerLayout)
+        botonMenu = findViewById(R.id.imgMenu)
+        navigationView = findViewById(R.id.navigationView)
+        bottomNavigate = findViewById(R.id.bottomNav)
+        bottomNavigate.visibility = View.VISIBLE
+        navigationView.setNavigationItemSelectedListener(this)
+        toogle = ActionBarDrawerToggle(this, drawerLayout, R.string.abre, R.string.cierra)
+        drawerLayout.setDrawerListener(toogle)
+        toogle.syncState()
+        val headervIew = navigationView.getHeaderView(0)
+        val txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
+        val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
+        txtUser.text = nombre
+        txtHabit.text = "Decorando: " + habitacion
         botonMenu.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
-
-        arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -136,32 +158,11 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         fragmentTransaction.commit()
     }
 
-    private fun checkIsSupportedDeviceOrFinish(activity: Activity): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            Log.e("LOGAXDECOR", "Sceneform requires Android N or later")
-            Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG)
-                .show()
-            activity.finish()
-            return false
-        }
-        val openGlVersionString =
-            (activity.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager)
-                .deviceConfigurationInfo
-                .glEsVersion
-        if (java.lang.Double.parseDouble(openGlVersionString) < 3.0) {
-            Log.e("LOGAXDECOR", "Sceneform requires OpenGL ES 3.0 later")
-            Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
-                .show()
-            activity.finish()
-            return false
-        }
-        return true
-    }
 
     override fun onResume() {
         super.onResume()
         //TODO Comprobar permisos de la camara
-
+        Log.i("TESTFILE", generateFilename())
         //Asegurarse que Google Play Sevices para AR esta instalado y actualizado
         try {
             if (arsesion == null) {
@@ -190,7 +191,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         defineMOdelo(Lampara_asset)
     }
 
-    private fun defineMOdelo(modelURL:String){
+    private fun defineMOdelo(modelURL: String) {
         ModelRenderable.builder()
             .setSource(
                 this, RenderableSource.builder().setSource(
@@ -223,7 +224,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             //Crear transformable y añadir a Anchor
             val mod = TransformableNode(arFragment?.transformationSystem)
             mod.setParent(anchorNode)
-            mod.localScale = Vector3(0.1f, 0.1f, 0.1f)
             mod.renderable = Modelo
             mod.select()
             mod.setOnTapListener { hitTestResult, motionEvent ->
@@ -236,14 +236,63 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun openDialogRooms() {
-        val ventana = RoomsSelectDialog()
-        ventana.show(supportFragmentManager, "Selecciona Habitacion")
+        RoomsSelectDialog().show(supportFragmentManager, "Selecciona Habitacion")
     }
 
-    private fun removeObject(nodo:AnchorNode){
+    private fun removeObject(nodo: AnchorNode) {
         arFragment?.arSceneView?.scene?.removeChild(nodo)
         nodo.anchor?.detach()
         nodo.setParent(null)
-        Toast.makeText(this, "Test Delete - anchorNode removed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Objeto Removido", Toast.LENGTH_SHORT).show()
+        btnRemove.visibility = View.INVISIBLE
     }
+
+    private fun generateFilename(): String {
+        val date = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "Sceneform/" + date + "_screenshot.png"
+    }
+
+    @Throws(IOException::class)
+    private fun saveBitmapToDisk(bitmap: Bitmap, filename: String) {
+        val out = File(filename)
+        if (!out.parentFile.exists()) {
+            out.parentFile.mkdirs()
+        }
+        try {
+            val outputStream = FileOutputStream(filename)
+            val outputData = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputData);
+            outputData.writeTo(outputStream)
+            outputStream.flush()
+            outputStream.close()
+            Log.i("ERRORPHOTO","HECHO")
+        } catch (ex: IOException) {
+            Log.i("ERRORPHOTO",ex.toString())
+            throw IOException("Fallo al guardar ", ex)
+        }
+    }
+
+    private fun takePhoto() {
+        val filename = generateFilename()
+        Log.i("TESTIMAGE",filename)
+        val view = arFragment?.arSceneView
+        val bitmap = Bitmap.createBitmap(view!!.width, view.height, Bitmap.Config.ARGB_8888)
+        val handlerThread = HandlerThread("PixelCopier")
+        handlerThread.start()
+        PixelCopy.request(view, bitmap, {
+            if (it == PixelCopy.SUCCESS) {
+                try {
+                    saveBitmapToDisk(bitmap,filename)
+                } catch (e: IOException) {
+                    val toast = Toast.makeText(this,e.toString(),Toast.LENGTH_LONG)
+                    Log.i("ERRORPHOTO",e.printStackTrace().toString())
+                    toast.show()
+                    return@request
+                }
+            }
+            handlerThread.quitSafely()
+        }, Handler(handlerThread.looper))
+
+    }
+
 }
