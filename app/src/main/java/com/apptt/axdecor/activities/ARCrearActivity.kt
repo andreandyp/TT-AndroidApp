@@ -1,9 +1,9 @@
 package com.apptt.axdecor.activities
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -17,7 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.content.FileProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -30,7 +30,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
 import com.google.ar.core.Session
@@ -254,27 +253,32 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     @Throws(IOException::class)
     private fun saveBitmapToDisk(bitmap: Bitmap, filename: String) {
-        val out = File(filename)
-        if (!out.parentFile.exists()) {
-            out.parentFile.mkdirs()
+        if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(
+                this,
+                "No nos diste permiso para guardar la imagen :(",
+                Toast.LENGTH_LONG
+            ).show()
         }
+        val out = File(filename)
+        out.createNewFile()
         try {
-            val outputStream = FileOutputStream(filename)
+            val outputStream = FileOutputStream(out)
             val outputData = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputData);
             outputData.writeTo(outputStream)
             outputStream.flush()
             outputStream.close()
-            Log.i("ERRORPHOTO","HECHO")
+            Log.i("ERRORPHOTO", "HECHO")
         } catch (ex: IOException) {
-            Log.i("ERRORPHOTO",ex.toString())
+            Log.i("ERRORPHOTO", ex.toString())
             throw IOException("Fallo al guardar ", ex)
         }
     }
 
     private fun takePhoto() {
         val filename = generateFilename()
-        Log.i("TESTIMAGE",filename)
+        Log.i("TESTIMAGE", filename)
         val view = arFragment?.arSceneView
         val bitmap = Bitmap.createBitmap(view!!.width, view.height, Bitmap.Config.ARGB_8888)
         val handlerThread = HandlerThread("PixelCopier")
@@ -282,10 +286,10 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         PixelCopy.request(view, bitmap, {
             if (it == PixelCopy.SUCCESS) {
                 try {
-                    saveBitmapToDisk(bitmap,filename)
+                    saveBitmapToDisk(bitmap, filename)
                 } catch (e: IOException) {
-                    val toast = Toast.makeText(this,e.toString(),Toast.LENGTH_LONG)
-                    Log.i("ERRORPHOTO",e.printStackTrace().toString())
+                    val toast = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
+                    Log.i("ERRORPHOTO", e.printStackTrace().toString())
                     toast.show()
                     return@request
                 }

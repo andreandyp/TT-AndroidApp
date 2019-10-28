@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="catalogoViewModel"
+                type="com.apptt.axdecor.viewmodels.CatalogoViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/catalogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".fragments.CatalogoFragment">
+
+        <ImageView
+                android:id="@+id/imagen_modelo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/asdfghjkl"
+                app:layout_constraintBottom_toTopOf="@+id/informacion_modelo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/informacion_modelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{catalogoViewModel.informacion}"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/descripcion_modelo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagen_modelo" />
+
+        <TextView
+                android:id="@+id/descripcion_modelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{catalogoViewModel.descripcion}"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/precio_modelo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/informacion_modelo" />
+
+        <TextView
+                android:id="@+id/precio_modelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{catalogoViewModel.precio}"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descripcion_modelo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
