@@ -36,7 +36,10 @@ import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
+import com.google.ar.sceneform.rendering.Material
 import com.google.ar.sceneform.rendering.ModelRenderable
+import com.google.ar.sceneform.rendering.PlaneRenderer
+import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
@@ -59,6 +62,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private var Modelo: ModelRenderable? = null
     private var arsesion: Session? = null
     private var conf: Config? = null
+    private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
     private val Lampara_asset =
         "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
     private val espejo_asset =
@@ -82,20 +86,29 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             when (it.itemId) {
                 R.id.itemLamparas -> {
                     defineMOdelo(Lampara_asset)
-                    Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show();true
+                    Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show()
+                    true
                 }
                 R.id.itemMuebles -> {
-                    Toast.makeText(this, "Muebles", Toast.LENGTH_SHORT).show();true
+                    Toast.makeText(this, "Muebles", Toast.LENGTH_SHORT).show()
+                    true
                 }
                 R.id.itemPisos -> {
-                    Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show();true
+                    Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show()
+                    cambiaModoPlano(0)
+                    changeFloorTexture()
+                    true
+
                 }
                 R.id.itemAdornos -> {
                     defineMOdelo(espejo_asset)
-                    Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show();true
+                    Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show()
+                    true
                 }
                 R.id.itemColores -> {
-                    Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show();true
+                    Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show()
+                    cambiaModoPlano(1)
+                    true
                 }
                 else -> false
             }
@@ -161,7 +174,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onResume() {
         super.onResume()
         //TODO Comprobar permisos de la camara
-        Log.i("TESTFILE", generateFilename())
         //Asegurarse que Google Play Sevices para AR esta instalado y actualizado
         try {
             if (arsesion == null) {
@@ -169,7 +181,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     ArCoreApk.InstallStatus.INSTALLED -> {
                         arsesion = Session(this)
                         conf = Config(arsesion)
-                        conf!!.setPlaneFindingMode(Config.PlaneFindingMode.HORIZONTAL_AND_VERTICAL)
+                        conf!!.setPlaneFindingMode(Config.PlaneFindingMode.HORIZONTAL)
                         conf!!.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE)
                         arsesion!!.configure(conf)
                         arFragment?.arSceneView?.setupSession(arsesion)
@@ -188,6 +200,19 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         toast.setGravity(Gravity.TOP, 0, 250)
         toast.show()
         defineMOdelo(Lampara_asset)
+    }
+
+    private fun cambiaModoPlano(modo: Int) {
+        modoPlano = modo
+        arsesion = Session(this)
+        conf = Config(arsesion)
+        when (modoPlano) {
+            0 -> conf!!.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL
+            1 -> conf!!.planeFindingMode = Config.PlaneFindingMode.VERTICAL
+        }
+        conf!!.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
+        arsesion!!.configure(conf)
+        arFragment?.arSceneView?.setupSession(arsesion)
     }
 
     private fun defineMOdelo(modelURL: String) {
@@ -248,7 +273,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun generateFilename(): String {
         val date = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
-        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + File.separator + "Sceneform/" + date + "_screenshot.png"
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + File.separator + "AXDecor/" + date + "_screenshot.png"
     }
 
     @Throws(IOException::class)
@@ -261,6 +286,9 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             ).show()
         }
         val out = File(filename)
+        if (!out.parentFile.exists()) {
+            out.parentFile.mkdirs()
+        }
         out.createNewFile()
         try {
             val outputStream = FileOutputStream(out)
@@ -269,7 +297,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             outputData.writeTo(outputStream)
             outputStream.flush()
             outputStream.close()
-            Log.i("ERRORPHOTO", "HECHO")
         } catch (ex: IOException) {
             Log.i("ERRORPHOTO", ex.toString())
             throw IOException("Fallo al guardar ", ex)
@@ -278,7 +305,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private fun takePhoto() {
         val filename = generateFilename()
-        Log.i("TESTIMAGE", filename)
         val view = arFragment?.arSceneView
         val bitmap = Bitmap.createBitmap(view!!.width, view.height, Bitmap.Config.ARGB_8888)
         val handlerThread = HandlerThread("PixelCopier")
@@ -293,10 +319,33 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     toast.show()
                     return@request
                 }
+                val toast = Toast.makeText(this,"Imagen Guardada Exitosamente!",Toast.LENGTH_SHORT)
+                toast.show()
             }
             handlerThread.quitSafely()
         }, Handler(handlerThread.looper))
 
+    }
+
+    private fun changeFloorTexture() {
+        val sampler = Texture.Sampler.builder()
+            .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+            .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
+            .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+            .build()
+
+        val trigrid = Texture.builder()
+            .setSource(this, R.drawable.piso_1)
+            .setSampler(sampler)
+            .build()
+
+        arFragment?.arSceneView?.scene?.addOnUpdateListener {
+            val planeRenderer = arFragment?.arSceneView?.planeRenderer
+            planeRenderer?.material?.thenAcceptBoth(trigrid) { material: Material?, texture: Texture? ->
+                material?.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
+                material?.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 50f)
+            }
+        }
     }
 
 }
