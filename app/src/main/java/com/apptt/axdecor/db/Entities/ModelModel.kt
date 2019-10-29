@@ -7,7 +7,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
-data class Model(
+data class ModelModel(
     @ColumnInfo(name = "id_model") @PrimaryKey @NonNull val idModel: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "style") val style: String,
@@ -18,7 +18,7 @@ data class Model(
     @ColumnInfo(name = "color") val color: String,
     @ColumnInfo(name = "id_provider")
     @ForeignKey(
-        entity = Provider::class,
+        entity = ProviderModel::class,
         parentColumns = ["id_provider"],
         childColumns = ["id_provider"],
         onDelete = ForeignKey.CASCADE,
@@ -26,7 +26,7 @@ data class Model(
     ) val idProvider: Int,
     @ColumnInfo(name = "id_type")
     @ForeignKey(
-        entity = Type::class,
+        entity = TypeModel::class,
         parentColumns = ["id_type"],
         childColumns = ["id_type"],
         onDelete = ForeignKey.CASCADE,

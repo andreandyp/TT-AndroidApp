@@ -13,7 +13,7 @@ data class Paint(
     @ColumnInfo(name = "vendor_code") val vendorCode: String,
     @ColumnInfo(name = "rgb_code") val rgbCode: String,
     @ForeignKey(
-        entity = Provider::class,
+        entity = ProviderModel::class,
         parentColumns = ["id_provider"],
         childColumns = ["id_provider"],
         onDelete = ForeignKey.CASCADE,

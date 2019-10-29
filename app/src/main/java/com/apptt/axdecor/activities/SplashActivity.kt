@@ -6,6 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.apptt.axdecor.R
+import com.apptt.axdecor.db.AXDecorDatabase.Companion.getDatabase
+import com.apptt.axdecor.db.AXDecorRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private val splash = 500
@@ -17,6 +23,13 @@ class SplashActivity : AppCompatActivity() {
             checkUser()
             finish()
         }, splash.toLong())
+
+        val job = Job()
+        val scope = CoroutineScope(job + Dispatchers.Main)
+        val repository = AXDecorRepository(application)
+        scope.launch {
+            repository.getProviders()
+        }
     }
 
     private fun checkUser() {
