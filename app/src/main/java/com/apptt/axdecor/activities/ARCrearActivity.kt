@@ -32,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
+import com.google.ar.core.Plane
 import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
@@ -49,6 +50,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.CompletableFuture
 
 class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
@@ -66,7 +68,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private val Lampara_asset =
         "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
     private val espejo_asset =
-        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/1%2F6%2Fespejo_1.glb?alt=media&token=0abdad72-d201-4fad-9862-bf2a605d2595"
+        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/espejo_1.glb?alt=media&token=3848d06d-2bf4-473e-bf20-d76194a3f4e2"
     private var mUserRequestedInstall = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,29 +87,34 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         bottomNavigate.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.itemLamparas -> {
+                    setDefaultPlane()
+                    arsesion?.setupPlaneFinding(0)
                     defineMOdelo(Lampara_asset)
                     Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.itemMuebles -> {
+                    setDefaultPlane()
+                    arsesion?.setupPlaneFinding(0)
                     Toast.makeText(this, "Muebles", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.itemPisos -> {
                     Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show()
-                    cambiaModoPlano(0)
+                    arsesion?.setupPlaneFinding(0)
                     changeFloorTexture()
                     true
 
                 }
                 R.id.itemAdornos -> {
                     defineMOdelo(espejo_asset)
+                    arsesion?.setupPlaneFinding(2)
                     Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.itemColores -> {
                     Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show()
-                    cambiaModoPlano(1)
+                    arsesion?.setupPlaneFinding(1)
                     true
                 }
                 else -> false
@@ -180,11 +187,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 when (ArCoreApk.getInstance().requestInstall(this, mUserRequestedInstall)) {
                     ArCoreApk.InstallStatus.INSTALLED -> {
                         arsesion = Session(this)
-                        conf = Config(arsesion)
-                        conf!!.setPlaneFindingMode(Config.PlaneFindingMode.HORIZONTAL)
-                        conf!!.setUpdateMode(Config.UpdateMode.LATEST_CAMERA_IMAGE)
-                        arsesion!!.configure(conf)
-                        arFragment?.arSceneView?.setupSession(arsesion)
+                        arsesion?.setupPlaneFinding(0)
                     }
                     ArCoreApk.InstallStatus.INSTALL_REQUESTED -> {
                         mUserRequestedInstall = false
@@ -202,20 +205,20 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         defineMOdelo(Lampara_asset)
     }
 
-    private fun cambiaModoPlano(modo: Int) {
-        modoPlano = modo
-        arsesion = Session(this)
-        conf = Config(arsesion)
-        when (modoPlano) {
-            0 -> conf!!.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL
-            1 -> conf!!.planeFindingMode = Config.PlaneFindingMode.VERTICAL
+    private fun Session.setupPlaneFinding(mode: Int) {
+        val arConfig = Config(this)
+        when (mode) {
+            0 -> arConfig.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL
+            1 -> arConfig.planeFindingMode = Config.PlaneFindingMode.VERTICAL
+            2 -> arConfig.planeFindingMode = Config.PlaneFindingMode.HORIZONTAL_AND_VERTICAL
         }
-        conf!!.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
-        arsesion!!.configure(conf)
-        arFragment?.arSceneView?.setupSession(arsesion)
+        arConfig.updateMode = Config.UpdateMode.LATEST_CAMERA_IMAGE
+        this.configure(arConfig)
+        arFragment?.arSceneView?.setupSession(this)
     }
 
     private fun defineMOdelo(modelURL: String) {
+        barraProgeso.visibility = View.VISIBLE
         ModelRenderable.builder()
             .setSource(
                 this, RenderableSource.builder().setSource(
@@ -223,13 +226,16 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     Uri.parse(modelURL),
                     RenderableSource.SourceType.GLB
                 )
-                    .setScale(0.5f)  // Scale the original model to 50%.
+                    .setScale(0.4f)  // Scale the original model to 50%.
                     .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                     .build()
             )
             .setRegistryId(modelURL)
             .build()
-            .thenAccept { renderable -> Modelo = renderable }
+            .thenAccept { renderable ->
+                Modelo = renderable
+                barraProgeso.visibility = View.INVISIBLE
+            }
             .exceptionally { throwable ->
                 val toast =
                     Toast.makeText(this, "Unable to load renderable $modelURL", Toast.LENGTH_LONG)
@@ -293,7 +299,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         try {
             val outputStream = FileOutputStream(out)
             val outputData = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputData);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputData)
             outputData.writeTo(outputStream)
             outputStream.flush()
             outputStream.close()
@@ -319,7 +325,8 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     toast.show()
                     return@request
                 }
-                val toast = Toast.makeText(this,"Imagen Guardada Exitosamente!",Toast.LENGTH_SHORT)
+                val toast =
+                    Toast.makeText(this, "Imagen Guardada Exitosamente!", Toast.LENGTH_SHORT)
                 toast.show()
             }
             handlerThread.quitSafely()
@@ -343,9 +350,27 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             val planeRenderer = arFragment?.arSceneView?.planeRenderer
             planeRenderer?.material?.thenAcceptBoth(trigrid) { material: Material?, texture: Texture? ->
                 material?.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
-                material?.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 50f)
+                material?.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 100f)
+                material?.setFloat2("uvScale", 1f, 1.19245f)
             }
         }
     }
 
+    private fun setDefaultPlane() {
+        val sample = Texture.Sampler.builder()
+            .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+            .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+            .build()
+
+        Texture.builder()
+            .setSource(this, R.drawable.floordiffuse)
+            .setSampler(sample)
+            .build()
+            .thenAccept { texture ->
+                arFragment?.arSceneView?.planeRenderer?.material?.thenAccept { material ->
+                    material.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
+                }
+            }
+    }
 }
+
