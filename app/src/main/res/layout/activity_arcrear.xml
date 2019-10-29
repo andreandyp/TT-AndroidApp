@@ -80,6 +80,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/btnPhoto"
                 app:srcCompat="@drawable/borraobjeto"
                 app:tint="@color/fondo" />
+
+        <ProgressBar
+                android:id="@+id/barraProgeso"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ar_fragment"
+                app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
