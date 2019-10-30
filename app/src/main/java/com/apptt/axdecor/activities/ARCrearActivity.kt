@@ -26,13 +26,13 @@ import com.apptt.axdecor.Dialogs.RoomsSelectDialog
 import com.apptt.axdecor.R
 import com.apptt.axdecor.Utilities.ARCoreUtils
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
+import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.Config
-import com.google.ar.core.Plane
 import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
@@ -50,7 +50,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.CompletableFuture
 
 class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
@@ -155,7 +154,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 navigateToFragment(ModoDecoracionFragment())
             }
             R.id.itemPreguntas -> {
-                Toast.makeText(this, "Preguntas Frecuentes", Toast.LENGTH_SHORT).show()
+                navigateToFragment(PreguntasFrecuentesFragment())
             }
             R.id.itemhabitacion -> {
                 openDialogRooms()
@@ -165,6 +164,9 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
         }
         bottomNavigate.visibility = View.INVISIBLE
+        btnPhoto.visibility = View.INVISIBLE
+        barraProgeso.visibility = View.INVISIBLE
+        btnRemove.visibility = View.INVISIBLE
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -236,14 +238,14 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 Modelo = renderable
                 barraProgeso.visibility = View.INVISIBLE
             }
-            .exceptionally { throwable ->
+            .exceptionally {
                 val toast =
                     Toast.makeText(this, "Unable to load renderable $modelURL", Toast.LENGTH_LONG)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
                 null
             }
-        arFragment?.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
+        arFragment?.setOnTapArPlaneListener { hitResult, _ , _ ->
             if (Modelo == null) {
                 return@setOnTapArPlaneListener
             }
@@ -256,7 +258,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             mod.setParent(anchorNode)
             mod.renderable = Modelo
             mod.select()
-            mod.setOnTapListener { hitTestResult, motionEvent ->
+            mod.setOnTapListener { _ , _ ->
                 btnRemove.visibility = View.VISIBLE
                 btnRemove.setOnClickListener {
                     removeObject(anchorNode)

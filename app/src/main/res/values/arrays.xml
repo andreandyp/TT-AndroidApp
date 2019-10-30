@@ -2,10 +2,10 @@
 <resources>
     <string-array name="colores">
         <item>¿Cúal es tu color preferido?</item>
-        <item>Rojo-Fuego</item>
-        <item>Amarillo-Sol</item>
-        <item>Verde-Tierra</item>
-        <item>Azul-Agua Fría</item>
+        <item>Rojo</item>
+        <item>Amarillo</item>
+        <item>Verde</item>
+        <item>Azul</item>
     </string-array>
     <string-array name="edades">
         <item>¿Qué edad tienes?</item>
@@ -18,7 +18,7 @@
         <item>Baño</item>
         <item>Cocina</item>
         <item>Comedor</item>
-        <item>Sala</item>
         <item>Recamara</item>
+        <item>Sala</item>
     </string-array>
 </resources>

@@ -4,11 +4,10 @@ package com.apptt.axdecor.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.TutorialConceptosActivity
 import kotlinx.android.synthetic.main.fragment_datos3.*
@@ -26,10 +25,6 @@ class Datos3Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args3 = Datos3FragmentArgs.fromBundle(arguments!!)
-        var habitacion: String
-        Log.i("APPP", args3.nombre)
-        Log.i("APPP", args3.personalidad)
-        Log.i("APPP", args3.edad)
         cardBano.setOnClickListener {
             saveDatosUsuario("Baño", args3.nombre, args3.edad, args3.personalidad)
         }

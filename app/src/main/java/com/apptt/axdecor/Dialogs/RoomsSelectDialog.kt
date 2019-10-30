@@ -16,7 +16,7 @@ class RoomsSelectDialog : DialogFragment() {
             val builder = MaterialAlertDialogBuilder(it)
             builder.setTitle("¿Qué habitación desearías decorar?")
                 .setIcon(R.drawable.ic_logo_fondo_02)
-                .setItems(R.array.Habitaciones, DialogInterface.OnClickListener { dialog, which ->
+                .setItems(R.array.Habitaciones, DialogInterface.OnClickListener { _ , which ->
                     when (which) {
                         0 -> {
                             updateRoom("Baño")

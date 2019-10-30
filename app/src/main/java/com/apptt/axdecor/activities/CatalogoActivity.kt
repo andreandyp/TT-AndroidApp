@@ -1,7 +1,7 @@
 package com.apptt.axdecor.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
 
 class CatalogoActivity : AppCompatActivity() {

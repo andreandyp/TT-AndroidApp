@@ -14,7 +14,7 @@
     <string name="conceptosInicio">Veamos un pequeño tutorial</string>
     <string name="selectHabitacion">¿Qué habitación desearías decorar?</string>
     <string name="omitir">Omitir</string>
-    <string name="conceptoTitulo">Empecemos con...</string>
+    <string name="conceptoTitulo">Empecemos con…</string>
 
     <string name="flecha_siguiente_paso">Siguiente paso</string>
     <string name="guardar_compartir">Guardar y compartir</string>
@@ -23,7 +23,7 @@
     <string name="que_quiero">¿Qué quiero?</string>
     <string name="informacion">Información</string>
     <string name="atras">Atrás</string>
-    <string name="selectmodo">Ya casi terminamos. Selecciona un modo de decoración y comencemos...</string>
+    <string name="selectmodo">Ahora solo selecciona un modo de decoración y comencemos a decorar!</string>
     <string name="abre">Abre Drawer</string>
     <string name="cierra">Cierra Drawer</string>
 
@@ -33,6 +33,19 @@
     <string name="color_key">color_key</string>
     <string name="room_key">room_key</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="FAQ">Preguntas Frecuentes</string>
+    <string name="Pregunta1">¿Diseño vs decoración?</string>
+    <string name="Pregunta2">¿Cómo influyen los colores en mi decoración?</string>
+    <string name="Pregunta3">¿Por qué debo jugar con los colores y su saturación?</string>
+    <string name="Pregunta4">¿Debo elegir un estilo de decoración prediseñado?</string>
+
+    <string name="Resp1">El diseño de interiores afecta tanto a lo elementos que lo componen como a la arquitectura, es decir, además de la estética, también hay que tener muy en cuenta la funcionalidad del espacio.
+La decoración de interiores está más enfocada a lo estético, al amueblamiento y adornamiento del espacio.
+</string>
+    <string name="Resp2">Los colores están fuertemente relacionados con las emociones, es decir que pueden influir en cómo te sientes o cómo respondes hacia ellos, son capaces de crear climas y estilos maravillosos.
+</string>
+    <string name="Resp3">Aquí te va un ejemplo, el color rojo es muy intenso, evoca energía y entusiasmo, por lo que es recomendado para utilizarlo en habitaciones en donde constantemente estás activo, si quisieras utilizarlo en tu recámara, la recomendación sería utilizarlo con una tonalidad más baja como un rojo pastel, para crear un ambiente más relajado y tranquilo.
+</string>
+    <string name="Resp4">La respuesta es no, sin embargo en el mundo de la decoración existen muchos estilos, clásico, rústico, minimalista, por mencionar algunos, en los que te puedes guiar si es que aún no tienes una idea de cómo quieres decorar tu espacio.
+</string>
 </resources>

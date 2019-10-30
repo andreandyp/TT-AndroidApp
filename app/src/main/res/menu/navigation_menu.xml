@@ -15,12 +15,12 @@
                 android:icon="@drawable/colores"
                 android:title="Selecciona color de sugerencias" />
         <item
+                android:id="@+id/itemPreguntas"
+                android:icon="@drawable/information"
+                android:title="¿Quieres saber más?" />
+        <item
                 android:id="@+id/itemContacto"
                 android:icon="@drawable/support"
                 android:title="Contacto" />
-        <item
-                android:id="@+id/itemPreguntas"
-                android:icon="@drawable/information"
-                android:title="Preguntas Frecuentes" />
     </group>
 </menu>
