@@ -1,92 +1,94 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
-import com.apptt.axdecor.Network.*
+import com.apptt.axdecor.Network.AXDecorAPI
+import com.apptt.axdecor.Utilities.DataNetworkUtils.extractFullCategories
+import com.apptt.axdecor.Utilities.DataNetworkUtils.extractFullStyles
+import com.apptt.axdecor.Utilities.DataNetworkUtils.extractFullTypes
+import com.apptt.axdecor.Utilities.ModelNetworkUtils.convertToModelModel
+import com.apptt.axdecor.Utilities.ModelNetworkUtils.extractModelCategories
+import com.apptt.axdecor.Utilities.ModelNetworkUtils.extractModelStyles
+import com.apptt.axdecor.Utilities.ProviderNetworkUtils.convertToProviderModel
+import com.apptt.axdecor.Utilities.ProviderNetworkUtils.extractProviderCategories
+import com.apptt.axdecor.Utilities.ProviderNetworkUtils.extractSocialNetworks
+import com.apptt.axdecor.Utilities.ProviderNetworkUtils.extractStores
+import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
-import com.apptt.axdecor.db.Entities.*
+import com.apptt.axdecor.db.Entities.ModelModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AXDecorRepository(application: Application) {
-    private val modeldao: ModelDAO
+    private val modelDAO: ModelDAO
     private val providerDAO: ProviderDAO
-    //private val listaModelos: List<ModelModel>
+    private val dataDAO: DataDAO
 
     init {
         val db = AXDecorDatabase.getDatabase(application)
-        modeldao = db.modelDAO()
+        modelDAO = db.modelDAO()
         providerDAO = db.providerDAO()
-        //listaModelos = modeldao.getAllModels()
+        dataDAO = db.dataDAO()
     }
 
-    /*fun getModelos(): List<ModelModel> {
-        return listaModelos
-    }*/
+    suspend fun getModels() {
+        withContext(Dispatchers.IO) {
+            val modelosNetwork = AXDecorAPI.retrofitService.obtenerModelosAsync().await()
+
+            val modelosDB = convertToModelModel(modelosNetwork)
+            modelDAO.insertModel(*modelosDB)
+
+            modelosNetwork.forEach { modelo ->
+                val stylesDB = extractModelStyles(modelo.styles, modelo.idModel)
+                modelDAO.addStyles(*stylesDB)
+
+                val categoriesDB = extractModelCategories(modelo.categories, modelo.idModel)
+                modelDAO.addCategories(*categoriesDB)
+            }
+        }
+    }
 
     suspend fun deleteAllModelos() {
-        modeldao.deleteAllModels()
+        modelDAO.deleteAllModels()
     }
 
     suspend fun insertModel(modelModel: ModelModel) {
-        modeldao.insertModel(modelModel)
+        modelDAO.insertModel(modelModel)
     }
 
     suspend fun getProviders() {
         withContext(Dispatchers.IO) {
-            val proveedores = AXDecorAPI.retrofitService.obtenerProveedoresAsync().await()
-            providerDAO.insertProvider(*convertToProviderModel(proveedores))
-            proveedores.forEach { proveedor ->
-                providerDAO.addSocialNetworks(*extractSocialNetworks(proveedor.socialNetworks, proveedor.idProvider))
-                providerDAO.addStores(*extractStores(proveedor.stores, proveedor.idProvider))
+            val proveedoresNetwork = AXDecorAPI.retrofitService.obtenerProveedoresAsync().await()
+            val proveedoresDB = convertToProviderModel(proveedoresNetwork)
+            providerDAO.insertProvider(*proveedoresDB)
+
+            proveedoresNetwork.forEach { proveedor ->
+                val socialNetworksDB =
+                    extractSocialNetworks(proveedor.socialNetworks, proveedor.idProvider)
+                providerDAO.addSocialNetworks(*socialNetworksDB)
+
+                val storesDB = extractStores(proveedor.stores, proveedor.idProvider)
+                providerDAO.addStores(*storesDB)
+
+                val categoryDB =
+                    extractProviderCategories(proveedor.categories, proveedor.idProvider)
+                providerDAO.addCategories(*categoryDB)
             }
 
         }
     }
 
-    private fun convertToProviderModel(proveedores: List<NetworkProvider>) : Array<ProviderModel> {
-        return proveedores.map {
-            ProviderModel(
-                idProvider = it.idProvider,
-                name = it.name,
-                rfc = it.rfc,
-                razonSocial = it.razonSocial,
-                persona = it.persona,
-                rango = it.rango
-            )
-        }.toTypedArray()
-    }
+    suspend fun getDefaultData() {
+        withContext(Dispatchers.IO) {
+            val dataNetwork = AXDecorAPI.retrofitService.obtenerDatosAsync().await()
 
-    private fun extractSocialNetworks(socialNetworks: List<NetworkSocialNetwork>, idProvider: Int) : Array<SocialNetworkModel> {
-        return socialNetworks.map {
-            SocialNetworkModel(
-                idSocialNetwork = it.idSocialNetwork,
-                socialNetworkURL = it.socialNetworkUrl,
-                idProvider = idProvider
-            )
-        }.toTypedArray()
-    }
+            val typesDB = extractFullTypes(dataNetwork.tipos)
+            val stylesDB = extractFullStyles(dataNetwork.estilos)
+            val categoriesDB = extractFullCategories(dataNetwork.categorias)
 
-    private fun extractStores(stores: List<NetworkStore>, idProvider: Int): Array<StoreModel> {
-        return stores.map {
-            StoreModel(
-                idStore = it.idStore,
-                address = it.address,
-                phone = it.phone,
-                email = it.email,
-                idProvider = idProvider
-            )
-        }.toTypedArray()
+            dataDAO.insertTypes(*typesDB)
+            dataDAO.insertStyles(*stylesDB)
+            dataDAO.insertCategories(*categoriesDB)
+        }
     }
-
-    private fun extractCategories(categories: List<NetworkCategory>, idProvider: Int): Array<ProviderHasCategoryModel> {
-        return categories.map {
-            ProviderHasCategoryModel(
-                idProviderCategory = 0,
-                idProvider = idProvider,
-                idCategory = it.idCategory
-            )
-        }.toTypedArray()
-    }
-
 }

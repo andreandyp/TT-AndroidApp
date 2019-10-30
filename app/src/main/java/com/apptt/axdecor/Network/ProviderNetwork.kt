@@ -1,6 +1,5 @@
 package com.apptt.axdecor.Network
 
-import com.apptt.axdecor.db.Entities.ProviderModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -34,6 +33,5 @@ data class NetworkStore(
 
 @JsonClass(generateAdapter = true)
 data class NetworkCategory(
-    val idCategory: Int,
-    val category: String
+    val idCategory: Int
 )

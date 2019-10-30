@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class ProviderHasCategoryModel(
-    @PrimaryKey(autoGenerate = true) val idProviderCategory: Long,
-    val idProvider: Int,
+data class ModelHasCategoryModel(
+    @PrimaryKey(autoGenerate = true) val idModelCategory: Long,
+    val idModel: Int,
     val idCategory: Int
 )

@@ -3,6 +3,8 @@ package com.apptt.axdecor.db.DAO
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.apptt.axdecor.db.Entities.ModelHasCategoryModel
+import com.apptt.axdecor.db.Entities.ModelHasPredefinedStyleModel
 import com.apptt.axdecor.db.Entities.ModelModel
 
 @Dao
@@ -14,5 +16,11 @@ interface ModelDAO {
     suspend fun deleteAllModels()
 
     @Insert
-    suspend fun insertModel(modelModel: ModelModel)
+    suspend fun insertModel(vararg modelModel: ModelModel)
+
+    @Insert
+    suspend fun addStyles(vararg modelHasPredefinedStyleModel: ModelHasPredefinedStyleModel)
+
+    @Insert
+    suspend fun addCategories(vararg modelHasCategoryModel: ModelHasCategoryModel)
 }

@@ -7,7 +7,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
-data class Paint(
+data class PaintModel(
     @ColumnInfo(name = "id_paint") @PrimaryKey @NonNull val idPaint: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "vendor_code") val vendorCode: String,
