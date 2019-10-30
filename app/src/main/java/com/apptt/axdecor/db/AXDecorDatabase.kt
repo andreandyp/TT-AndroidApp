@@ -4,12 +4,31 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
+import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.*
 
-@Database(entities = arrayOf(Model::class, Provider::class, ARScene::class, SocialNetwork::class, Store::class, Paint::class, Email::class, Phone::class, PredefinedStyle::class), version = 1)
-public abstract class AXDecorDatabase : RoomDatabase() {
+@Database(
+    entities = [
+        ARScene::class,
+        CategoryModel::class,
+        ModelHasCategoryModel::class,
+        ModelHasPredefinedStyleModel::class,
+        ModelModel::class,
+        PaintModel::class,
+        PredefinedStyleModel::class,
+        ProviderHasCategoryModel::class,
+        ProviderModel::class,
+        SocialNetworkModel::class,
+        StoreModel::class,
+        TypeModel::class
+    ], version = 1, exportSchema = false
+)
+abstract class AXDecorDatabase : RoomDatabase() {
     abstract fun modelDAO(): ModelDAO
+    abstract fun providerDAO(): ProviderDAO
+    abstract fun dataDAO(): DataDAO
 
     companion object {
         @Volatile

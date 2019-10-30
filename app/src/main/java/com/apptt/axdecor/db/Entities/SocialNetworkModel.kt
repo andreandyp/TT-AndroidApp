@@ -7,12 +7,12 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity
-data class Store(
-    @ColumnInfo(name = "id_store") @PrimaryKey @NonNull val idStore:Int,
-    @ColumnInfo(name = "address")  val address:String,
+data class SocialNetworkModel(
+    @ColumnInfo(name = "id_social_network") @PrimaryKey @NonNull val idSocialNetwork: Int,
+    @ColumnInfo(name = "social_network_url") val socialNetworkURL: String,
     @ColumnInfo(name = "id_provider")
     @ForeignKey(
-        entity = Provider::class,
+        entity = ProviderModel::class,
         parentColumns = ["id_provider"],
         childColumns = ["id_provider"],
         onDelete = ForeignKey.CASCADE,

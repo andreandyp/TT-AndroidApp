@@ -6,7 +6,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Type(
+data class TypeModel(
     @ColumnInfo(name = "id_type") @PrimaryKey @NonNull val idType:Int,
     @ColumnInfo(name = "name_type") val nameType:String
 )

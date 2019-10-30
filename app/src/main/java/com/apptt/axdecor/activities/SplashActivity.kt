@@ -6,17 +6,34 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
+import com.apptt.axdecor.db.AXDecorRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
-    private val splash = 500
+    private val splash = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         Handler().postDelayed({
+            addDefaultData()
             checkUser()
             finish()
         }, splash.toLong())
+    }
+
+    private fun addDefaultData() {
+        val job = Job()
+        val scope = CoroutineScope(job + Dispatchers.Main)
+        val repository = AXDecorRepository(application)
+        scope.launch {
+            repository.getDefaultData()
+            repository.getProviders()
+            repository.getModels()
+        }
     }
 
     private fun checkUser() {
