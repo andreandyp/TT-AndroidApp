@@ -22,8 +22,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.apptt.axdecor.Dialogs.RoomsSelectDialog
-import com.apptt.axdecor.Dialogs.SugerenciaPinturaDialog
+import com.apptt.axdecor.dialogs.RoomsSelectDialog
+import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.R
 import com.apptt.axdecor.Utilities.ARCoreUtils
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
@@ -45,7 +45,6 @@ import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
-import kotlinx.android.synthetic.main.pinturas_dialog.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -116,7 +115,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 R.id.itemColores -> {
                     Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show()
                     arsesion?.setupPlaneFinding(1)
-                    muestraSugerencia("amarillo")
+                    muestraSugerencia()
                     true
                 }
                 else -> false
@@ -378,9 +377,13 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             }
     }
 
-    private fun muestraSugerencia(color: String) {
-        var cuadrito = SugerenciaPinturaDialog("rojo")
-        cuadrito.show(supportFragmentManager, "Sugerencia")
+    private fun muestraSugerencia() {
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        val colorUser = sharePref.getString(getString(R.string.color_key), "amarillo")
+        SugerenciaPinturaDialog(colorUser!!).show(supportFragmentManager, "Sugerencia")
     }
 
 }

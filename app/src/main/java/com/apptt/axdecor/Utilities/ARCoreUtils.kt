@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import kotlinx.android.synthetic.main.pinturas_dialog.view.*
 
 class ARCoreUtils {
     companion object{

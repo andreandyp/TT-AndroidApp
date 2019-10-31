@@ -52,4 +52,15 @@ La decoración de interiores está más enfocada a lo estético, al amueblamient
 Combinan perfecto con tonalidades verdes, grises y violetas.
 Son ideales para terrazas y cocinas
 </string>
+    <string name="sugerenciaAzul">Tradicional y conservador, en su tonalidades más oscuras se vuelve dinámico, y frío cuando se agrega blanco.
+
+Los colores azules tienen efectos relajantes, por ello son perfectos para espacios en donde busques calma y refugio.
+No es tan recomendable para una cocina.
+</string>
+    <string name="sugerenciaRojo">El color rojo es enérgico, cálido y de alto impacto, es ideal para aplicarlo en cocinas, espacios de entretenimiento o donde se busque promover la conversación e interacción. En el comedor puede resultar muy dramático por lo que se recomienda uno con menor saturación.
+</string>
+    <string name="sugerenciaVerde">Puede aplicarse para muchos estados de ánimo, pero en su forma más pura representa balance y frescura.
+Cuando toma tonalidades azules se vuelve nítido y frío, por lo que es perfecto para utilizarse en recámaras y baños.
+Es un color que funciona perfecto en la mayoría de los espacios, pero es ideas para la sala, dormitorios y oficinas.
+</string>
 </resources>

@@ -7,7 +7,7 @@
         android:background="#FFFFFF">
 
     <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/materialTextView2"
+            android:id="@+id/texto1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:justificationMode="inter_word"
@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/materialTextView2"
+            app:layout_constraintTop_toBottomOf="@+id/texto1"
             app:srcCompat="@drawable/amarillos" />
 
     <com.google.android.material.textview.MaterialTextView

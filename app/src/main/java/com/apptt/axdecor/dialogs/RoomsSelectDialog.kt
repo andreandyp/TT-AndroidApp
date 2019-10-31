@@ -1,4 +1,4 @@
-package com.apptt.axdecor.Dialogs
+package com.apptt.axdecor.dialogs
 
 import android.app.Dialog
 import android.content.Context
