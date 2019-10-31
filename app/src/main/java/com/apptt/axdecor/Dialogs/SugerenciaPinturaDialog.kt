@@ -20,13 +20,13 @@ class SugerenciaPinturaDialog(color: String) : DialogFragment() {
         val act = activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            builder.setView(inflater.inflate(R.layout.pinturas_dialog, null))
+            val view = inflater.inflate(R.layout.pinturas_dialog, null)
+            builder.setView(view)
                 .setPositiveButton("Ok",
                     DialogInterface.OnClickListener { dialog, id ->
                         getDialog()?.cancel()
                     })
-            val im = it.findViewById<ImageView>(R.id.imPaleta)
-            im.setImageResource(R.drawable.rojos)
+            view.findViewById<ImageView>(R.id.imPaleta)?.setImageResource(R.drawable.rojos)
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
         return act
