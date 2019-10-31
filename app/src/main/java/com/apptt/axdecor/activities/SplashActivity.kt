@@ -30,9 +30,9 @@ class SplashActivity : AppCompatActivity() {
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
         scope.launch {
-            repository.getDefaultData()
-            repository.getProviders()
-            repository.getModels()
+            //repository.getDefaultData()
+            //repository.getProviders()
+            //repository.getModels()
         }
     }
 

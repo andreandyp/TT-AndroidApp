@@ -23,6 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.Dialogs.RoomsSelectDialog
+import com.apptt.axdecor.Dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.R
 import com.apptt.axdecor.Utilities.ARCoreUtils
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
@@ -44,6 +45,7 @@ import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
+import kotlinx.android.synthetic.main.pinturas_dialog.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -114,6 +116,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 R.id.itemColores -> {
                     Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show()
                     arsesion?.setupPlaneFinding(1)
+                    muestraSugerencia("amarillo")
                     true
                 }
                 else -> false
@@ -245,7 +248,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 toast.show()
                 null
             }
-        arFragment?.setOnTapArPlaneListener { hitResult, _ , _ ->
+        arFragment?.setOnTapArPlaneListener { hitResult, _, _ ->
             if (Modelo == null) {
                 return@setOnTapArPlaneListener
             }
@@ -258,7 +261,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             mod.setParent(anchorNode)
             mod.renderable = Modelo
             mod.select()
-            mod.setOnTapListener { _ , _ ->
+            mod.setOnTapListener { _, _ ->
                 btnRemove.visibility = View.VISIBLE
                 btnRemove.setOnClickListener {
                     removeObject(anchorNode)
@@ -374,5 +377,11 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 }
             }
     }
+
+    private fun muestraSugerencia(color: String) {
+        var cuadrito = SugerenciaPinturaDialog("rojo")
+        cuadrito.show(supportFragmentManager, "Sugerencia")
+    }
+
 }
 
