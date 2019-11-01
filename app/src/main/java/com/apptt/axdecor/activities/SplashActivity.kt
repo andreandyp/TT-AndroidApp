@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
         scope.launch {
             //repository.getDefaultData()
             //repository.getProviders()
-            //repository.getModels()
+            //repository.getModelsFromInternet()
         }
     }
 

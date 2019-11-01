@@ -1,4 +1,4 @@
-package com.apptt.axdecor.Utilities
+package com.apptt.axdecor.utilities
 
 import android.app.Activity
 import android.app.ActivityManager

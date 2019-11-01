@@ -25,7 +25,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.Dialogs.RoomsSelectDialog
 import com.apptt.axdecor.Dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.R
-import com.apptt.axdecor.Utilities.ARCoreUtils
+import com.apptt.axdecor.utilities.ARCoreUtils
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.google.android.material.appbar.AppBarLayout
@@ -45,7 +45,6 @@ import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
-import kotlinx.android.synthetic.main.pinturas_dialog.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream

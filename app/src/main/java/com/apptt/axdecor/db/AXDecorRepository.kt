@@ -1,21 +1,25 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
-import com.apptt.axdecor.Network.AXDecorAPI
-import com.apptt.axdecor.Utilities.DataNetworkUtils.extractFullCategories
-import com.apptt.axdecor.Utilities.DataNetworkUtils.extractFullStyles
-import com.apptt.axdecor.Utilities.DataNetworkUtils.extractFullTypes
-import com.apptt.axdecor.Utilities.ModelNetworkUtils.convertToModelModel
-import com.apptt.axdecor.Utilities.ModelNetworkUtils.extractModelCategories
-import com.apptt.axdecor.Utilities.ModelNetworkUtils.extractModelStyles
-import com.apptt.axdecor.Utilities.ProviderNetworkUtils.convertToProviderModel
-import com.apptt.axdecor.Utilities.ProviderNetworkUtils.extractProviderCategories
-import com.apptt.axdecor.Utilities.ProviderNetworkUtils.extractSocialNetworks
-import com.apptt.axdecor.Utilities.ProviderNetworkUtils.extractStores
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import com.apptt.axdecor.network.AXDecorAPI
+import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
+import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
+import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
+import com.apptt.axdecor.utilities.ModelNetworkUtils.convertToModelModel
+import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelCategories
+import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelStyles
+import com.apptt.axdecor.utilities.ProviderNetworkUtils.convertToProviderModel
+import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractProviderCategories
+import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractSocialNetworks
+import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractStores
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.ModelModel
+import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -31,7 +35,7 @@ class AXDecorRepository(application: Application) {
         dataDAO = db.dataDAO()
     }
 
-    suspend fun getModels() {
+    suspend fun getModelsFromInternet() {
         withContext(Dispatchers.IO) {
             val modelosNetwork = AXDecorAPI.retrofitService.obtenerModelosAsync().await()
 
@@ -45,6 +49,13 @@ class AXDecorRepository(application: Application) {
                 val categoriesDB = extractModelCategories(modelo.categories, modelo.idModel)
                 modelDAO.addCategories(*categoriesDB)
             }
+        }
+    }
+
+    suspend fun getAllModels() : List<Model> {
+        return withContext(Dispatchers.IO) {
+            val models = modelDAO.getAllModels()
+            convertToModelDomain(models)
         }
     }
 
