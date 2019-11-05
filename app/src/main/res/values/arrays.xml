@@ -21,4 +21,8 @@
         <item>Recamara</item>
         <item>Sala</item>
     </string-array>
+    <string-array name="opcionesCotiza">
+        <item>Ver fotos capturadas</item>
+        <item>Hacer cotización de decoración realizada</item>
+    </string-array>
 </resources>

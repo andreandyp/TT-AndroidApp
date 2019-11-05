@@ -10,10 +10,10 @@
                 android:id="@+id/itemhabitacion"
                 android:icon="@drawable/muebles"
                 android:title="Selecciona habitación" />
-        <item
+        <!--<item
                 android:id="@+id/itemcambiacolor"
                 android:icon="@drawable/colores"
-                android:title="Selecciona color de sugerencias" />
+                android:title="Selecciona color de sugerencias" /> -->
         <item
                 android:id="@+id/itemPreguntas"
                 android:icon="@drawable/information"

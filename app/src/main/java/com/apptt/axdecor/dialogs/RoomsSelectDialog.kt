@@ -7,10 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.apptt.axdecor.R
-import com.apptt.axdecor.activities.ARCrearActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class RoomsSelectDialog : DialogFragment() {
+class RoomsSelectDialog(clase:Class<Any>) : DialogFragment() {
+    private val claseX = clase
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = MaterialAlertDialogBuilder(it)
@@ -28,10 +28,10 @@ class RoomsSelectDialog : DialogFragment() {
                             updateRoom("Comedor")
                         }
                         3 -> {
-                            updateRoom("Sala")
+                            updateRoom("Recamara")
                         }
                         4 -> {
-                            updateRoom("Recamara")
+                            updateRoom("Sala")
                         }
                     }
                 })
@@ -48,7 +48,7 @@ class RoomsSelectDialog : DialogFragment() {
             putString(getString(R.string.room_key), Room)
             commit()
         }
-        val inten = Intent(activity, ARCrearActivity::class.java)
+        val inten = Intent(activity, claseX)
         startActivity(inten)
     }
 }

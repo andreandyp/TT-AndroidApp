@@ -20,6 +20,9 @@
                     android:layout_width="39dp"
                     android:layout_height="32dp"
                     android:layout_marginEnd="7dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:src="@drawable/ic_logo_fondo_02"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +30,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
             <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/materialTextView"
+                    android:id="@+id/tvTituloAccion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="AXDecor"
@@ -51,7 +54,7 @@
                     android:focusable="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/materialTextView"
+                    app:layout_constraintTop_toTopOf="@+id/tvTituloAccion"
                     app:srcCompat="@drawable/menu" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

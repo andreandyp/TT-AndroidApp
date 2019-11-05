@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.ARCrearActivity
+import com.apptt.axdecor.activities.ARElegirActivity
 import kotlinx.android.synthetic.main.fragment_modo_decoracion.*
 
 class ModoDecoracionFragment : Fragment() {
@@ -28,6 +29,14 @@ class ModoDecoracionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         cardCrear.setOnClickListener {
             val intento = Intent(activity?.applicationContext, ARCrearActivity::class.java)
+            startActivity(intento)
+            ActivityCompat.requestPermissions(
+                activity as Activity,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+            )
+        }
+        cardElegir.setOnClickListener {
+            val intento = Intent(activity?.applicationContext, ARElegirActivity::class.java)
             startActivity(intento)
             ActivityCompat.requestPermissions(
                 activity as Activity,

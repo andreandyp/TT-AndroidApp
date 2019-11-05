@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
 import com.apptt.axdecor.Utilities.ARCoreUtils
-import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
@@ -50,7 +49,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var bottomNavigate: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private var arFragment: ArFragment? = null
@@ -66,23 +65,18 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
         val stub = findViewById<ViewStub>(R.id.stub)
-        stub.layoutResource = R.layout.activity_arcrear
+        stub.layoutResource = R.layout.activity_arelegir
         stub.inflate()
         val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
-        acciontv.setText("Crear Estilo")
+        acciontv.setText("Elegir Estilo")
         if (!ARCoreUtils.checkIsSupportedDeviceOrFinish(this)) {
             return
         }
-        arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
         val botonFoto = findViewById<FloatingActionButton>(R.id.btnPhoto)
+        arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
         botonFoto.setOnClickListener { takePhoto() }
-        fabCheck.setOnClickListener { muestraCotiza() }
         inicializaNavigationDrawer()
         navegacionDeCatalogos()
-    }
-
-    private fun muestraCotiza() {
-        CotizaDialog().show(supportFragmentManager, "Cotizacion")
     }
 
     private fun navegacionDeCatalogos() {
@@ -168,7 +162,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
         bottomNavigate.visibility = View.INVISIBLE
         btnPhoto.visibility = View.INVISIBLE
-        barraProgeso.visibility = View.GONE
+        barraProgeso.visibility = View.INVISIBLE
         btnRemove.visibility = View.INVISIBLE
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -239,7 +233,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .build()
             .thenAccept { renderable ->
                 modelo = renderable
-                barraProgeso.visibility = View.GONE
+                barraProgeso.visibility = View.INVISIBLE
             }
             .exceptionally {
                 val toast =
@@ -271,10 +265,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun openDialogRooms() {
-        RoomsSelectDialog(ARCrearActivity().javaClass).show(
-            supportFragmentManager,
-            "Selecciona Habitacion"
-        )
+        RoomsSelectDialog(ARElegirActivity().javaClass).show(supportFragmentManager, "Selecciona Habitacion")
     }
 
     private fun removeObject(nodo: AnchorNode) {
@@ -339,7 +330,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             handlerThread.quitSafely()
         }, Handler(handlerThread.looper))
-        Toast.makeText(this, "Imagen Guardada Exitosamente!", Toast.LENGTH_SHORT).show()
+
     }
 
     private fun changeFloorTexture() {
@@ -369,6 +360,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
             .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
             .build()
+
         Texture.builder()
             .setSource(this, R.drawable.floordiffuse)
             .setSampler(sample)

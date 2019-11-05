@@ -20,8 +20,8 @@ class SugerenciaPinturaDialog(color: String) : DialogFragment() {
             val view = inflater.inflate(R.layout.pinturas_dialog, null)
             builder.setView(view)
                 .setPositiveButton("Ok",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        getDialog()?.cancel()
+                    DialogInterface.OnClickListener { _, _ ->
+                        getDialog()?.dismiss()
                     })
             val paleta = view.findViewById<ImageView>(R.id.imPaleta)
             val texto1 = view.findViewById<MaterialTextView>(R.id.texto1)
