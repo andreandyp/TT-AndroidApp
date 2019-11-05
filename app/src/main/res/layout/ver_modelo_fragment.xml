@@ -55,13 +55,14 @@
                 android:id="@+id/tvColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="40dp"
+                android:text="Color"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/model_nombre"
-                android:text="Color" />
+                app:layout_constraintTop_toBottomOf="@+id/model_nombre" />
 
         <TextView
                 android:id="@+id/tvMedidas"
@@ -82,25 +83,42 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
+                android:text="Estilo"
                 app:layout_constraintBottom_toBottomOf="@+id/tvMedidas"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
                 app:layout_constraintTop_toTopOf="@+id/tvMedidas"
-                app:layout_constraintVertical_bias="0.0"
-                android:text="Estilo" />
+                app:layout_constraintVertical_bias="0.0" />
 
         <TextView
                 android:id="@+id/tvDescripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="40dp"
+                android:text="Descripción"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="@+id/guideline14"
-                app:layout_constraintTop_toBottomOf="@+id/model_medidas"
-                android:text="Descripción" />
+                app:layout_constraintTop_toBottomOf="@+id/model_medidas" />
+
+        <TextView
+                android:id="@+id/model_descripcion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{viewModel.modelo.description}"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac lectus ut felis mollis tristique." />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline13"
@@ -108,6 +126,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="205dp" />
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnColocar"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline15"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="@+id/guideline14"
+                app:layout_constraintTop_toBottomOf="@+id/model_descripcion"
+                tools:text="Colocar" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline14"
@@ -131,7 +161,6 @@
                 android:text="@{viewModel.modelo.name}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -143,83 +172,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                tools:text="Amarillo"
                 android:text="@{viewModel.modelo.color}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvColor" />
+                app:layout_constraintTop_toBottomOf="@+id/tvColor"
+                tools:text="Amarillo" />
 
         <TextView
                 android:id="@+id/model_medidas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="4X4X43"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/model_color"
                 app:layout_constraintEnd_toStartOf="@+id/model_estilo"
+                app:layout_constraintHorizontal_bias="0.466"
                 app:layout_constraintStart_toEndOf="@+id/model_color"
                 app:layout_constraintTop_toTopOf="@+id/model_color"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="4X4X43" />
 
         <TextView
                 android:id="@+id/model_estilo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Vintage"
+                android:text="@{viewModel.estilos}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/model_medidas"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
                 app:layout_constraintTop_toTopOf="@+id/model_medidas"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Vintage" />
 
         <TextView
                 android:id="@+id/model_precio"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{viewModel.modelo.price}"
-                tools:text="1299.99"
+                android:text="@{viewModel.precioFormateado}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
-                app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
-
-        <TextView
-                android:id="@+id/model_descripcion"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{viewModel.modelo.description}"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac lectus ut felis mollis tristique." />
-
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnColocar"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                app:layout_constraintHorizontal_bias="0.491"
-                app:layout_constraintStart_toStartOf="@+id/guideline14"
-                app:layout_constraintTop_toBottomOf="@+id/model_descripcion"
-                tools:text="Colocar" />
+                app:layout_constraintTop_toBottomOf="@+id/tvPrecio"
+                tools:text="1299.99" />
 
         <ImageView
                 android:id="@+id/icNombre"

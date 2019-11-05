@@ -18,7 +18,9 @@ import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractStores
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
+import com.apptt.axdecor.db.Entities.CategoryModel
 import com.apptt.axdecor.db.Entities.ModelModel
+import com.apptt.axdecor.domain.CategoryProvider
 import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
 import kotlinx.coroutines.Dispatchers
@@ -56,8 +58,6 @@ class AXDecorRepository(application: Application) {
     suspend fun getAllModels() : List<Model> {
         return withContext(Dispatchers.IO) {
             val models = modelDAO.getAllModels()
-            Log.i("CATEGORIAS", "HUE")
-            Log.i("CATEGORIAS", modelDAO.viewCategoriesOfModel(1).toString())
             models.map { model ->
                 val categories = modelDAO.viewCategoriesOfModel(model.idModel)
                 convertToModelDomain(model, categories)
@@ -66,8 +66,18 @@ class AXDecorRepository(application: Application) {
         }
     }
 
-    suspend fun deleteAllModelos() {
-        modelDAO.deleteAllModels()
+    suspend fun getProvidersByCategory() : List<CategoryProvider> {
+        return withContext(Dispatchers.IO) {
+            val providers = providerDAO.getProvidersByCategory()
+            providers.map {
+                CategoryProvider(
+                    idCategory = it.idCategory,
+                    category = it.category,
+                    providers = it.providers.split(","),
+                    idProviders = it.idProviders.split(",").map { id -> id.toInt() }
+                )
+            }
+        }
     }
 
     suspend fun insertModel(modelModel: ModelModel) {

@@ -37,6 +37,8 @@ class CatalogoViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             val mods = axDecorRepository.getAllModels()
             _modelos.value = mods
+
+            axDecorRepository.getProvidersByCategory()
         }
     }
 
