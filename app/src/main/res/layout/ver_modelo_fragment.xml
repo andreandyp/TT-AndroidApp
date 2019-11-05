@@ -37,7 +37,7 @@
                 app:layout_constraintHorizontal_bias="0.551"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/model_imagen"
-                tools:text="Nombre" />
+                android:text="Nombre" />
 
         <TextView
                 android:id="@+id/tvPrecio"
@@ -49,7 +49,7 @@
                 app:layout_constraintHorizontal_bias="0.533"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
                 app:layout_constraintTop_toTopOf="@+id/tvNombre"
-                tools:text="Precio($)" />
+                android:text="Precio($)" />
 
         <TextView
                 android:id="@+id/tvColor"
@@ -61,7 +61,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/model_nombre"
-                tools:text="Color" />
+                android:text="Color" />
 
         <TextView
                 android:id="@+id/tvMedidas"
@@ -74,7 +74,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tvColor"
                 app:layout_constraintTop_toTopOf="@+id/tvColor"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="Medidas" />
+                android:text="Medidas" />
 
         <TextView
                 android:id="@+id/tvEstilo"
@@ -87,7 +87,7 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
                 app:layout_constraintTop_toTopOf="@+id/tvMedidas"
                 app:layout_constraintVertical_bias="0.0"
-                tools:text="Estilo" />
+                android:text="Estilo" />
 
         <TextView
                 android:id="@+id/tvDescripcion"
@@ -100,7 +100,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/guideline15"
                 app:layout_constraintStart_toStartOf="@+id/guideline14"
                 app:layout_constraintTop_toBottomOf="@+id/model_medidas"
-                tools:text="Descripción" />
+                android:text="Descripción" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline13"
@@ -129,13 +129,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@{viewModel.modelo.name}"
-                tools:text="Nombre del Modelo"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvNombre" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNombre"
+                tools:text="Nombre del Modelo" />
 
         <TextView
                 android:id="@+id/model_color"
