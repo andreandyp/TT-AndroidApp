@@ -11,7 +11,9 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.databinding.ModeloItemBinding
 import com.apptt.axdecor.domain.Model
 
-class CatalogoAdapter : ListAdapter<Model, CatalogoAdapter.ModelViewHolder>(DiffCallback) {
+class CatalogoAdapter(
+    private val callback: (modelo: Model) -> Unit
+) : ListAdapter<Model, CatalogoAdapter.ModelViewHolder>(DiffCallback) {
     var modelos: List<Model> = emptyList()
         set(value) {
             field = value
@@ -40,14 +42,16 @@ class CatalogoAdapter : ListAdapter<Model, CatalogoAdapter.ModelViewHolder>(Diff
     }
 
     override fun onBindViewHolder(holder: ModelViewHolder, position: Int) {
-        holder.binding.also {
-            it.modelo = modelos[position]
+        holder.binding.also { binding ->
+            val modelo = modelos[position]
+            binding.modelo = modelo
+            holder.itemView.setOnClickListener {
+                callback(modelo)
+            }
+
+            binding.executePendingBindings()
         }
     }
-
-    /*class OnClickListener(val clickListener: (modelo: Model) -> Unit) {
-        fun onClick(modelo: Model) = clickListener(modelo)
-    }*/
 
     companion object DiffCallback : DiffUtil.ItemCallback<Model>() {
         override fun areItemsTheSame(oldItem: Model, newItem: Model): Boolean {

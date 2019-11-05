@@ -1,11 +1,9 @@
 package com.apptt.axdecor.domain
 
-import androidx.annotation.NonNull
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Model(
     val idModel: Int,
     val name: String,
@@ -31,4 +29,4 @@ data class Model(
         onUpdate = ForeignKey.CASCADE
     ) val idType: Int*/
 
-)
+) : Parcelable

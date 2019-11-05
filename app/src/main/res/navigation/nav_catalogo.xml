@@ -10,5 +10,19 @@
             android:name="com.apptt.axdecor.fragments.CatalogoFragment"
             android:label="CatalogoFragment"
             tools:layout="@layout/catalogo_fragment"
-            />
+            >
+        <action
+                android:id="@+id/action_catalogoFragment_to_verModeloFragment"
+                app:destination="@id/verModeloFragment"
+                app:popUpTo="@+id/catalogoFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/verModeloFragment"
+            android:name="com.apptt.axdecor.fragments.VerModeloFragment"
+            android:label="VerModeloFragment"
+            tools:layout="@layout/ver_modelo_fragment">
+        <argument
+                android:name="modelo"
+                app:argType="com.apptt.axdecor.domain.Model" />
+    </fragment>
 </navigation>

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.adapters.CatalogoAdapter
 import com.apptt.axdecor.domain.Model
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 @BindingAdapter("catalogoList")
 fun bindCatalogo(recyclerView: RecyclerView, catalogo: List<Model>) {
@@ -20,6 +21,7 @@ fun bindImagenModelo(imgView: ImageView, imgUrl: String?) {
         val imgUri = it.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(imgUri)
+            .apply(RequestOptions.circleCropTransform())
             .into(imgView)
     }
 }

@@ -16,6 +16,10 @@ class CatalogoViewModel(application: Application) : AndroidViewModel(application
     val modelos: LiveData<List<Model>>
         get() = _modelos
 
+    private val _verModelo = MutableLiveData<Model>()
+    val verModelo: LiveData<Model>
+        get() = _verModelo
+
 
     private val viewModelJob = SupervisorJob()
 
@@ -39,6 +43,14 @@ class CatalogoViewModel(application: Application) : AndroidViewModel(application
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun verDetallesModelo(modelo: Model) {
+        _verModelo.value = modelo
+    }
+
+    fun verDetallesModeloComplete(){
+        _verModelo.value = null
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
