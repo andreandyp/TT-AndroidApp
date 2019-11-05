@@ -10,7 +10,7 @@ import com.apptt.axdecor.db.Entities.ModelModel
 
 @Dao
 interface ModelDAO {
-    @Query("SELECT * from ModelModel ORDER BY name")
+    @Query("SELECT m.*, s.style from ModelModel m, ModelHasPredefinedStyleModel ms, PredefinedStyleModel s WHERE m.id_model = ms.idModel AND ms.idPredefinedStyle = s.id_predefined_style ORDER BY name")
     fun getAllModels(): List<ModelModel>
 
     @Query("DELETE FROM ModelModel")

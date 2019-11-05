@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="viewModel"
+                type="com.apptt.axdecor.viewmodels.VerModeloViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/model_imagen"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:layout_constraintBottom_toTopOf="@+id/model_medidas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:modeloUrl="@{viewModel.modelo.file2D}"
+                tools:src="@drawable/adornos" />
+
+        <TextView
+                android:id="@+id/model_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.modelo.name}"
+                app:layout_constraintBottom_toTopOf="@+id/model_medidas"
+                app:layout_constraintEnd_toStartOf="@+id/model_precio"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/model_imagen"
+                tools:text="Nombre" />
+
+        <TextView
+                android:id="@+id/model_precio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.modelo.price}"
+                app:layout_constraintBottom_toTopOf="@+id/model_medidas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/model_nombre"
+                app:layout_constraintTop_toBottomOf="@+id/model_imagen"
+                tools:text="Precio" />
+
+        <TextView
+                android:id="@+id/model_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.modelo.color}"
+                app:layout_constraintBottom_toTopOf="@+id/model_descripcion"
+                app:layout_constraintEnd_toStartOf="@+id/model_medidas"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/model_imagen"
+                tools:text="Color" />
+
+        <TextView
+                android:id="@+id/model_medidas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/model_descripcion"
+                app:layout_constraintEnd_toStartOf="@+id/model_estilo"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/model_color"
+                app:layout_constraintTop_toBottomOf="@+id/model_imagen"
+                tools:text="Medidas" />
+
+        <TextView
+                android:id="@+id/model_estilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/model_descripcion"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/model_medidas"
+                app:layout_constraintTop_toBottomOf="@+id/model_imagen"
+                tools:text="Estilo" />
+
+        <TextView
+                android:id="@+id/model_descripcion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.modelo.description}"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/model_medidas"
+                tools:text="Descripción" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

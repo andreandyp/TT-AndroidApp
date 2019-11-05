@@ -1,8 +1,8 @@
-package com.apptt.axdecor.Utilities
+package com.apptt.axdecor.utilities
 
-import com.apptt.axdecor.Network.NetworkFullCategory
-import com.apptt.axdecor.Network.NetworkFullStyle
-import com.apptt.axdecor.Network.NetworkFullType
+import com.apptt.axdecor.network.NetworkFullCategory
+import com.apptt.axdecor.network.NetworkFullStyle
+import com.apptt.axdecor.network.NetworkFullType
 import com.apptt.axdecor.db.Entities.CategoryModel
 import com.apptt.axdecor.db.Entities.PredefinedStyleModel
 import com.apptt.axdecor.db.Entities.TypeModel

@@ -1,9 +1,9 @@
-package com.apptt.axdecor.Utilities
+package com.apptt.axdecor.utilities
 
-import com.apptt.axdecor.Network.NetworkCategory
-import com.apptt.axdecor.Network.NetworkProvider
-import com.apptt.axdecor.Network.NetworkSocialNetwork
-import com.apptt.axdecor.Network.NetworkStore
+import com.apptt.axdecor.network.NetworkCategory
+import com.apptt.axdecor.network.NetworkProvider
+import com.apptt.axdecor.network.NetworkSocialNetwork
+import com.apptt.axdecor.network.NetworkStore
 import com.apptt.axdecor.db.Entities.ProviderHasCategoryModel
 import com.apptt.axdecor.db.Entities.ProviderModel
 import com.apptt.axdecor.db.Entities.SocialNetworkModel

@@ -1,4 +1,4 @@
-package com.apptt.axdecor.Network
+package com.apptt.axdecor.network
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

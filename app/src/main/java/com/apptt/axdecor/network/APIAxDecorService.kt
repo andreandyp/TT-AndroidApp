@@ -1,4 +1,4 @@
-package com.apptt.axdecor.Network
+package com.apptt.axdecor.network
 
 import com.apptt.axdecor.db.Entities.PaintModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

@@ -20,11 +20,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
-import com.apptt.axdecor.Utilities.ARCoreUtils
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.fragments.ModoDecoracionFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
+import com.apptt.axdecor.utilities.ARCoreUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
