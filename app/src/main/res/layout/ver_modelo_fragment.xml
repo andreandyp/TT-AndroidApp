@@ -198,14 +198,16 @@
                 android:id="@+id/model_descripcion"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac lectus ut felis mollis tristique."
+                android:layout_marginEnd="16dp"
                 android:text="@{viewModel.modelo.description}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline15"
-                app:layout_constraintStart_toStartOf="@+id/guideline14"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescripcion" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescripcion"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac lectus ut felis mollis tristique." />
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnColocar"
