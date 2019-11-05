@@ -1,6 +1,7 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.apptt.axdecor.network.AXDecorAPI
@@ -55,7 +56,13 @@ class AXDecorRepository(application: Application) {
     suspend fun getAllModels() : List<Model> {
         return withContext(Dispatchers.IO) {
             val models = modelDAO.getAllModels()
-            convertToModelDomain(models)
+            Log.i("CATEGORIAS", "HUE")
+            Log.i("CATEGORIAS", modelDAO.viewCategoriesOfModel(1).toString())
+            models.map { model ->
+                val categories = modelDAO.viewCategoriesOfModel(model.idModel)
+                convertToModelDomain(model, categories)
+            }
+
         }
     }
 

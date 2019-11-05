@@ -9,8 +9,13 @@ class VerModeloViewModel(model: Model, app: Application) : AndroidViewModel(app)
     val modelo: LiveData<Model>
         get() = _modelo
 
+    private val _estilos = MutableLiveData<String>()
+    val estilos: LiveData<String>
+        get() = _estilos
+
     init {
         _modelo.value = model
+        _estilos.value = model.categories.joinToString(", ")
     }
 
     class Factory(
