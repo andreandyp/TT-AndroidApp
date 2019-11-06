@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,16 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ProveedoresFragment : Fragment() {
+    private val proveedoresSeleccionados: MutableList<String> = mutableListOf()
+    private val callback = { idProveedor: Int, idCategory: Int, isChecked: Boolean ->
+        if(isChecked) {
+            proveedoresSeleccionados.add("$idProveedor,$idCategory")
+        }
+        else {
+            proveedoresSeleccionados.remove("$idProveedor,$idCategory")
+        }
+        Unit
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +42,10 @@ class ProveedoresFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnSiguiente.setOnClickListener {
-            it.findNavController()
-                .navigate(ProveedoresFragmentDirections.actionProveedoresFragmentToModoDecoracionFragment())
+            proveedoresSeleccionados.forEach {
+            }
+            //it.findNavController()
+                //.navigate(ProveedoresFragmentDirections.actionProveedoresFragmentToModoDecoracionFragment())
         }
         val repository = AXDecorRepository(activity!!.application)
         var gridIluminacion = GridLayoutManager(activity, 3)
@@ -50,11 +63,11 @@ class ProveedoresFragment : Fragment() {
         lateinit var proveedores: List<CategoryProvider>
         scope.launch {
             proveedores = repository.getProvidersByCategory()
-            recIluminacion.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(4))
-            recMuebles.adapter = ProveedoresAdapter(activity!!.applicationContext, proveedores.get(2).providers)
-            recAdornos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(0).providers)
-            recPisos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(1).providers)
-            recPinturas.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(3).providers)
+            recIluminacion.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(4), callback)
+            recMuebles.adapter = ProveedoresAdapter(activity!!.applicationContext, proveedores.get(2), callback)
+            recAdornos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(0), callback)
+            recPisos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(1), callback)
+            recPinturas.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(3), callback)
         }
         recIluminacion.visibility = View.VISIBLE
         recMuebles.visibility = View.VISIBLE

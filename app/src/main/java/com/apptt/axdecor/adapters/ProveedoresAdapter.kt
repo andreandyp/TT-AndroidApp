@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
 import com.apptt.axdecor.domain.CategoryProvider
 
-class ProveedoresAdapter(context: Context, list: CategoryProvider) :
+class ProveedoresAdapter(context: Context, private val mList: CategoryProvider, private val callback: (Int, Int, Boolean) -> Unit) :
     RecyclerView.Adapter<ProveedoresAdapter.PlaceViewHolder>() {
     val mContext = context
-    val mList = list
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         return ProveedoresAdapter.PlaceViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -31,7 +31,7 @@ class ProveedoresAdapter(context: Context, list: CategoryProvider) :
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         holder.check.setText(mList.providers[position])
         holder.check.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            callback(mList.idProviders[position], mList.idCategory, isChecked)
         }
     }
 
