@@ -1,13 +1,13 @@
 package com.apptt.axdecor.utilities
 
-import com.apptt.axdecor.network.NetworkCategory
-import com.apptt.axdecor.network.NetworkProvider
-import com.apptt.axdecor.network.NetworkSocialNetwork
-import com.apptt.axdecor.network.NetworkStore
 import com.apptt.axdecor.db.Entities.ProviderHasCategoryModel
 import com.apptt.axdecor.db.Entities.ProviderModel
 import com.apptt.axdecor.db.Entities.SocialNetworkModel
 import com.apptt.axdecor.db.Entities.StoreModel
+import com.apptt.axdecor.network.NetworkCategory
+import com.apptt.axdecor.network.NetworkProvider
+import com.apptt.axdecor.network.NetworkSocialNetwork
+import com.apptt.axdecor.network.NetworkStore
 
 object ProviderNetworkUtils  {
     fun convertToProviderModel(proveedores: List<NetworkProvider>) : Array<ProviderModel> {

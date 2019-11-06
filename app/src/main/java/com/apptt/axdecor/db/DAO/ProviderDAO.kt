@@ -4,7 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.apptt.axdecor.db.Entities.*
+import com.apptt.axdecor.db.Entities.ProviderHasCategoryModel
+import com.apptt.axdecor.db.Entities.ProviderModel
+import com.apptt.axdecor.db.Entities.SocialNetworkModel
+import com.apptt.axdecor.db.Entities.StoreModel
 import com.apptt.axdecor.db.queries.CategoryProviderModel
 
 @Dao

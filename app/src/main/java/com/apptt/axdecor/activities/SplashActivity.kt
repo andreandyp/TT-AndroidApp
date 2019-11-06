@@ -10,7 +10,6 @@ import com.apptt.axdecor.db.AXDecorRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private val splash = 0
@@ -29,11 +28,20 @@ class SplashActivity : AppCompatActivity() {
         val job = Job()
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
-        scope.launch {
-            repository.getDefaultData()
-            repository.getProviders()
-            repository.getModelsFromInternet()
-        }
+        /*scope.launch {
+            try {
+                val data = repository.getDefaultDataFromInternet()
+                repository.saveDefaultDataFromInternet(data)
+                val providers = repository.getProvidersFromInternet()
+                repository.saveProvidersFromInternet(providers)
+                val models = repository.getModelsFromInternet()
+                repository.saveModelsFromInternet(models)
+            }
+            catch (e: Exception) {
+                Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
+            }
+
+        }*/
     }
 
     private fun checkUser() {

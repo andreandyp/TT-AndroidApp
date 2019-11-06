@@ -1,7 +1,5 @@
 package com.apptt.axdecor.utilities
 
-import android.util.Log
-import com.apptt.axdecor.db.Entities.CategoryModel
 import com.apptt.axdecor.db.Entities.ModelModel
 import com.apptt.axdecor.db.Entities.PredefinedStyleModel
 import com.apptt.axdecor.domain.Model

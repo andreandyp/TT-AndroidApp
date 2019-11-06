@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
-import com.apptt.axdecor.domain.CategoryProvider
 
 class ProveedoresAdapter(context: Context, list: List<String>) :
     RecyclerView.Adapter<ProveedoresAdapter.PlaceViewHolder>() {

@@ -1,12 +1,12 @@
 package com.apptt.axdecor.utilities
 
-import com.apptt.axdecor.network.NetworkCategory
-import com.apptt.axdecor.network.NetworkModel
-import com.apptt.axdecor.network.NetworkStyle
 import com.apptt.axdecor.db.Entities.ModelHasCategoryModel
 import com.apptt.axdecor.db.Entities.ModelHasPredefinedStyleModel
 import com.apptt.axdecor.db.Entities.ModelHasTypeModel
 import com.apptt.axdecor.db.Entities.ModelModel
+import com.apptt.axdecor.network.NetworkCategory
+import com.apptt.axdecor.network.NetworkModel
+import com.apptt.axdecor.network.NetworkStyle
 import com.apptt.axdecor.network.NetworkType
 
 object ModelNetworkUtils {

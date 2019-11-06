@@ -1,7 +1,6 @@
 package com.apptt.axdecor.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.Model

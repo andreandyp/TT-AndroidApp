@@ -1,29 +1,27 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import com.apptt.axdecor.db.DAO.DataDAO
+import com.apptt.axdecor.db.DAO.ModelDAO
+import com.apptt.axdecor.db.DAO.ProviderDAO
+import com.apptt.axdecor.domain.CategoryProvider
+import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.network.AXDecorAPI
+import com.apptt.axdecor.network.NetworkDataContainer
+import com.apptt.axdecor.network.NetworkModel
+import com.apptt.axdecor.network.NetworkProvider
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
+import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
 import com.apptt.axdecor.utilities.ModelNetworkUtils.convertToModelModel
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelCategories
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelStyles
+import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelTypes
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.convertToProviderModel
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractProviderCategories
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractSocialNetworks
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractStores
-import com.apptt.axdecor.db.DAO.DataDAO
-import com.apptt.axdecor.db.DAO.ModelDAO
-import com.apptt.axdecor.db.DAO.ProviderDAO
-import com.apptt.axdecor.db.Entities.CategoryModel
-import com.apptt.axdecor.db.Entities.ModelModel
-import com.apptt.axdecor.domain.CategoryProvider
-import com.apptt.axdecor.domain.Model
-import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
-import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelTypes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -39,10 +37,39 @@ class AXDecorRepository(application: Application) {
         dataDAO = db.dataDAO()
     }
 
-    suspend fun getModelsFromInternet() {
-        withContext(Dispatchers.IO) {
-            val modelosNetwork = AXDecorAPI.retrofitService.obtenerModelosAsync().await()
+    suspend fun getModelsFromInternet(): List<NetworkModel> {
+        return withContext(Dispatchers.IO) {
+            AXDecorAPI.retrofitService.obtenerModelosAsync().await()
+        }
+    }
 
+    suspend fun getAllModels(): List<Model> {
+        return withContext(Dispatchers.IO) {
+            val models = modelDAO.getAllModels()
+            models.map { model ->
+                val styles = modelDAO.viewStylesOfModel(model.idModel)
+                convertToModelDomain(model, styles)
+            }
+
+        }
+    }
+
+    suspend fun getProvidersByCategory(): List<CategoryProvider> {
+        return withContext(Dispatchers.IO) {
+            val providers = providerDAO.getProvidersByCategory()
+            providers.map {
+                CategoryProvider(
+                    idCategory = it.idCategory,
+                    category = it.category,
+                    providers = it.providers.split(","),
+                    idProviders = it.idProviders.split(",").map { id -> id.toInt() }
+                )
+            }
+        }
+    }
+
+    suspend fun saveModelsFromInternet(modelosNetwork: List<NetworkModel>) {
+        withContext(Dispatchers.IO) {
             val modelosDB = convertToModelModel(modelosNetwork)
             modelDAO.insertModel(*modelosDB)
 
@@ -59,38 +86,15 @@ class AXDecorRepository(application: Application) {
         }
     }
 
-    suspend fun getAllModels() : List<Model> {
+    suspend fun getProvidersFromInternet(): List<NetworkProvider> {
         return withContext(Dispatchers.IO) {
-            val models = modelDAO.getAllModels()
-            models.map { model ->
-                val styles = modelDAO.viewStylesOfModel(model.idModel)
-                convertToModelDomain(model, styles)
-            }
+            AXDecorAPI.retrofitService.obtenerProveedoresAsync().await()
 
         }
     }
 
-    suspend fun getProvidersByCategory() : List<CategoryProvider> {
-        return withContext(Dispatchers.IO) {
-            val providers = providerDAO.getProvidersByCategory()
-            providers.map {
-                CategoryProvider(
-                    idCategory = it.idCategory,
-                    category = it.category,
-                    providers = it.providers.split(","),
-                    idProviders = it.idProviders.split(",").map { id -> id.toInt() }
-                )
-            }
-        }
-    }
-
-    suspend fun insertModel(modelModel: ModelModel) {
-        modelDAO.insertModel(modelModel)
-    }
-
-    suspend fun getProviders() {
+    suspend fun saveProvidersFromInternet(proveedoresNetwork: List<NetworkProvider>) {
         withContext(Dispatchers.IO) {
-            val proveedoresNetwork = AXDecorAPI.retrofitService.obtenerProveedoresAsync().await()
             val proveedoresDB = convertToProviderModel(proveedoresNetwork)
             providerDAO.insertProvider(*proveedoresDB)
 
@@ -106,14 +110,18 @@ class AXDecorRepository(application: Application) {
                     extractProviderCategories(proveedor.categories, proveedor.idProvider)
                 providerDAO.addCategories(*categoryDB)
             }
+        }
 
+    }
+
+    suspend fun getDefaultDataFromInternet(): NetworkDataContainer {
+        return withContext(Dispatchers.IO) {
+            AXDecorAPI.retrofitService.obtenerDatosAsync().await()
         }
     }
 
-    suspend fun getDefaultData() {
+    suspend fun saveDefaultDataFromInternet(dataNetwork: NetworkDataContainer) {
         withContext(Dispatchers.IO) {
-            val dataNetwork = AXDecorAPI.retrofitService.obtenerDatosAsync().await()
-
             val typesDB = extractFullTypes(dataNetwork.tipos)
             val stylesDB = extractFullStyles(dataNetwork.estilos)
             val categoriesDB = extractFullCategories(dataNetwork.categorias)

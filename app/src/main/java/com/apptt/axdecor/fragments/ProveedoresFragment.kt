@@ -2,14 +2,12 @@ package com.apptt.axdecor.fragments
 
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.ProveedoresAdapter
 import com.apptt.axdecor.db.AXDecorRepository
@@ -43,7 +41,6 @@ class ProveedoresFragment : Fragment() {
         lateinit var proveedores: List<CategoryProvider>
         scope.launch {
             proveedores = repository.getProvidersByCategory()
-            Log.i("proveedores", proveedores.toString())
             //recIluminacion.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(4).providers)
             recMuebles.adapter = ProveedoresAdapter(activity!!.applicationContext, proveedores.get(2).providers)
             //recAdornos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(0).providers)

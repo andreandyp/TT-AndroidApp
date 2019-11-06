@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CatalogoAdapter
 import com.apptt.axdecor.databinding.CatalogoFragmentBinding
-import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.viewmodels.CatalogoViewModel
 
 class CatalogoFragment : Fragment() {
