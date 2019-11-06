@@ -109,7 +109,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
             app:layout_constraintStart_toStartOf="@+id/guideline8"
-            app:layout_constraintTop_toBottomOf="@+id/tvIlumniacion"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvIlumniacion" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recMuebles"
@@ -119,7 +119,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
             app:layout_constraintStart_toStartOf="@+id/guideline8"
-            app:layout_constraintTop_toBottomOf="@+id/tvMuebles"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvMuebles" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recAdornos"
@@ -129,7 +129,7 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/guideline16"
             app:layout_constraintStart_toStartOf="@+id/guideline8"
-            app:layout_constraintTop_toBottomOf="@+id/tvAdornos"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvAdornos" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recPisos"

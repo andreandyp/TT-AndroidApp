@@ -2,6 +2,7 @@ package com.apptt.axdecor.fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,23 +35,31 @@ class ProveedoresFragment : Fragment() {
                 .navigate(ProveedoresFragmentDirections.actionProveedoresFragmentToModoDecoracionFragment())
         }
         val repository = AXDecorRepository(activity!!.application)
-        var mGridLayoutManager = GridLayoutManager(activity, 3)
-        recIluminacion.layoutManager = mGridLayoutManager
+        var gridIluminacion = GridLayoutManager(activity, 3)
+        var gridMuebles = GridLayoutManager(activity, 3)
+        var gridAdornos = GridLayoutManager(activity, 3)
+        var gridPisos = GridLayoutManager(activity, 3)
+        var gridPinturas = GridLayoutManager(activity, 3)
+        recIluminacion.layoutManager = gridIluminacion
+        recMuebles.layoutManager = gridMuebles
+        recAdornos.layoutManager = gridAdornos
+        recPisos.layoutManager = gridPisos
+        recPinturas.layoutManager = gridPinturas
         val job = Job()
         val scope = CoroutineScope(job + Dispatchers.Main)
         lateinit var proveedores: List<CategoryProvider>
         scope.launch {
             proveedores = repository.getProvidersByCategory()
-            //recIluminacion.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(4).providers)
+            recIluminacion.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(4))
             recMuebles.adapter = ProveedoresAdapter(activity!!.applicationContext, proveedores.get(2).providers)
-            //recAdornos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(0).providers)
-            //recPisos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(1).providers)
-            //recPinturas.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(3).providers)
+            recAdornos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(0).providers)
+            recPisos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(1).providers)
+            recPinturas.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(3).providers)
         }
-        //recIluminacion.visibility = View.VISIBLE
+        recIluminacion.visibility = View.VISIBLE
         recMuebles.visibility = View.VISIBLE
-        //recAdornos.visibility = View.VISIBLE
-        //recPisos.visibility = View.VISIBLE
-        //recPinturas.visibility = View.VISIBLE
+        recAdornos.visibility = View.VISIBLE
+        recPisos.visibility = View.VISIBLE
+        recPinturas.visibility = View.VISIBLE
     }
 }

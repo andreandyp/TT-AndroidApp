@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
 import com.apptt.axdecor.db.AXDecorRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
     private val splash = 0
@@ -28,8 +30,8 @@ class SplashActivity : AppCompatActivity() {
         val job = Job()
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
-        /*scope.launch {
-            try {
+        scope.launch {
+           /* try {
                 val data = repository.getDefaultDataFromInternet()
                 repository.saveDefaultDataFromInternet(data)
                 val providers = repository.getProvidersFromInternet()
@@ -39,9 +41,9 @@ class SplashActivity : AppCompatActivity() {
             }
             catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
-            }
+            }*/
 
-        }*/
+        }
     }
 
     private fun checkUser() {

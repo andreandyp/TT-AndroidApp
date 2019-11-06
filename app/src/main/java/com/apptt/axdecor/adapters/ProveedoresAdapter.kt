@@ -4,11 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
+import com.apptt.axdecor.domain.CategoryProvider
 
-class ProveedoresAdapter(context: Context, list: List<String>) :
+class ProveedoresAdapter(context: Context, list: CategoryProvider) :
     RecyclerView.Adapter<ProveedoresAdapter.PlaceViewHolder>() {
     val mContext = context
     val mList = list
@@ -23,14 +25,17 @@ class ProveedoresAdapter(context: Context, list: List<String>) :
     }
 
     override fun getItemCount(): Int {
-        return mList.size
+        return mList.providers.size
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        holder.radioBoton.setText(mList.get(position))
+        holder.check.setText(mList.providers[position])
+        holder.check.setOnCheckedChangeListener { buttonView, isChecked ->
+
+        }
     }
 
     class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val radioBoton = itemView.findViewById<RadioButton>(R.id.rbProv)
+        val check = itemView.findViewById<CheckBox>(R.id.rbProv)
     }
 }
