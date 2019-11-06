@@ -13,9 +13,11 @@
             android:id="@+id/imagen_modelo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:adjustViewBounds="true"
             android:padding="2dp"
             android:scaleType="centerCrop"
             app:modeloUrl="@{modelo.file2D}"/>
-
 </layout>

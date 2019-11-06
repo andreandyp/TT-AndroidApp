@@ -48,7 +48,9 @@
         <activity
                 android:name=".activities.DatosUsuarioActivity"
                 android:screenOrientation="portrait" />
-        <activity android:name=".activities.CatalogoActivity" android:screenOrientation="portrait"/>
+        <activity
+                android:name=".activities.CatalogoActivity"
+                android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

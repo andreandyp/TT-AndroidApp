@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
 import com.apptt.axdecor.domain.CategoryProvider
 
-class ProveedoresAdapter(context: Context, list: List<CategoryProvider>) :
+class ProveedoresAdapter(context: Context, list: List<String>) :
     RecyclerView.Adapter<ProveedoresAdapter.PlaceViewHolder>() {
     val mContext = context
     val mList = list
@@ -28,7 +28,7 @@ class ProveedoresAdapter(context: Context, list: List<CategoryProvider>) :
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-
+        holder.radioBoton.setText(mList.get(position))
     }
 
     class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

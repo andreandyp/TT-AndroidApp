@@ -41,7 +41,7 @@ class ConceptosFragment : Fragment() {
         )
 
         binding.siguienteFragmento.setOnClickListener {
-            it.findNavController().navigate(ConceptosFragmentDirections.actionConceptosFragmentToModoDecoracionFragment())
+            it.findNavController().navigate(ConceptosFragmentDirections.actionConceptosFragmentToProveedoresFragment())
         }
 
         conceptosViewModel = ViewModelProviders.of(this).get(ConceptosViewModel::class.java)
