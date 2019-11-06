@@ -7,6 +7,9 @@
     <ImageView
             android:id="@+id/ivPlace"
             android:layout_width="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_height="150dp"
             android:layout_margin="10dp"
             android:scaleType="centerCrop"

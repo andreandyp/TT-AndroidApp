@@ -1,6 +1,7 @@
 package com.apptt.axdecor.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -161,6 +162,10 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             R.id.itemhabitacion -> {
                 openDialogRooms()
+            }
+            R.id.itemcatalogo -> {
+                val mInt = Intent(this,CatalogoActivity::class.java)
+                startActivity(mInt)
             }
             R.id.itemContacto -> {
                 Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()

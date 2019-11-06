@@ -28,7 +28,7 @@ class BienvenidaConceptosFragment : Fragment() {
                 .navigate(BienvenidaConceptosFragmentDirections.actionBienvenidaConceptosFragmentToConceptosFragment())
         }
         binding.omitirButton.setOnClickListener {
-            it.findNavController().navigate(BienvenidaConceptosFragmentDirections.actionBienvenidaConceptosFragmentToModoDecoracionFragment())
+            it.findNavController().navigate(BienvenidaConceptosFragmentDirections.actionBienvenidaConceptosFragmentToProveedoresFragment())
         }
 
         return binding.root
