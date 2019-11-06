@@ -12,5 +12,5 @@ data class Model(
     val description: String,
     val file2D: String,
     val color: String,
-    val categories: List<String>
+    val styles: List<String>
 ) : Parcelable

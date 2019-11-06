@@ -22,7 +22,7 @@ class VerModeloViewModel(model: Model, app: Application) : AndroidViewModel(app)
     init {
         val nf = NumberFormat.getCurrencyInstance(Locale.US)
         _modelo.value = model
-        _estilos.value = model.categories.joinToString(", ")
+        _estilos.value = model.styles.joinToString(", ")
         _precioFormateado.value = nf.format(model.price.toDouble())
     }
 

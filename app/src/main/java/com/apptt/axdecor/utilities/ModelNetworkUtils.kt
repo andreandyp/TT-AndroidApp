@@ -5,7 +5,9 @@ import com.apptt.axdecor.network.NetworkModel
 import com.apptt.axdecor.network.NetworkStyle
 import com.apptt.axdecor.db.Entities.ModelHasCategoryModel
 import com.apptt.axdecor.db.Entities.ModelHasPredefinedStyleModel
+import com.apptt.axdecor.db.Entities.ModelHasTypeModel
 import com.apptt.axdecor.db.Entities.ModelModel
+import com.apptt.axdecor.network.NetworkType
 
 object ModelNetworkUtils {
     fun convertToModelModel(proveedores: List<NetworkModel>) : Array<ModelModel> {
@@ -20,8 +22,7 @@ object ModelNetworkUtils {
                 file2D = it.file2D,
                 createdAt = it.createdAt,
                 updatedAt = it.updatedAt,
-                idProvider = it.Provider_idProvider,
-                idType = it.Type_idType
+                idProvider = it.Provider_idProvider
             )
         }.toTypedArray()
     }
@@ -42,6 +43,16 @@ object ModelNetworkUtils {
                 idModelCategory = 0,
                 idModel = idModel,
                 idCategory = it.idCategory
+            )
+        }.toTypedArray()
+    }
+
+    fun extractModelTypes(types: List<NetworkType>, idModel: Int): Array<ModelHasTypeModel> {
+        return types.map {
+            ModelHasTypeModel(
+                idModelType = 0,
+                idModel = idModel,
+                idType = it.idType
             )
         }.toTypedArray()
     }

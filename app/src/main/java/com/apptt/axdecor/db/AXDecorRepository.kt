@@ -23,6 +23,7 @@ import com.apptt.axdecor.db.Entities.ModelModel
 import com.apptt.axdecor.domain.CategoryProvider
 import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
+import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelTypes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -51,6 +52,9 @@ class AXDecorRepository(application: Application) {
 
                 val categoriesDB = extractModelCategories(modelo.categories, modelo.idModel)
                 modelDAO.addCategories(*categoriesDB)
+
+                val typesDB = extractModelTypes(modelo.types, modelo.idModel)
+                modelDAO.addTypes(*typesDB)
             }
         }
     }
@@ -59,8 +63,8 @@ class AXDecorRepository(application: Application) {
         return withContext(Dispatchers.IO) {
             val models = modelDAO.getAllModels()
             models.map { model ->
-                val categories = modelDAO.viewCategoriesOfModel(model.idModel)
-                convertToModelDomain(model, categories)
+                val styles = modelDAO.viewStylesOfModel(model.idModel)
+                convertToModelDomain(model, styles)
             }
 
         }

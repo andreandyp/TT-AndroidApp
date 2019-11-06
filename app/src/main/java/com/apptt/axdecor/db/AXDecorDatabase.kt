@@ -22,7 +22,8 @@ import com.apptt.axdecor.db.Entities.*
         ProviderModel::class,
         SocialNetworkModel::class,
         StoreModel::class,
-        TypeModel::class
+        TypeModel::class,
+        ModelHasTypeModel::class
     ], version = 1, exportSchema = false
 )
 abstract class AXDecorDatabase : RoomDatabase() {

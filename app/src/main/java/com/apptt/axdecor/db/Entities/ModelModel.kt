@@ -24,14 +24,5 @@ data class ModelModel(
         childColumns = ["id_provider"],
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE
-    ) val idProvider: Int,
-    @ColumnInfo(name = "id_type")
-    @ForeignKey(
-        entity = TypeModel::class,
-        parentColumns = ["id_type"],
-        childColumns = ["id_type"],
-        onDelete = ForeignKey.CASCADE,
-        onUpdate = ForeignKey.CASCADE
-    ) val idType: Int
-
+    ) val idProvider: Int
 )

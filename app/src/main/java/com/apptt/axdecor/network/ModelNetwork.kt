@@ -15,13 +15,18 @@ data class NetworkModel(
     val createdAt: String,
     val updatedAt: String,
     val Provider_idProvider: Int,
-    val Type_idType: Int,
     @Json(name = "predefinedstyles")
     val styles: List<NetworkStyle>,
-    val categories: List<NetworkCategory>
+    val categories: List<NetworkCategory>,
+    val types: List<NetworkType>
 )
 
 @JsonClass(generateAdapter = true)
 data class NetworkStyle(
     val idPredefinedStyle: Int
+)
+
+@JsonClass(generateAdapter = true)
+data class NetworkType(
+    val idType: Int
 )
