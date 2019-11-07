@@ -25,19 +25,19 @@ class Datos3Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args3 = Datos3FragmentArgs.fromBundle(arguments!!)
-        cardBano.setOnClickListener {
+        imBaño.setOnClickListener {
             saveDatosUsuario("Baño", args3.nombre, args3.edad, args3.personalidad)
         }
-        cardCocina.setOnClickListener {
+        imCocina.setOnClickListener {
             saveDatosUsuario("Cocina", args3.nombre, args3.edad, args3.personalidad)
         }
-        cardRecamara.setOnClickListener {
+        imRecamara.setOnClickListener {
             saveDatosUsuario("Recamara", args3.nombre, args3.edad, args3.personalidad)
         }
-        cardComedor.setOnClickListener {
+        imComedor.setOnClickListener {
             saveDatosUsuario("Comedor", args3.nombre, args3.edad, args3.personalidad)
         }
-        cardSala.setOnClickListener {
+        imSala.setOnClickListener {
             saveDatosUsuario("Sala", args3.nombre, args3.edad, args3.personalidad)
         }
     }

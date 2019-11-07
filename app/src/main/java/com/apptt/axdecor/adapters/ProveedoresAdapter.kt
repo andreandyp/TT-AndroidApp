@@ -1,11 +1,9 @@
 package com.apptt.axdecor.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
 import com.apptt.axdecor.domain.CategoryProvider

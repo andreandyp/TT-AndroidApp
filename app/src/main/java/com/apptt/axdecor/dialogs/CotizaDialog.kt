@@ -22,7 +22,7 @@ class CotizaDialog : DialogFragment() {
                             val mIntent = Intent(activity, GaleriaActivity::class.java)
                             startActivity(mIntent)
                         }
-                        1 -> {//Activity de cotización, se manda Lista de elementos añadidos
+                        1 -> {
                             val mIntent = Intent(activity, CotizacionActivity::class.java)
                             startActivity(mIntent)
                         }
@@ -31,6 +31,4 @@ class CotizaDialog : DialogFragment() {
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
-
-
 }

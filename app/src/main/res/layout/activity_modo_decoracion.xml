@@ -8,158 +8,33 @@
 
     <include
             android:id="@+id/appBarMenu"
-            layout="@layout/app_bar"
+            layout="@layout/app_bar_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-            android:id="@+id/tvModo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/selectmodo"
-            android:textAlignment="center"
-            android:textColor="#009688"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guiaRight"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guiaLeft"
-            app:layout_constraintTop_toBottomOf="@+id/appBarMenu" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contenedorFR"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/fondo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarMenu">
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guiaTop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.05" />
+        <fragment
+                android:id="@+id/fragmentDecoracion"
+                android:name="com.apptt.axdecor.fragments.ModoDecoracionFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guiaCentro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guiaRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.95" />
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guiaMitad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guiaLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.05" />
-
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guiaBottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.95" />
-
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardCrear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:clickable="true"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
-            app:layout_constraintEnd_toStartOf="@+id/guiaRight"
-            app:layout_constraintStart_toStartOf="@+id/guiaLeft"
-            app:layout_constraintTop_toBottomOf="@+id/tvModo"
-            app:rippleColor="@color/colorPrimary">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteX="106dp"
-                tools:layout_editor_absoluteY="187dp">
-
-            <ImageView
-                    android:id="@+id/imgCrear"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/ic_crear"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvCrear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Crear Estilo"
-                    android:textColor="#009688"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/imgCrear"
-                    app:layout_constraintStart_toStartOf="@+id/imgCrear"
-                    app:layout_constraintTop_toBottomOf="@+id/imgCrear" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardElegir"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:clickable="true"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="2dp"
-            app:layout_constraintEnd_toStartOf="@+id/guiaRight"
-            app:layout_constraintHorizontal_bias="0.511"
-            app:layout_constraintStart_toStartOf="@+id/guiaLeft"
-            app:layout_constraintTop_toBottomOf="@+id/cardCrear"
-            app:rippleColor="@color/colorSecondary">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center"
-                android:orientation="vertical"
-                tools:layout_editor_absoluteX="108dp"
-                tools:layout_editor_absoluteY="459dp">
-
-            <ImageView
-                    android:id="@+id/imgElegir"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:src="@drawable/ic_elegir"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvElegir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Elegir Estilo"
-                    android:textColor="#009688"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@+id/imgElegir"
-                    app:layout_constraintHorizontal_bias="0.504"
-                    app:layout_constraintStart_toStartOf="@+id/imgElegir"
-                    app:layout_constraintTop_toBottomOf="@+id/imgElegir" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

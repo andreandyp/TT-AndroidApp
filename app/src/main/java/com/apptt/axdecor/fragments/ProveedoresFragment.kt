@@ -4,13 +4,10 @@ package com.apptt.axdecor.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.ModoDecoracionActivity
@@ -18,9 +15,7 @@ import com.apptt.axdecor.adapters.ProveedoresAdapter
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.CategoryProvider
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_datos1.*
 import kotlinx.android.synthetic.main.fragment_proveedores.*
-import kotlinx.android.synthetic.main.fragment_proveedores.btnSiguiente
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -56,6 +51,7 @@ class ProveedoresFragment : Fragment() {
                 ) ?: return@setOnClickListener
                 with(sharePref.edit()) {
                     putStringSet(getString(R.string.providers_key), proveedoresSeleccionados.toSet())
+                    commit()
                 }
                 val mIntent = Intent(activity,ModoDecoracionActivity::class.java)
                 startActivity(mIntent)

@@ -1,8 +1,10 @@
 package com.apptt.axdecor.activities
 
+import android.Manifest
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.apptt.axdecor.R
 
 class DatosUsuarioActivity : AppCompatActivity() {
@@ -14,5 +16,9 @@ class DatosUsuarioActivity : AppCompatActivity() {
         flechaAtras.setOnClickListener {
             onBackPressed()
         }
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+        )
     }
 }

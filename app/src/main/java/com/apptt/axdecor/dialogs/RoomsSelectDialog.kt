@@ -48,6 +48,7 @@ class RoomsSelectDialog(clase:Class<Any>) : DialogFragment() {
             putString(getString(R.string.room_key), Room)
             commit()
         }
+        activity?.finish()
         val inten = Intent(activity, claseX)
         startActivity(inten)
     }

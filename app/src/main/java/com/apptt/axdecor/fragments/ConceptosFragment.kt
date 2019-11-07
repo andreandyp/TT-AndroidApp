@@ -20,9 +20,6 @@ import com.apptt.axdecor.databinding.FragmentConceptosBinding
 import com.apptt.axdecor.viewmodels.ConceptosViewModel
 import pl.bclogic.pulsator4droid.library.PulsatorLayout
 
-/**
- * A simple [Fragment] subclass.
- */
 class ConceptosFragment : Fragment() {
     private lateinit var binding: FragmentConceptosBinding
     private lateinit var iconos: List<PulsatorLayout>

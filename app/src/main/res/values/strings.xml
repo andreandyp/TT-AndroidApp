@@ -8,7 +8,7 @@
     <string name="descipcionIMNombre">Imagen para indicar nombre.</string>
     <string name="descipcionIMEdad">Imagen para indicar edad.</string>
     <string name="conocer">Queremos conocerte un poco más.</string>
-    <string name="soy">Soy:</string>
+    <string name="selectestilo">¿Qué estilo prefieres?</string>
     <string name="presupuesto">Presupuesto:</string>
     <string name="ListaPersonalidad">¿Cómo te describirias?</string>
     <string name="conceptosInicio">Veamos un pequeño tutorial</string>
@@ -33,6 +33,7 @@
     <string name="color_key">color_key</string>
     <string name="room_key">room_key</string>
     <string name="providers_key">providers_key</string>
+    <string name="style_key">style_key</string>
 
     <string name="FAQ">Preguntas Frecuentes</string>
     <string name="Pregunta1">¿Diseño vs decoración?</string>

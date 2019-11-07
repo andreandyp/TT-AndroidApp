@@ -1,34 +1,113 @@
 package com.apptt.axdecor.activities
 
 import android.Manifest
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.app.ActivityCompat
+import android.view.MenuItem
+import android.view.ViewStub
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
-import kotlinx.android.synthetic.main.activity_modo_decoracion.*
+import com.apptt.axdecor.dialogs.RoomsSelectDialog
+import com.apptt.axdecor.fragments.ConceptosFragment
+import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
+import com.apptt.axdecor.fragments.ProveedoresFragment
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textview.MaterialTextView
 
-class ModoDecoracionActivity : AppCompatActivity() {
-
+class ModoDecoracionActivity : AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_modo_decoracion)
-        cardCrear.setOnClickListener {
-            val intento = Intent(this, ARCrearActivity::class.java)
-            startActivity(intento)
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-            )
-        }
-        cardElegir.setOnClickListener {
-            val intento = Intent(this.applicationContext, ARElegirActivity::class.java)
-            startActivity(intento)
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-            )
+        setContentView(R.layout.navigation_drawer)
+        val stub = findViewById<ViewStub>(R.id.stub)
+        stub.layoutResource = R.layout.activity_modo_decoracion
+        stub.inflate()
+        inicializaNavigationDrawer()
+        val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
+        acciontv.setText("AXDecor")
+    }
+
+    private fun inicializaNavigationDrawer() {
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        val nombre = sharePref.getString(getString(R.string.user_Name), "")
+        val habitacion = sharePref.getString(getString(R.string.room_key), "")
+        drawerLayout = findViewById(R.id.drawerLayout)
+        val toogle = ActionBarDrawerToggle(this, drawerLayout, R.string.abre, R.string.cierra)
+        val botonMenu = findViewById<ImageView>(R.id.imgMenu)
+        val navigationView = findViewById<NavigationView>(R.id.navigationView)
+        val headervIew = navigationView.getHeaderView(0)
+        val txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
+        val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
+        txtUser.text = nombre
+        txtHabit.text = "Decorando: " + habitacion
+        navigationView.setNavigationItemSelectedListener(this)
+        drawerLayout.setDrawerListener(toogle)
+        toogle.syncState()
+        botonMenu.setOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
         }
     }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.itemModo -> {
+                val mInt = Intent(this, ModoDecoracionActivity::class.java)
+                startActivity(mInt)
+            }
+            R.id.itemPreguntas -> {
+                navigateToFragment(PreguntasFrecuentesFragment())
+            }
+            R.id.itemhabitacion -> {
+                openDialogRooms()
+            }
+            R.id.itemCatalogo -> {
+                val mInt = Intent(this, CatalogoActivity::class.java)
+                startActivity(mInt)
+            }
+            R.id.itemGaleria -> {
+                val mInt = Intent(this, GaleriaActivity::class.java)
+                startActivity(mInt)
+            }
+            R.id.itemTutorial -> {
+                navigateToFragment(ConceptosFragment())
+            }
+            R.id.itemContacto -> {
+                Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemProveedores -> {
+                navigateToFragment(ProveedoresFragment())
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    private fun openDialogRooms() {
+        RoomsSelectDialog(ARCrearActivity().javaClass).show(
+            supportFragmentManager,
+            "Selecciona Habitacion"
+        )
+    }
+
+    private fun navigateToFragment(fragmentToNavigate: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.contenedorFR, fragmentToNavigate)
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
+
 }
