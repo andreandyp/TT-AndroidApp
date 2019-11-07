@@ -14,7 +14,9 @@ object DomainUtils {
             color = model.color,
             fileAR = model.fileAR,
             file2D = model.file2D,
-            styles = extractStyles(styles)
+            styles = extractStyles(styles),
+            medidas = model.medidas,
+            codigo = model.codigo
         )
     }
 

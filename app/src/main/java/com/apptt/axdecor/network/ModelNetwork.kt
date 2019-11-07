@@ -18,7 +18,9 @@ data class NetworkModel(
     @Json(name = "predefinedstyles")
     val styles: List<NetworkStyle>,
     val categories: List<NetworkCategory>,
-    val types: List<NetworkType>
+    val types: List<NetworkType>,
+    val medidas: String?,
+    val codigo: String?
 )
 
 @JsonClass(generateAdapter = true)

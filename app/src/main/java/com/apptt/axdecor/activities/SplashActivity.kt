@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
         scope.launch {
-           /* try {
+           try {
                 val data = repository.getDefaultDataFromInternet()
                 repository.saveDefaultDataFromInternet(data)
                 val providers = repository.getProvidersFromInternet()
@@ -41,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
             }
             catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
-            }*/
+            }
 
         }
     }

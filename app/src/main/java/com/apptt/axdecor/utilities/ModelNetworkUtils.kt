@@ -22,7 +22,9 @@ object ModelNetworkUtils {
                 file2D = it.file2D,
                 createdAt = it.createdAt,
                 updatedAt = it.updatedAt,
-                idProvider = it.Provider_idProvider
+                idProvider = it.Provider_idProvider,
+                medidas = it.medidas,
+                codigo = it.codigo
             )
         }.toTypedArray()
     }

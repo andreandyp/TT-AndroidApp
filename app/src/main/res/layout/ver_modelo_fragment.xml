@@ -186,6 +186,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="14sp"
+                android:text="@{viewModel.modelo.medidas}"
                 app:layout_constraintBottom_toBottomOf="@+id/model_color"
                 app:layout_constraintEnd_toStartOf="@+id/model_estilo"
                 app:layout_constraintHorizontal_bias="0.466"
