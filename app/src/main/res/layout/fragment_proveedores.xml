@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/fondo"
         tools:context=".fragments.ProveedoresFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -155,6 +156,7 @@
             android:id="@id/btnSiguiente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:text="Siguiente"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

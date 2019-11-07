@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
 import com.apptt.axdecor.domain.CategoryProvider
 
-class ProveedoresAdapter(context: Context, private val mList: CategoryProvider, private val callback: (Int, Int, Boolean) -> Unit) :
+class ProveedoresAdapter(private val mList: CategoryProvider, private val callback: (Int, Int, Boolean) -> Unit) :
     RecyclerView.Adapter<ProveedoresAdapter.PlaceViewHolder>() {
-    val mContext = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         return ProveedoresAdapter.PlaceViewHolder(

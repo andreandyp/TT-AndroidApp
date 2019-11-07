@@ -24,8 +24,9 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
-import com.apptt.axdecor.fragments.ModoDecoracionFragment
+import com.apptt.axdecor.fragments.ConceptosFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
+import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,6 +64,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private val espejo_asset =
         "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/espejo_1.glb?alt=media&token=3848d06d-2bf4-473e-bf20-d76194a3f4e2"
     private var mUserRequestedInstall = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
@@ -155,7 +157,8 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.itemModo -> {
-                navigateToFragment(ModoDecoracionFragment())
+                val mInt = Intent(this, ModoDecoracionActivity::class.java)
+                startActivity(mInt)
             }
             R.id.itemPreguntas -> {
                 navigateToFragment(PreguntasFrecuentesFragment())
@@ -163,18 +166,29 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             R.id.itemhabitacion -> {
                 openDialogRooms()
             }
-            R.id.itemcatalogo -> {
-                val mInt = Intent(this,CatalogoActivity::class.java)
+            R.id.itemCatalogo -> {
+                val mInt = Intent(this, CatalogoActivity::class.java)
                 startActivity(mInt)
+            }
+            R.id.itemGaleria -> {
+                val mInt = Intent(this, GaleriaActivity::class.java)
+                startActivity(mInt)
+            }
+            R.id.itemTutorial -> {
+                navigateToFragment(ConceptosFragment())
             }
             R.id.itemContacto -> {
                 Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemProveedores -> {
+                navigateToFragment(ProveedoresFragment())
             }
         }
         bottomNavigate.visibility = View.INVISIBLE
         btnPhoto.visibility = View.INVISIBLE
         barraProgeso.visibility = View.GONE
         btnRemove.visibility = View.INVISIBLE
+        fabCheck.visibility = View.INVISIBLE
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }

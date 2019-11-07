@@ -1,6 +1,7 @@
 package com.apptt.axdecor.activities
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
@@ -22,7 +23,6 @@ import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
-import com.apptt.axdecor.fragments.ModoDecoracionFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -148,7 +148,8 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.itemModo -> {
-                navigateToFragment(ModoDecoracionFragment())
+                val mInt = Intent(this,ModoDecoracionActivity::class.java)
+                startActivity(mInt)
             }
             R.id.itemPreguntas -> {
                 navigateToFragment(PreguntasFrecuentesFragment())

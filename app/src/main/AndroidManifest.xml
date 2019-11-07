@@ -19,7 +19,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.FullImageActivity"></activity>
+        <activity android:name=".activities.SelectEstiloActivity"></activity>
+        <activity android:name=".activities.ModoDecoracionActivity" />
+        <activity android:name=".activities.FullImageActivity" />
         <activity android:name=".activities.GaleriaActivity" />
         <activity android:name=".activities.CotizacionActivity" />
 
@@ -50,7 +52,7 @@
                 android:screenOrientation="portrait" />
         <activity
                 android:name=".activities.CatalogoActivity"
-                android:screenOrientation="portrait"></activity>
+                android:screenOrientation="portrait" />
     </application>
 
 </manifest>

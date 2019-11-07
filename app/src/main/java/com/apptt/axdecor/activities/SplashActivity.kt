@@ -14,7 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
-    private val splash = 0
+    private val splash = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class SplashActivity : AppCompatActivity() {
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
         scope.launch {
-           /* try {
+           try {
                 val data = repository.getDefaultDataFromInternet()
                 repository.saveDefaultDataFromInternet(data)
                 val providers = repository.getProvidersFromInternet()
@@ -41,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
             }
             catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
-            }*/
+            }
 
         }
     }
@@ -53,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
         ) ?: return
         var Intent: Intent
         if (sharePref.contains(getString(R.string.user_Name))) {
-            Intent = Intent(this, TutorialConceptosActivity::class.java)
+            Intent = Intent(this, ModoDecoracionActivity::class.java)
         } else {
             Intent = Intent(this, DatosUsuarioActivity::class.java)
         }

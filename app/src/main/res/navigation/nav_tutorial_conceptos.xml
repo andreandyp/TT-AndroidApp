@@ -5,11 +5,6 @@
         android:id="@+id/navigation_graph"
         app:startDestination="@id/bienvenidaConceptosFragment">
     <fragment
-            android:id="@+id/modoDecoracionFragment"
-            android:name="com.apptt.axdecor.fragments.ModoDecoracionFragment"
-            android:label="fragment_modo_decoracion"
-            tools:layout="@layout/fragment_modo_decoracion" />
-    <fragment
             android:id="@+id/bienvenidaConceptosFragment"
             android:name="com.apptt.axdecor.fragments.BienvenidaConceptosFragment"
             android:label="fragment_bienvenida_conceptos"
@@ -47,13 +42,5 @@
             android:id="@+id/proveedoresFragment"
             android:name="com.apptt.axdecor.fragments.ProveedoresFragment"
             android:label="fragment_proveedores"
-            tools:layout="@layout/fragment_proveedores" >
-        <action
-                android:id="@+id/action_proveedoresFragment_to_modoDecoracionFragment"
-                app:destination="@id/modoDecoracionFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
+            tools:layout="@layout/fragment_proveedores" />
 </navigation>

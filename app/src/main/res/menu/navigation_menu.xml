@@ -10,14 +10,27 @@
                 android:id="@+id/itemhabitacion"
                 android:icon="@drawable/muebles"
                 android:title="Selecciona habitación" />
+
         <item
-                android:id="@+id/itemcatalogo"
+                android:id="@+id/itemProveedores"
+                android:icon="@drawable/coin"
+                android:title="Selecciona proveedores" />
+        <item
+                android:id="@+id/itemCatalogo"
                 android:icon="@drawable/edit"
                 android:title="Ver catalogo de modelos" />
+        <item
+                android:id="@+id/itemGaleria"
+                android:icon="@drawable/camera"
+                android:title="Ver fotografías tomadas" />
         <item
                 android:id="@+id/itemPreguntas"
                 android:icon="@drawable/information"
                 android:title="¿Quieres saber más?" />
+        <item
+                android:id="@+id/itemTutorial"
+                android:icon="@drawable/lightbulb"
+                android:title="Ver tutorial de conceptos" />
         <item
                 android:id="@+id/itemContacto"
                 android:icon="@drawable/support"

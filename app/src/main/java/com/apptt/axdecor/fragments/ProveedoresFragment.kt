@@ -1,6 +1,8 @@
 package com.apptt.axdecor.fragments
 
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,10 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.apptt.axdecor.R
+import com.apptt.axdecor.activities.ModoDecoracionActivity
 import com.apptt.axdecor.adapters.ProveedoresAdapter
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.CategoryProvider
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_datos1.*
 import kotlinx.android.synthetic.main.fragment_proveedores.*
+import kotlinx.android.synthetic.main.fragment_proveedores.btnSiguiente
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -23,10 +29,9 @@ import kotlinx.coroutines.launch
 class ProveedoresFragment : Fragment() {
     private val proveedoresSeleccionados: MutableList<String> = mutableListOf()
     private val callback = { idProveedor: Int, idCategory: Int, isChecked: Boolean ->
-        if(isChecked) {
+        if (isChecked) {
             proveedoresSeleccionados.add("$idProveedor,$idCategory")
-        }
-        else {
+        } else {
             proveedoresSeleccionados.remove("$idProveedor,$idCategory")
         }
         Unit
@@ -42,17 +47,27 @@ class ProveedoresFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btnSiguiente.setOnClickListener {
-            proveedoresSeleccionados.forEach {
+            if (proveedoresSeleccionados.size == 0){
+                Snackbar.make(btnSiguiente, "Debes seleccionar al menos un proveedor.", Snackbar.LENGTH_SHORT).show()
+            }else{
+                val sharePref = activity?.getSharedPreferences(
+                    getString(R.string.preference_file_key_datos),
+                    Context.MODE_PRIVATE
+                ) ?: return@setOnClickListener
+                with(sharePref.edit()) {
+                    putStringSet(getString(R.string.providers_key), proveedoresSeleccionados.toSet())
+                }
+                val mIntent = Intent(activity,ModoDecoracionActivity::class.java)
+                startActivity(mIntent)
             }
-            //it.findNavController()
-                //.navigate(ProveedoresFragmentDirections.actionProveedoresFragmentToModoDecoracionFragment())
         }
+        proveedoresSeleccionados.clear()
         val repository = AXDecorRepository(activity!!.application)
-        var gridIluminacion = GridLayoutManager(activity, 3)
-        var gridMuebles = GridLayoutManager(activity, 3)
-        var gridAdornos = GridLayoutManager(activity, 3)
-        var gridPisos = GridLayoutManager(activity, 3)
-        var gridPinturas = GridLayoutManager(activity, 3)
+        val gridIluminacion = GridLayoutManager(activity, 3)
+        val gridMuebles = GridLayoutManager(activity, 3)
+        val gridAdornos = GridLayoutManager(activity, 3)
+        val gridPisos = GridLayoutManager(activity, 3)
+        val gridPinturas = GridLayoutManager(activity, 3)
         recIluminacion.layoutManager = gridIluminacion
         recMuebles.layoutManager = gridMuebles
         recAdornos.layoutManager = gridAdornos
@@ -63,11 +78,16 @@ class ProveedoresFragment : Fragment() {
         lateinit var proveedores: List<CategoryProvider>
         scope.launch {
             proveedores = repository.getProvidersByCategory()
-            recIluminacion.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(4), callback)
-            recMuebles.adapter = ProveedoresAdapter(activity!!.applicationContext, proveedores.get(2), callback)
-            recAdornos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(0), callback)
-            recPisos.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(1), callback)
-            recPinturas.adapter = ProveedoresAdapter(activity!!.applicationContext,proveedores.get(3), callback)
+            recIluminacion.adapter =
+                ProveedoresAdapter(proveedores.get(4), callback)
+            recMuebles.adapter =
+                ProveedoresAdapter(proveedores.get(2), callback)
+            recAdornos.adapter =
+                ProveedoresAdapter(proveedores.get(0), callback)
+            recPisos.adapter =
+                ProveedoresAdapter(proveedores.get(1), callback)
+            recPinturas.adapter =
+                ProveedoresAdapter(proveedores.get(3), callback)
         }
         recIluminacion.visibility = View.VISIBLE
         recMuebles.visibility = View.VISIBLE
