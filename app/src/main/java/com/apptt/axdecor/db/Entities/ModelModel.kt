@@ -17,6 +17,8 @@ data class ModelModel(
     @ColumnInfo(name = "color") val color: String,
     @ColumnInfo(name = "created_at") val createdAt: String,
     @ColumnInfo(name = "updated_at") val updatedAt: String,
+    @ColumnInfo(name = "medidas") val medidas: String?,
+    @ColumnInfo(name = "codigo") val codigo: String?,
     @ColumnInfo(name = "id_provider")
     @ForeignKey(
         entity = ProviderModel::class,
