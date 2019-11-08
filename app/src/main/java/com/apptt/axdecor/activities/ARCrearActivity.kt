@@ -43,10 +43,8 @@ import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
-import com.google.ar.sceneform.rendering.Material
-import com.google.ar.sceneform.rendering.ModelRenderable
-import com.google.ar.sceneform.rendering.PlaneRenderer
-import com.google.ar.sceneform.rendering.Texture
+import com.google.ar.sceneform.math.Matrix
+import com.google.ar.sceneform.rendering.*
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
@@ -93,9 +91,9 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inicializaNavigationDrawer()
         navegacionDeCatalogos()
 
-        catalogoFragment = findViewById(R.id.catalogoFragment)
+        catalogoFragment = findViewById(R.id.catalogo_ra)
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
-            catalogoFragment.visibility = View.GONE
+            catalogoFragment.visibility = View.INVISIBLE
             defineModelo(it.fileAR)
             catalogoFragment.visibility = View.VISIBLE
         })
@@ -267,7 +265,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     Uri.parse(modelURL),
                     RenderableSource.SourceType.GLB
                 )
-                    .setScale(0.4f)
+                    .setScale(0.5f)
                     .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                     .build()
             )

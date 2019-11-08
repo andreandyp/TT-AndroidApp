@@ -28,22 +28,25 @@
                 android:id="@+id/ar_fragment"
                 android:name="com.google.ar.sceneform.ux.ArFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         <fragment
                 android:id="@+id/catalogo_ra"
                 android:name="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:visibility="visible"
                 app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_catalogo"
-                app:layout_constraintBottom_toTopOf="@+id/bottomNav" />
+                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ar_fragment"
+                app:navGraph="@navigation/nav_catalogo" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNav"
