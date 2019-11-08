@@ -1,5 +1,6 @@
 package com.apptt.axdecor.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.apptt.axdecor.databinding.CatalogoFragmentBinding
 import com.apptt.axdecor.viewmodels.CatalogoViewModel
 
 class CatalogoFragment : Fragment() {
+    lateinit var binding: CatalogoFragmentBinding
 
     private val viewModel: CatalogoViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -32,7 +34,7 @@ class CatalogoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding: CatalogoFragmentBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.catalogo_fragment,
             container,
@@ -48,6 +50,10 @@ class CatalogoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        if (activity?.javaClass?.simpleName == "CatalogoActivity") {
+            binding.constraintLayoutCatalogo.setBackgroundColor(Color.TRANSPARENT)
+        }
 
         viewModel.modelos.observe(viewLifecycleOwner, Observer {
             it?.apply {

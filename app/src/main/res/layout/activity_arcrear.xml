@@ -36,6 +36,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
+        <fragment
+                android:id="@+id/catalogo_ra"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_catalogo"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNav" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottomNav"
                 style="@style/Widget.MaterialComponents.BottomAppBar"

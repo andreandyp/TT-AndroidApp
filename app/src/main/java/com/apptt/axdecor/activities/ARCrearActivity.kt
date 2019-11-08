@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -16,10 +17,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProviders
 import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
@@ -28,6 +31,7 @@ import com.apptt.axdecor.fragments.ConceptosFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
+import com.apptt.axdecor.viewmodels.VerModeloViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -64,8 +68,13 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private val espejo_asset =
         "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/espejo_1.glb?alt=media&token=3848d06d-2bf4-473e-bf20-d76194a3f4e2"
     private var mUserRequestedInstall = true
+    private lateinit var viewModel: VerModeloViewModel
+    private lateinit var catalogoFragment: ConstraintLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        viewModel = ViewModelProviders.of(this, VerModeloViewModel.Factory(null, application))
+                .get(VerModeloViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
         val stub = findViewById<ViewStub>(R.id.stub)
@@ -82,6 +91,13 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         fabCheck.setOnClickListener { muestraCotiza() }
         inicializaNavigationDrawer()
         navegacionDeCatalogos()
+
+        catalogoFragment = findViewById(R.id.catalogoFragment)
+        viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
+            catalogoFragment.visibility = View.GONE
+            defineModelo(it.fileAR)
+            catalogoFragment.visibility = View.VISIBLE
+        })
     }
 
     private fun muestraCotiza() {
@@ -94,7 +110,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 R.id.itemLamparas -> {
                     setDefaultPlane()
                     arsesion?.setupPlaneFinding(0)
-                    defineMOdelo(Lampara_asset)
+                    defineModelo(Lampara_asset)
                     Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show()
                     true
                 }
@@ -112,7 +128,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
                 }
                 R.id.itemAdornos -> {
-                    defineMOdelo(espejo_asset)
+                    defineModelo(espejo_asset)
                     arsesion?.setupPlaneFinding(2)
                     Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show()
                     true
@@ -226,7 +242,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.TOP, 0, 250)
         toast.show()
-        defineMOdelo(Lampara_asset)
+        defineModelo(Lampara_asset)
     }
 
     private fun Session.setupPlaneFinding(mode: Int) {
@@ -241,7 +257,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         arFragment?.arSceneView?.setupSession(this)
     }
 
-    private fun defineMOdelo(modelURL: String) {
+    private fun defineModelo(modelURL: String) {
         barraProgeso.visibility = View.VISIBLE
         ModelRenderable.builder()
             .setSource(
