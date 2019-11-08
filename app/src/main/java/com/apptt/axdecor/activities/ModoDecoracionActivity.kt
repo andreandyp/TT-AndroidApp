@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.fragments.ConceptosFragment
+import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.google.android.material.navigation.NavigationView
@@ -66,6 +67,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
             R.id.itemModo -> {
                 val mInt = Intent(this, ModoDecoracionActivity::class.java)
                 startActivity(mInt)
+                finish()
             }
             R.id.itemPreguntas -> {
                 navigateToFragment(PreguntasFrecuentesFragment())
@@ -84,11 +86,11 @@ class ModoDecoracionActivity : AppCompatActivity(),
             R.id.itemTutorial -> {
                 navigateToFragment(ConceptosFragment())
             }
-            R.id.itemContacto -> {
-                Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
-            }
             R.id.itemProveedores -> {
                 navigateToFragment(ProveedoresFragment())
+            }
+            R.id.itemContacto -> {
+                navigateToFragment(ContactoFragment())
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
