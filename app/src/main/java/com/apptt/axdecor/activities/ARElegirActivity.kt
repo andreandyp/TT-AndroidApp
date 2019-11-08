@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
+import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -159,6 +160,9 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
             R.id.itemContacto -> {
                 Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
+            }
+            R.id.itemContacto -> {
+                navigateToFragment(ContactoFragment())
             }
         }
         bottomNavigate.visibility = View.INVISIBLE

@@ -25,6 +25,7 @@ import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.fragments.ConceptosFragment
+import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
@@ -177,11 +178,11 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             R.id.itemTutorial -> {
                 navigateToFragment(ConceptosFragment())
             }
-            R.id.itemContacto -> {
-                Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
-            }
             R.id.itemProveedores -> {
                 navigateToFragment(ProveedoresFragment())
+            }
+            R.id.itemContacto -> {
+                navigateToFragment(ContactoFragment())
             }
         }
         bottomNavigate.visibility = View.INVISIBLE
