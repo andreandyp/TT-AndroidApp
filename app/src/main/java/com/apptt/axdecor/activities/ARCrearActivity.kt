@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
@@ -43,8 +42,10 @@ import com.google.ar.core.Session
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
-import com.google.ar.sceneform.math.Matrix
-import com.google.ar.sceneform.rendering.*
+import com.google.ar.sceneform.rendering.Material
+import com.google.ar.sceneform.rendering.ModelRenderable
+import com.google.ar.sceneform.rendering.PlaneRenderer
+import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
 import kotlinx.android.synthetic.main.activity_arcrear.*
@@ -62,18 +63,15 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private var modelo: ModelRenderable? = null
     private var arsesion: Session? = null
     private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
-    private val Lampara_asset =
-        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
-    private val espejo_asset =
-        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/espejo_1.glb?alt=media&token=3848d06d-2bf4-473e-bf20-d76194a3f4e2"
     private var mUserRequestedInstall = true
     private lateinit var viewModel: VerModeloViewModel
     private lateinit var catalogoFragment: ConstraintLayout
+    private var modelosInsertados: MutableMap<Int, Int> = mutableMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this, VerModeloViewModel.Factory(null, application))
-                .get(VerModeloViewModel::class.java)
+            .get(VerModeloViewModel::class.java)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
         val stub = findViewById<ViewStub>(R.id.stub)
@@ -91,11 +89,16 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inicializaNavigationDrawer()
         navegacionDeCatalogos()
 
-        catalogoFragment = findViewById(R.id.catalogo_ra)
+        //catalogoFragment = findViewById(R.id.catalogo_ra)
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
-            catalogoFragment.visibility = View.INVISIBLE
-            defineModelo(it.fileAR)
-            catalogoFragment.visibility = View.VISIBLE
+            //catalogoFragment.visibility = View.INVISIBLE
+            defineModelo(it.fileAR, it.idModel)
+            if (modelosInsertados.containsKey(it.idModel)) {
+                modelosInsertados[it.idModel] = modelosInsertados[it.idModel]!!.plus(1)
+            } else {
+                modelosInsertados[it.idModel] = 1
+            }
+            //catalogoFragment.visibility = View.VISIBLE
         })
     }
 
@@ -109,7 +112,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 R.id.itemLamparas -> {
                     setDefaultPlane()
                     arsesion?.setupPlaneFinding(0)
-                    defineModelo(Lampara_asset)
                     Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show()
                     true
                 }
@@ -127,7 +129,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
                 }
                 R.id.itemAdornos -> {
-                    defineModelo(espejo_asset)
                     arsesion?.setupPlaneFinding(2)
                     Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show()
                     true
@@ -241,7 +242,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.TOP, 0, 250)
         toast.show()
-        defineModelo(Lampara_asset)
     }
 
     private fun Session.setupPlaneFinding(mode: Int) {
@@ -256,7 +256,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         arFragment?.arSceneView?.setupSession(this)
     }
 
-    private fun defineModelo(modelURL: String) {
+    private fun defineModelo(modelURL: String, id: Int) {
         barraProgeso.visibility = View.VISIBLE
         ModelRenderable.builder()
             .setSource(
@@ -290,6 +290,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             val anchor = hitResult.createAnchor()
             val anchorNode = AnchorNode(anchor)
             anchorNode.setParent(arFragment?.arSceneView?.scene)
+            anchorNode.name = id.toString()
             //Crear transformable y añadir a Anchor
             val mod = TransformableNode(arFragment?.transformationSystem)
             mod.setParent(anchorNode)
@@ -315,6 +316,15 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         arFragment?.arSceneView?.scene?.removeChild(nodo)
         nodo.anchor?.detach()
         nodo.setParent(null)
+        val modeloEliminar = modelosInsertados[nodo.name.toInt()]
+
+        if (modeloEliminar!! > 0) {
+            modelosInsertados[nodo.name.toInt()] =
+                modelosInsertados[nodo.name.toInt()]!!.toInt() - 1
+        } else {
+            modelosInsertados.remove(nodo.name.toInt())
+        }
+
         Toast.makeText(this, "Objeto Removido", Toast.LENGTH_SHORT).show()
         btnRemove.visibility = View.INVISIBLE
     }
