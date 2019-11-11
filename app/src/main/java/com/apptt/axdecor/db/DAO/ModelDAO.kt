@@ -11,12 +11,17 @@ interface ModelDAO {
     @Query("SELECT * FROM ModelModel")
     fun getAllModels(): List<ModelModel>
 
-    @Query("""
+    @Query("SELECT * FROM ModelModel Where id_model = :id")
+    suspend fun getModelById(id: Int): ModelModel
+
+    @Query(
+        """
         SELECT DISTINCT S.* FROM PredefinedStyleModel AS S
         INNER JOIN ModelHasPredefinedStyleModel AS MS
         ON S.id_predefined_style = MS.idPredefinedStyle
         WHERE MS.idModel = :idModel
-    """)
+    """
+    )
     suspend fun viewStylesOfModel(idModel: Int): List<PredefinedStyleModel>
 
     @Query("DELETE FROM ModelModel")

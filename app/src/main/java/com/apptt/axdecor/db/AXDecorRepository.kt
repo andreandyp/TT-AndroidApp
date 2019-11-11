@@ -14,6 +14,7 @@ import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
 import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
+import com.apptt.axdecor.utilities.DomainUtils.convertToSingleModelDomain
 import com.apptt.axdecor.utilities.ModelNetworkUtils.convertToModelModel
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelCategories
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelStyles
@@ -50,7 +51,13 @@ class AXDecorRepository(application: Application) {
                 val styles = modelDAO.viewStylesOfModel(model.idModel)
                 convertToModelDomain(model, styles)
             }
+        }
+    }
 
+    suspend fun getModelById(id: Int): Model {
+        return withContext(Dispatchers.IO) {
+            val modelo = modelDAO.getModelById(id)
+            convertToSingleModelDomain(modelo)
         }
     }
 

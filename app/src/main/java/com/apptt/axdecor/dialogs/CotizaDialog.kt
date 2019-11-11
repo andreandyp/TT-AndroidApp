@@ -6,11 +6,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.apptt.axdecor.R
-import com.apptt.axdecor.activities.CotizacionActivity
+import com.apptt.axdecor.activities.CotizacionesActivity
 import com.apptt.axdecor.activities.GaleriaActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.util.HashMap
 
-class CotizaDialog : DialogFragment() {
+class CotizaDialog(private val modelosCotizar: HashMap<Int, Int>) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = MaterialAlertDialogBuilder(it)
@@ -23,7 +24,8 @@ class CotizaDialog : DialogFragment() {
                             startActivity(mIntent)
                         }
                         1 -> {
-                            val mIntent = Intent(activity, CotizacionActivity::class.java)
+                            val mIntent = Intent(activity, CotizacionesActivity::class.java)
+                            mIntent.putExtra("modelos",modelosCotizar)
                             startActivity(mIntent)
                         }
                     }

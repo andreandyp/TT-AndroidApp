@@ -19,20 +19,21 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SelectEstiloActivity"></activity>
-        <activity android:name=".activities.ModoDecoracionActivity"/>
+        <activity
+                android:name=".activities.CotizacionesActivity"
+                android:label="@string/title_activity_cotizaciones"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.SelectEstiloActivity" />
+        <activity android:name=".activities.ModoDecoracionActivity" />
         <activity android:name=".activities.FullImageActivity" />
         <activity android:name=".activities.GaleriaActivity" />
-        <activity android:name=".activities.CotizacionActivity" />
 
         <meta-data
                 android:name="com.google.ar.core"
                 android:value="required" />
 
-        <activity
-                android:name=".activities.ARCrearActivity" />
-        <activity
-                android:name=".activities.ARElegirActivity" />
+        <activity android:name=".activities.ARCrearActivity" />
+        <activity android:name=".activities.ARElegirActivity" />
         <activity
                 android:name=".activities.SplashActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">

@@ -55,6 +55,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var bottomNavigate: BottomNavigationView
@@ -66,7 +67,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private var mUserRequestedInstall = true
     private lateinit var viewModel: VerModeloViewModel
     private lateinit var catalogoFragment: ConstraintLayout
-    private var modelosInsertados: MutableMap<Int, Int> = mutableMapOf()
+    private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,17 +94,11 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
             //catalogoFragment.visibility = View.INVISIBLE
             defineModelo(it.fileAR, it.idModel)
-            if (modelosInsertados.containsKey(it.idModel)) {
-                modelosInsertados[it.idModel] = modelosInsertados[it.idModel]!!.plus(1)
-            } else {
-                modelosInsertados[it.idModel] = 1
-            }
-            //catalogoFragment.visibility = View.VISIBLE
         })
     }
 
     private fun muestraCotiza() {
-        CotizaDialog().show(supportFragmentManager, "Cotizacion")
+        CotizaDialog(modelosInsertados).show(supportFragmentManager, "Cotizacion")
     }
 
     private fun navegacionDeCatalogos() {
@@ -265,7 +260,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     Uri.parse(modelURL),
                     RenderableSource.SourceType.GLB
                 )
-                    .setScale(0.5f)
+                    //.setScale(0.4f)
                     .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                     .build()
             )
@@ -296,6 +291,13 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             mod.setParent(anchorNode)
             mod.renderable = modelo
             mod.select()
+            if (modelosInsertados.containsKey(id)) {
+                modelosInsertados[id] = modelosInsertados[id]!!.plus(1)
+            } else {
+                modelosInsertados[id] = 1
+            }
+            //Log.i("TESTCOTIZA", modelosInsertados.toString())
+            //catalogoFragment.visibility = View.VISIBLE
             mod.setOnTapListener { _, _ ->
                 btnRemove.visibility = View.VISIBLE
                 btnRemove.setOnClickListener {
@@ -321,10 +323,12 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (modeloEliminar!! > 0) {
             modelosInsertados[nodo.name.toInt()] =
                 modelosInsertados[nodo.name.toInt()]!!.toInt() - 1
+            if (modelosInsertados[nodo.name.toInt()] == 0) {
+                modelosInsertados.remove(nodo.name.toInt())
+            }
         } else {
             modelosInsertados.remove(nodo.name.toInt())
         }
-
         Toast.makeText(this, "Objeto Removido", Toast.LENGTH_SHORT).show()
         btnRemove.visibility = View.INVISIBLE
     }
@@ -434,4 +438,3 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 }
-
