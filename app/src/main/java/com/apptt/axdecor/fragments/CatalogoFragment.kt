@@ -2,6 +2,7 @@ package com.apptt.axdecor.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CatalogoAdapter
 import com.apptt.axdecor.databinding.CatalogoFragmentBinding
+import com.apptt.axdecor.viewmodels.ARViewModel
 import com.apptt.axdecor.viewmodels.CatalogoViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -21,12 +23,12 @@ class CatalogoFragment : Fragment() {
     lateinit var binding: CatalogoFragmentBinding
     lateinit var bottomNavigate: BottomNavigationView
 
-    private val viewModel: CatalogoViewModel by lazy {
+    private val viewModel: ARViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProviders.of(this, CatalogoViewModel.Factory(activity.application))
-            .get(CatalogoViewModel::class.java)
+        ViewModelProviders.of(activity, ARViewModel.Factory(activity.application))
+            .get(ARViewModel::class.java)
     }
 
     private val catalogoAdapter = CatalogoAdapter {
@@ -50,6 +52,38 @@ class CatalogoFragment : Fragment() {
 
         bottomNavigate = binding.bottomNav
 
+        binding.bottomNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.itemLamparas -> {
+                    viewModel.cambiarModoDecoracion("0")
+                    viewModel.verModelosConCategoria(3)
+                    true
+                }
+                R.id.itemMuebles -> {
+                    viewModel.cambiarModoDecoracion("0")
+                    viewModel.verModelosConCategoria(2)
+                    true
+                }
+                R.id.itemPisos -> {
+                    viewModel.cambiarModoDecoracion("0")
+                    viewModel.verModelosConCategoria(1)
+                    true
+
+                }
+                R.id.itemAdornos -> {
+                    viewModel.cambiarModoDecoracion("2")
+                    viewModel.verModelosConCategoria(0)
+                    true
+                }
+                R.id.itemColores -> {
+                    viewModel.cambiarModoDecoracion("1")
+                    viewModel.verModelosConCategoria(4)
+                    true
+                }
+                else -> false
+            }
+        }
+
         return binding.root
     }
 
@@ -60,7 +94,7 @@ class CatalogoFragment : Fragment() {
             binding.constraintLayoutCatalogo.setBackgroundColor(Color.TRANSPARENT)
         }
 
-        viewModel.modelos.observe(viewLifecycleOwner, Observer {
+        viewModel.listaModelos.observe(viewLifecycleOwner, Observer {
             it?.apply {
                 catalogoAdapter.modelos = it
             }

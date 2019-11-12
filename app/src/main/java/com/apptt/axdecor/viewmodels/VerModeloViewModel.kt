@@ -43,7 +43,6 @@ class VerModeloViewModel(model: Model?, app: Application) : AndroidViewModel(app
 
     fun actualizarPrecio(precio: String) {
         val nf = NumberFormat.getCurrencyInstance(Locale.US)
-        Log.i("PRECIO", precio)
         _precioFormateado.value = nf.format(precio.toDouble())
     }
 

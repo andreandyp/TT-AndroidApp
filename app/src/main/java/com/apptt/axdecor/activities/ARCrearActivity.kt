@@ -16,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -32,8 +31,7 @@ import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
-import com.apptt.axdecor.viewmodels.CatalogoViewModel
-import com.apptt.axdecor.viewmodels.VerModeloViewModel
+import com.apptt.axdecor.viewmodels.ARViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -57,9 +55,8 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
-class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var bottomNavigate: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private var arFragment: ArFragment? = null
@@ -67,14 +64,18 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private var arsesion: Session? = null
     private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
     private var mUserRequestedInstall = true
-    private lateinit var viewModel: VerModeloViewModel
+    private lateinit var viewModel: ARViewModel
     private var catalogoFragment: Fragment? = null
     private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this, VerModeloViewModel.Factory(null, application))
-            .get(VerModeloViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ARViewModel.Factory(application))
+            .get(ARViewModel::class.java)
+
+        viewModel.let {
+            //lifecycle.addObserver(it)
+        }
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
@@ -93,15 +94,19 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inicializaNavigationDrawer()
 
         catalogoFragment = supportFragmentManager.findFragmentById(R.id.catalogo_ra)
-        bottomNavigate = findViewById(R.id.bottomNav)
+        //bottomNavigate = findViewById(R.id.bottomNav)
 
-        navegacionDeCatalogos()
+        //navegacionDeCatalogos()
 
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
             catalogoFragment?.view?.visibility = View.GONE
             defineModelo(it.fileAR, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
+        })
+
+        viewModel._modoDecoracion.observe(this, androidx.lifecycle.Observer {
+            arsesion?.setupPlaneFinding(it.toInt())
         })
     }
 

@@ -7,7 +7,7 @@
 
         <variable
                 name="viewModel"
-                type="com.apptt.axdecor.viewmodels.VerModeloViewModel" />
+                type="com.apptt.axdecor.viewmodels.ARViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:modeloUrl="@{viewModel.modelo.file2D}"
+                app:modeloUrl="@{viewModel.verModelo.file2D}"
                 tools:src="@mipmap/ic_decorax_round" />
 
         <TextView
@@ -113,7 +113,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
-                android:text="@{viewModel.modelo.description}"
+                android:text="@{viewModel.verModelo.name}"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +160,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{viewModel.modelo.name}"
+                android:text="@{viewModel.verModelo.name}"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{viewModel.modelo.color}"
+                android:text="@{viewModel.verModelo.color}"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:text="@{viewModel.modelo.medidas}"
+                android:text="@{viewModel.verModelo.medidas}"
                 app:layout_constraintBottom_toBottomOf="@+id/model_color"
                 app:layout_constraintEnd_toStartOf="@+id/model_estilo"
                 app:layout_constraintHorizontal_bias="0.466"
@@ -201,7 +201,7 @@
                 android:id="@+id/model_estilo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.estilos}"
+                android:text="@{viewModel.estilosModelo}"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/model_medidas"
@@ -216,7 +216,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{viewModel.precioFormateado}"
+                android:text="@{viewModel.precioFormateadoModelo}"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
