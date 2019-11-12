@@ -22,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
@@ -31,6 +32,7 @@ import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
+import com.apptt.axdecor.viewmodels.CatalogoViewModel
 import com.apptt.axdecor.viewmodels.VerModeloViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -66,20 +68,21 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
     private var mUserRequestedInstall = true
     private lateinit var viewModel: VerModeloViewModel
-    private lateinit var catalogoFragment: ConstraintLayout
+    private var catalogoFragment: Fragment? = null
     private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this, VerModeloViewModel.Factory(null, application))
             .get(VerModeloViewModel::class.java)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
         val stub = findViewById<ViewStub>(R.id.stub)
         stub.layoutResource = R.layout.activity_arcrear
         stub.inflate()
         val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
-        acciontv.setText("Crear Estilo")
+        acciontv.text = "Crear Estilo"
         if (!ARCoreUtils.checkIsSupportedDeviceOrFinish(this)) {
             return
         }
@@ -88,12 +91,17 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         botonFoto.setOnClickListener { takePhoto() }
         fabCheck.setOnClickListener { muestraCotiza() }
         inicializaNavigationDrawer()
+
+        catalogoFragment = supportFragmentManager.findFragmentById(R.id.catalogo_ra)
+        bottomNavigate = findViewById(R.id.bottomNav)
+
         navegacionDeCatalogos()
 
-        //catalogoFragment = findViewById(R.id.catalogo_ra)
+
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
-            //catalogoFragment.visibility = View.INVISIBLE
+            catalogoFragment?.view?.visibility = View.GONE
             defineModelo(it.fileAR, it.idModel)
+            catalogoFragment?.findNavController()?.navigateUp()
         })
     }
 
@@ -155,8 +163,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
         txtUser.text = nombre
         txtHabit.text = "Decorando: " + habitacion
-        bottomNavigate = findViewById(R.id.bottomNav)
-        bottomNavigate.visibility = View.VISIBLE
         navigationView.setNavigationItemSelectedListener(this)
         drawerLayout.setDrawerListener(toogle)
         toogle.syncState()
@@ -195,7 +201,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 navigateToFragment(ContactoFragment())
             }
         }
-        bottomNavigate.visibility = View.INVISIBLE
         btnPhoto.visibility = View.INVISIBLE
         barraProgeso.visibility = View.GONE
         btnRemove.visibility = View.INVISIBLE
@@ -296,8 +301,8 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             } else {
                 modelosInsertados[id] = 1
             }
-            //Log.i("TESTCOTIZA", modelosInsertados.toString())
-            //catalogoFragment.visibility = View.VISIBLE
+
+            catalogoFragment?.view?.visibility = View.VISIBLE
             mod.setOnTapListener { _, _ ->
                 btnRemove.visibility = View.VISIBLE
                 btnRemove.setOnClickListener {

@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.apptt.axdecor.db.Entities.*
+import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 
 @Dao
 interface ModelDAO {
@@ -23,6 +24,15 @@ interface ModelDAO {
     """
     )
     suspend fun viewStylesOfModel(idModel: Int): List<PredefinedStyleModel>
+
+    @Query(
+        """
+        SELECT DISTINCT m.*, c.category
+        FROM ModelModel m, ModelHasCategoryModel mc, CategoryModel c
+        WHERE m.id_model = mc.idModel AND mc.idCategory = c.id_category AND c.id_category = :idCategory
+    """
+    )
+    suspend fun getModelsWithCategory(idCategory: Int): List<ModelWithCategoryModel>
 
     @Query("DELETE FROM ModelModel")
     suspend fun deleteAllModels()

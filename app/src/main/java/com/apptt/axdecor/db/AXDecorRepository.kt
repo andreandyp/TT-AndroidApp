@@ -1,11 +1,13 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
+import android.util.Log
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.domain.CategoryProvider
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.network.AXDecorAPI
 import com.apptt.axdecor.network.NetworkDataContainer
 import com.apptt.axdecor.network.NetworkModel
@@ -14,6 +16,7 @@ import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
 import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
+import com.apptt.axdecor.utilities.DomainUtils.convertToModelWithCategoryDomain
 import com.apptt.axdecor.utilities.DomainUtils.convertToSingleModelDomain
 import com.apptt.axdecor.utilities.ModelNetworkUtils.convertToModelModel
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelCategories
@@ -136,6 +139,15 @@ class AXDecorRepository(application: Application) {
             dataDAO.insertTypes(*typesDB)
             dataDAO.insertStyles(*stylesDB)
             dataDAO.insertCategories(*categoriesDB)
+        }
+    }
+
+    suspend fun getModelsWithCategory(id: Int): List<Model> {
+        return withContext(Dispatchers.IO) {
+            val modelos = modelDAO.getModelsWithCategory(id)
+            modelos.map {
+                convertToModelWithCategoryDomain(it)
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,9 +15,11 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CatalogoAdapter
 import com.apptt.axdecor.databinding.CatalogoFragmentBinding
 import com.apptt.axdecor.viewmodels.CatalogoViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CatalogoFragment : Fragment() {
     lateinit var binding: CatalogoFragmentBinding
+    lateinit var bottomNavigate: BottomNavigationView
 
     private val viewModel: CatalogoViewModel by lazy {
         val activity = requireNotNull(this.activity) {
@@ -45,6 +48,8 @@ class CatalogoFragment : Fragment() {
         binding.catalogoViewModel = viewModel
         binding.catalogo.adapter = catalogoAdapter
 
+        bottomNavigate = binding.bottomNav
+
         return binding.root
     }
 
@@ -71,6 +76,10 @@ class CatalogoFragment : Fragment() {
                 viewModel.verDetallesModeloComplete()
             }
         })
+    }
+
+    public fun cambiarModelos(id: Int) {
+        viewModel.verModelosConCategoria(id)
     }
 
 }

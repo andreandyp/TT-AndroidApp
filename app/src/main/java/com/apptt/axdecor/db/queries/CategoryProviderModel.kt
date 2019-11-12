@@ -11,5 +11,4 @@ data class CategoryProviderModel(
     @ColumnInfo(name = "category") val category: String,
     @ColumnInfo(name = "providers") val providers: String,
     @ColumnInfo(name = "idProviders") val idProviders: String
-
 )
