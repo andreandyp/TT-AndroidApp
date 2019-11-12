@@ -5,10 +5,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//enum class Persona(val persona: String) { FISICA("FISICA"), MORAL("MORAL") }
-//enum class Tipo(val tipo:String) {ILUMINACION("ILUMNIACION"),PISO("PISO"),MUEBLES("MUEBLES"),PINTURA("PINTURA"),DECORACION("DECORACION")}
-//enum class Categoria(val categoria:String){BAJO("BAJO"),MEDIO("MEDIO"),ALTO("ALTO")}
-
 @Entity
 data class ProviderModel(
     @ColumnInfo(name = "id_provider") @PrimaryKey @NonNull val idProvider: Int,
@@ -16,6 +12,7 @@ data class ProviderModel(
     @ColumnInfo(name = "rfc") val rfc: String,
     @ColumnInfo(name = "razon_social") val razonSocial: String,
     @ColumnInfo(name = "persona") val persona: String,
-    @ColumnInfo(name = "rango") val rango: String
+    @ColumnInfo(name = "rango") val rango: String,
+    @ColumnInfo(name = "logo") val logo: String
 
 )

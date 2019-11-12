@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
@@ -31,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
         scope.launch {
-            /*try {
+            try {
                 val data = repository.getDefaultDataFromInternet()
                 repository.saveDefaultDataFromInternet(data)
                 Toast.makeText(this@SplashActivity, "Datos descargados", Toast.LENGTH_SHORT).show()
@@ -45,7 +46,7 @@ class SplashActivity : AppCompatActivity() {
                     .show()
             } catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
-            }*/
+            }
 
         }
     }

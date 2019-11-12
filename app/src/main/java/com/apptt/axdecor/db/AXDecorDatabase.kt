@@ -8,6 +8,7 @@ import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.*
+import com.apptt.axdecor.db.queries.ModelProviderCategory
 
 @Database(
     entities = [

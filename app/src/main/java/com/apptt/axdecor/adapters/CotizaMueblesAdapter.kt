@@ -40,9 +40,9 @@ class CotizaMueblesAdapter(
         Log.i("TESTCOTIZA","Posicion: " + position + " " + modelos[position].name + modelos[position].price)
         Glide.with(mcontext)
             .load(modelos[position].file2D)
+            .apply(RequestOptions().placeholder(R.drawable.loading).error(R.drawable.no))
+            .apply(RequestOptions.circleCropTransform().timeout(5_000))
             .into(holder.imagen)
-            .apply { RequestOptions.placeholderOf(R.drawable.loading).error(R.drawable.no)}
-
         holder.nombre.text = modelos[position].name
         holder.cantidad.text = "Cantidad: " + cantidades[modelos[position].idModel] as Int
         val precio =

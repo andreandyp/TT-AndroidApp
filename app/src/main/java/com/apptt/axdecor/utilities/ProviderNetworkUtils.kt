@@ -18,7 +18,8 @@ object ProviderNetworkUtils  {
                 rfc = it.rfc,
                 razonSocial = it.razonSocial,
                 persona = it.persona,
-                rango = it.rango
+                rango = it.rango,
+                logo = it.logo
             )
         }.toTypedArray()
     }

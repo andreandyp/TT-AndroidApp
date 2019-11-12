@@ -1,7 +1,6 @@
 package com.apptt.axdecor.activities
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
@@ -9,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CotizacionesPagerAdapter
 import com.apptt.axdecor.db.AXDecorRepository
+import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.domain.Provider
 import kotlinx.android.synthetic.main.app_bar.*
 import kotlinx.coroutines.*
 
@@ -20,7 +21,9 @@ class CotizacionesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cotizaciones)
         val cantidades = intent.extras?.getSerializable("modelos") as HashMap<*, *>
         val modelos = getDataModels(cantidades)
-        val cotizacionesPagerAdapter = CotizacionesPagerAdapter(this, supportFragmentManager,cantidades,modelos)
+        val proveedores = getProvidersCategoryFromModels(modelos)
+        val cotizacionesPagerAdapter =
+            CotizacionesPagerAdapter(this, supportFragmentManager, cantidades, modelos, proveedores)
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = cotizacionesPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
@@ -43,4 +46,37 @@ class CotizacionesActivity : AppCompatActivity() {
         }
         return lista
     }
+
+    private fun getProvidersCategoryFromModels(modelos: MutableList<Model>): MutableList<MutableList<ModelProviderCategory>> {
+        val listaCategorias = mutableListOf<MutableList<ModelProviderCategory>>()
+        val repository = AXDecorRepository(application)
+        var decoracion = mutableListOf<ModelProviderCategory>()
+        var pisos = mutableListOf<ModelProviderCategory>()
+        var muebles = mutableListOf<ModelProviderCategory>()
+        var pintura = mutableListOf<ModelProviderCategory>()
+        var iluminacion = mutableListOf<ModelProviderCategory>()
+        runBlocking {
+            val prov = repository.getProviderByCategoryModel()
+            modelos.forEach { itModel->
+                prov.forEach {
+                    if(itModel.idModel == it.idModel){
+                        when (it.idCategory) {
+                            1 -> {decoracion.add(it)}
+                            2 -> {pisos.add(it)}
+                            3 -> {muebles.add(it)}
+                            4 -> {pintura.add(it)}
+                            5 -> {iluminacion.add(it)}
+                        }
+                    }
+                }
+            }
+            listaCategorias.add(decoracion)
+            listaCategorias.add(pisos)
+            listaCategorias.add(muebles)
+            listaCategorias.add(pintura)
+            listaCategorias.add(iluminacion)
+        }
+        return listaCategorias
+    }
+
 }

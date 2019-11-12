@@ -9,11 +9,15 @@ import com.apptt.axdecor.db.Entities.ProviderModel
 import com.apptt.axdecor.db.Entities.SocialNetworkModel
 import com.apptt.axdecor.db.Entities.StoreModel
 import com.apptt.axdecor.db.queries.CategoryProviderModel
+import com.apptt.axdecor.db.queries.ModelProviderCategory
 
 @Dao
 interface ProviderDAO {
     @Query("SELECT * FROM ProviderModel ORDER BY name")
     fun getAllProviders(): List<ProviderModel>
+
+    @Query("SELECT * FROM ProviderModel where id_provider = :id")
+    suspend fun getProviderById(id: Int): ProviderModel
 
     @Query(
         """
@@ -28,6 +32,15 @@ interface ProviderDAO {
     """
     )
     suspend fun getProvidersByCategory(): List<CategoryProviderModel>
+
+    @Query(
+        """ 
+            SELECT DISTINCT a.id_model,b.id_provider,c.id_category,e.address,e.phone,e.email,b.logo 
+            FROM ModelModel as a,ProviderModel as b,CategoryModel as c,ModelHasCategoryModel as d, StoreModel as e 
+            WHERE a.id_provider = b.id_provider and a.id_model = d.idModel and c.id_category = d.idCategory and b.id_provider = e.id_provider
+            """
+    )
+    suspend fun getProviderByCategoryModel(): List<ModelProviderCategory>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProvider(vararg provider: ProviderModel)

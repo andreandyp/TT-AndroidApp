@@ -14,5 +14,6 @@ data class Model(
     val color: String,
     val medidas: String?,
     val codigo: String?,
-    val styles: List<String>
+    val styles: List<String>,
+    val idProvider: Int
 ) : Parcelable

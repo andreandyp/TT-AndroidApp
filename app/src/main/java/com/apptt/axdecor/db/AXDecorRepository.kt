@@ -4,8 +4,10 @@ import android.app.Application
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
+import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.CategoryProvider
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.domain.Provider
 import com.apptt.axdecor.network.AXDecorAPI
 import com.apptt.axdecor.network.NetworkDataContainer
 import com.apptt.axdecor.network.NetworkModel
@@ -15,6 +17,7 @@ import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
 import com.apptt.axdecor.utilities.DomainUtils.convertToModelDomain
 import com.apptt.axdecor.utilities.DomainUtils.convertToSingleModelDomain
+import com.apptt.axdecor.utilities.DomainUtils.convertToSingleProvider
 import com.apptt.axdecor.utilities.ModelNetworkUtils.convertToModelModel
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelCategories
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelStyles
@@ -58,6 +61,19 @@ class AXDecorRepository(application: Application) {
         return withContext(Dispatchers.IO) {
             val modelo = modelDAO.getModelById(id)
             convertToSingleModelDomain(modelo)
+        }
+    }
+
+    suspend fun getProviderById(id: Int): Provider {
+        return withContext(Dispatchers.IO) {
+            val provider = providerDAO.getProviderById(id)
+            convertToSingleProvider(provider)
+        }
+    }
+
+    suspend fun getProviderByCategoryModel(): List<ModelProviderCategory>{
+        return withContext(Dispatchers.IO){
+            providerDAO.getProviderByCategoryModel()
         }
     }
 

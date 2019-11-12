@@ -11,6 +11,7 @@ data class NetworkProvider(
     val razonSocial: String,
     val persona: String,
     val rango: String,
+    val logo: String,
     @Json(name = "socialnetworks")
     val socialNetworks: List<NetworkSocialNetwork>,
     val stores: List<NetworkStore>,
