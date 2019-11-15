@@ -20,9 +20,5 @@
             android:id="@+id/verModeloFragment"
             android:name="com.apptt.axdecor.fragments.VerModeloFragment"
             android:label="VerModeloFragment"
-            tools:layout="@layout/ver_modelo_fragment">
-        <argument
-                android:name="modelo"
-                app:argType="com.apptt.axdecor.domain.Model" />
-    </fragment>
+            tools:layout="@layout/ver_modelo_fragment"/>
 </navigation>

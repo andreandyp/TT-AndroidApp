@@ -29,7 +29,7 @@
                 android:name="com.google.ar.sceneform.ux.ArFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -47,19 +47,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/ar_fragment"
                 app:navGraph="@navigation/nav_catalogo" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNav"
-                style="@style/Widget.MaterialComponents.BottomAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                app:labelVisibilityMode="labeled"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/categoria_menu" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnPhoto"
@@ -109,10 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:clickable="true"
                 app:backgroundTint="#66BB6A"
-                app:layout_constraintBottom_toTopOf="@+id/bottomNav"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/checkmark"
                 app:tint="@color/fondo" />

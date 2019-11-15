@@ -6,8 +6,8 @@
     <data>
 
         <variable
-                name="catalogoViewModel"
-                type="com.apptt.axdecor.viewmodels.CatalogoViewModel" />
+                name="arViewModel"
+                type="com.apptt.axdecor.viewmodels.ARViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

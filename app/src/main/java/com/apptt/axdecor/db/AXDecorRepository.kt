@@ -1,6 +1,7 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
+import android.util.Log
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO

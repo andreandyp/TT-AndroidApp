@@ -32,6 +32,7 @@ import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
+import com.apptt.axdecor.viewmodels.ARViewModel
 import com.apptt.axdecor.viewmodels.CatalogoViewModel
 import com.apptt.axdecor.viewmodels.VerModeloViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -60,21 +61,21 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var bottomNavigate: BottomNavigationView
+    //lateinit var bottomNavigate: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private var arFragment: ArFragment? = null
     private var modelo: ModelRenderable? = null
     private var arsesion: Session? = null
     private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
     private var mUserRequestedInstall = true
-    private lateinit var viewModel: VerModeloViewModel
+    private lateinit var viewModel: ARViewModel
     private var catalogoFragment: Fragment? = null
     private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this, VerModeloViewModel.Factory(null, application))
-            .get(VerModeloViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ARViewModel.Factory(application))
+            .get(ARViewModel::class.java)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
@@ -93,14 +94,16 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inicializaNavigationDrawer()
 
         catalogoFragment = supportFragmentManager.findFragmentById(R.id.catalogo_ra)
-        bottomNavigate = findViewById(R.id.bottomNav)
+        //bottomNavigate = findViewById(R.id.bottomNav)
 
-        navegacionDeCatalogos()
+        //navegacionDeCatalogos()
 
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
             catalogoFragment?.view?.visibility = View.GONE
+            Log.i("HUE", "BYE")
             defineModelo(it.fileAR, it.idModel)
+            Log.i("HUE", viewModel._modoDecoracion?.value.toString());
             catalogoFragment?.findNavController()?.navigateUp()
         })
     }
@@ -110,7 +113,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun navegacionDeCatalogos() {
-        bottomNavigate.setOnNavigationItemSelectedListener {
+        /*bottomNavigate.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.itemLamparas -> {
                     setDefaultPlane()
@@ -144,7 +147,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 }
                 else -> false
             }
-        }
+        }*/
     }
 
     private fun inicializaNavigationDrawer() {
