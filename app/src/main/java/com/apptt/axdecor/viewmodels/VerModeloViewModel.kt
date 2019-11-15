@@ -1,6 +1,7 @@
 package com.apptt.axdecor.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.apptt.axdecor.domain.Model
 import java.text.NumberFormat
@@ -25,7 +26,7 @@ class VerModeloViewModel(model: Model?, app: Application) : AndroidViewModel(app
         val nf = NumberFormat.getCurrencyInstance(Locale.US)
         _modelo.value = model
         _estilos.value = model?.styles?.joinToString(", ")
-        _precioFormateado.value = nf.format(model?.price?.toDouble() ?: 0.00)
+        _precioFormateado.value = nf.format(model?.price?.toDouble() ?: 0.0)
     }
 
     class Factory(
@@ -38,6 +39,16 @@ class VerModeloViewModel(model: Model?, app: Application) : AndroidViewModel(app
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
+
+    fun actualizarPrecio(precio: String) {
+        val nf = NumberFormat.getCurrencyInstance(Locale.US)
+        Log.i("PRECIO", precio)
+        _precioFormateado.value = nf.format(precio.toDouble())
+    }
+
+    fun actualizarEstilos(estilos: List<String>) {
+        _estilos.value = estilos.joinToString(", ")
     }
 
 }

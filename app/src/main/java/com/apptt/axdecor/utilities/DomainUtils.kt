@@ -2,8 +2,10 @@ package com.apptt.axdecor.utilities
 
 import com.apptt.axdecor.db.Entities.ModelModel
 import com.apptt.axdecor.db.Entities.PredefinedStyleModel
+import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 import com.apptt.axdecor.db.Entities.ProviderModel
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.domain.Provider
 
 object DomainUtils {
@@ -19,11 +21,12 @@ object DomainUtils {
             styles = extractStyles(styles),
             medidas = model.medidas,
             codigo = model.codigo,
-            idProvider = model.idProvider
+            idProvider = model.idProvider,
+            category = ""
         )
     }
 
-    fun convertToSingleModelDomain(model:ModelModel):Model{
+    fun convertToSingleModelDomain(model: ModelModel): Model {
         return Model(
             idModel = model.idModel,
             name = model.name,
@@ -35,7 +38,9 @@ object DomainUtils {
             styles = emptyList(),
             medidas = model.medidas,
             codigo = model.codigo,
-            idProvider = model.idProvider)
+            idProvider = model.idProvider,
+            category = ""
+        )
     }
 
     fun convertToSingleProvider(provider: ProviderModel):Provider{
@@ -53,5 +58,22 @@ object DomainUtils {
         return styles.map {
             it.style
         }
+    }
+
+    fun convertToModelWithCategoryDomain(modelo: ModelWithCategoryModel): Model {
+        return Model(
+            idModel = modelo.idModel,
+            name = modelo.name,
+            price = modelo.price,
+            description = modelo.description ?: "",
+            color = modelo.color,
+            fileAR = modelo.fileAR,
+            file2D = modelo.file2D,
+            medidas = modelo.medidas,
+            codigo = modelo.codigo,
+            category = modelo.category,
+            styles = emptyList(),
+            idProvider = 0
+            )
     }
 }

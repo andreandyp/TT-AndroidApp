@@ -9,6 +9,7 @@ import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.*
 import com.apptt.axdecor.db.queries.ModelProviderCategory
+import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 
 @Database(
     entities = [
@@ -24,7 +25,8 @@ import com.apptt.axdecor.db.queries.ModelProviderCategory
         SocialNetworkModel::class,
         StoreModel::class,
         TypeModel::class,
-        ModelHasTypeModel::class
+        ModelHasTypeModel::class,
+        ModelWithCategoryModel::class
     ], version = 1, exportSchema = false
 )
 abstract class AXDecorDatabase : RoomDatabase() {
