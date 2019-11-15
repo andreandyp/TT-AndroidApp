@@ -35,6 +35,8 @@ import com.apptt.axdecor.utilities.ARCoreUtils
 import com.apptt.axdecor.viewmodels.ARViewModel
 import com.apptt.axdecor.viewmodels.CatalogoViewModel
 import com.apptt.axdecor.viewmodels.VerModeloViewModel
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -61,7 +63,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    //lateinit var bottomNavigate: BottomNavigationView
+    lateinit var barraDummy: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private var arFragment: ArFragment? = null
     private var modelo: ModelRenderable? = null
@@ -94,9 +96,9 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         inicializaNavigationDrawer()
 
         catalogoFragment = supportFragmentManager.findFragmentById(R.id.catalogo_ra)
-        //bottomNavigate = findViewById(R.id.bottomNav)
+        barraDummy = findViewById(R.id.barraDummy)
 
-        //navegacionDeCatalogos()
+        barraDummy.visibility = View.INVISIBLE
 
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
@@ -106,6 +108,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             Log.i("HUE", viewModel._modoDecoracion?.value.toString());
             catalogoFragment?.findNavController()?.navigateUp()
         })
+        animaciones()
     }
 
     private fun muestraCotiza() {
@@ -445,4 +448,49 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         SugerenciaPinturaDialog(colorUser!!).show(supportFragmentManager, "Sugerencia")
     }
 
+    private fun animaciones() {
+        val secuencia = TapTargetSequence(this)
+            .targets(
+                TapTarget.forView(
+                    findViewById(R.id.barraDummy),
+                    "Elige lo que te gusta!",
+                    "Selecciona una categoría y mira el catálogo de modelos diponibles. RECUERDA: Pulsa sobre un modelo y oprime el botón 'Colocar' para seleccionarlo."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(25)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(1),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.btnPhoto),
+                    "Que no se te vaya este diseño!",
+                    "Toma una captura y guardalo en la galería para poder compartirlo :D"
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(2),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.fabCheck),
+                    "¿Terminaste tu decoración?",
+                    "Elige ver tus capturas realizadas o hacer la cotización de tu decoración."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.verdeCheck)
+                    .id(3)
+            )
+        secuencia.start()
+    }
 }

@@ -97,10 +97,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:clickable="true"
-                app:backgroundTint="#66BB6A"
+                app:backgroundTint="@color/verdeCheck"
+                app:layout_constraintBottom_toTopOf="@+id/barraDummy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/checkmark"
                 app:tint="@color/fondo" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/barraDummy"
+                style="@style/Widget.MaterialComponents.BottomAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                app:labelVisibilityMode="labeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/categoria_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
