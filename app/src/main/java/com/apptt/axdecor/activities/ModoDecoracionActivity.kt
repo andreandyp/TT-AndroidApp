@@ -19,6 +19,8 @@ import com.apptt.axdecor.fragments.ConceptosFragment
 import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textview.MaterialTextView
 
@@ -34,6 +36,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
         inicializaNavigationDrawer()
         val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
         acciontv.setText("AXDecor")
+        secuenciaAnimaciones()
     }
 
     private fun inicializaNavigationDrawer() {
@@ -110,4 +113,37 @@ class ModoDecoracionActivity : AppCompatActivity(),
         fragmentTransaction.commit()
     }
 
+    private fun secuenciaAnimaciones() {
+        val secuencia = TapTargetSequence(this)
+            .targets(
+                TapTarget.forView(findViewById(R.id.imgMenu),"Navega a través de la app", "Mira tus fotos, cambia el modo de decoraión u observa el catálogo de modelos que tenemos para ti.")
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(25)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(1),
+                TapTarget.forView(findViewById<ImageView>(R.id.imgCrear),"Crea tu propio estilo", "Se libre! Inserta modelos por categoría a tu gusto y haz tu decoración deseada.")
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(60)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(2),
+                TapTarget.forView(findViewById<ImageView>(R.id.imgElegir),"Elige un estilo", "Checa los estilo de moda y elige uno para decorar tu espacio.")
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(60)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorSecondary)
+                    .id(3)
+            )
+        secuencia.start()
+    }
 }

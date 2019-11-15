@@ -32,6 +32,8 @@ import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
 import com.apptt.axdecor.viewmodels.VerModeloViewModel
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -95,6 +97,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             //catalogoFragment.visibility = View.INVISIBLE
             defineModelo(it.fileAR, it.idModel)
         })
+        animaciones()
     }
 
     private fun muestraCotiza() {
@@ -437,4 +440,49 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         SugerenciaPinturaDialog(colorUser!!).show(supportFragmentManager, "Sugerencia")
     }
 
+    private fun animaciones() {
+        val secuencia = TapTargetSequence(this)
+            .targets(
+                TapTarget.forView(
+                    findViewById(R.id.bottomNav),
+                    "Elige lo que te gusta!",
+                    "Selecciona una categoría y mira el catálogo de modelos diponibles. RECUERDA: Pulsa sobre un modelo y oprime el botón 'Colocar' para seleccionarlo."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(25)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(1),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.btnPhoto),
+                    "Que no se te vaya este diseño!",
+                    "Toma una captura y guardalo en la galería para poder compartirlo :D"
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(2),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.fabCheck),
+                    "¿Terminaste tu decoración?",
+                    "Elige ver tus capturas realizadas o hacer la cotización de tu decoración."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.verdeCheck)
+                    .id(3)
+            )
+        secuencia.start()
+    }
 }

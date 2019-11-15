@@ -26,11 +26,12 @@ class CotizacionesPagerAdapter(
                 CotizaMueblesFragment(modelos, cantidades)
             }
             1 -> {
-                CotizaPisosFragment()
-            }
-            2 -> {
                 ContactoProveedoresFragment(proveedores)
+                //CotizaPisosFragment()
             }
+            /*2 -> {
+                ContactoProveedoresFragment(proveedores)
+            }*/
             else -> CotizaMueblesFragment(modelos, cantidades)
         }
     }
@@ -38,13 +39,13 @@ class CotizacionesPagerAdapter(
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
             0 -> "Muebles, adornos y lamparas"
-            1 -> "Pisos y pinturas"
-            2 -> "Contacto con proveedores"
+            //1 -> "Pisos y pinturas"
+            1 -> "Contacto con proveedores"
             else -> ""
         }
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 }
