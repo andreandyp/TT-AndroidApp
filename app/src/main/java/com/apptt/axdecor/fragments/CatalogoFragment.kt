@@ -105,15 +105,9 @@ class CatalogoFragment : Fragment() {
             if (modeloSeleccionado != null) {
                 val directions =
                     CatalogoFragmentDirections.actionCatalogoFragmentToVerModeloFragment()
-                Log.i("HUE", modeloSeleccionado.name)
                 this.findNavController().navigate(directions)
                 viewModel.verDetallesModeloComplete()
             }
         })
     }
-
-    public fun cambiarModelos(id: Int) {
-        viewModel.verModelosConCategoria(id)
-    }
-
 }

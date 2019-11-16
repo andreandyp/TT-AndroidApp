@@ -41,17 +41,16 @@ class VerModeloFragment : Fragment() {
 
         binding.btnColocar.setOnClickListener {
             val viewModel = binding.viewModel
-            Log.i("HUE", "CLICK")
             viewModel!!.modeloAR.value = viewModel.detallesModelo.value
         }
 
-        viewModel.verModelo.observe(viewLifecycleOwner, Observer { modelo ->
+        viewModel.detallesModelo.observe(viewLifecycleOwner, Observer { modelo ->
             if(modelo != null) {
                 viewModel.actualizarPrecio(modelo.price)
             }
         })
 
-        viewModel.verModelo.observe(viewLifecycleOwner, Observer { modelo ->
+        viewModel.detallesModelo.observe(viewLifecycleOwner, Observer { modelo ->
             if(modelo != null) {
                 viewModel.actualizarEstilos(modelo.styles)
             }
