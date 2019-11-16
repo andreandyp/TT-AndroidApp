@@ -16,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -33,8 +32,6 @@ import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
 import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
 import com.apptt.axdecor.viewmodels.ARViewModel
-import com.apptt.axdecor.viewmodels.CatalogoViewModel
-import com.apptt.axdecor.viewmodels.VerModeloViewModel
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -103,9 +100,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
             catalogoFragment?.view?.visibility = View.GONE
-            Log.i("HUE", "BYE")
             defineModelo(it.fileAR, it.idModel)
-            Log.i("HUE", viewModel._modoDecoracion?.value.toString());
             catalogoFragment?.findNavController()?.navigateUp()
         })
         animaciones()
