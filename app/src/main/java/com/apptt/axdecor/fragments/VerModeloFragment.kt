@@ -41,7 +41,8 @@ class VerModeloFragment : Fragment() {
 
         binding.btnColocar.setOnClickListener {
             val viewModel = binding.viewModel
-            viewModel!!.modeloAR.value = viewModel.detallesModelo.value
+            val modeloPoner = viewModel!!.detallesModelo.value
+            viewModel!!.modeloAR.value = modeloPoner
         }
 
         viewModel.detallesModelo.observe(viewLifecycleOwner, Observer { modelo ->

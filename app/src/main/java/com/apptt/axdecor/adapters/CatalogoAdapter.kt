@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
 import com.apptt.axdecor.databinding.ModeloItemBinding
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.domain.ModelWithCategory
 
 class CatalogoAdapter(
-    private val callback: (modelo: Model) -> Unit
+    private val callback: (modelo: ModelWithCategory) -> Unit
 ) : ListAdapter<Model, CatalogoAdapter.ModelViewHolder>(DiffCallback) {
-    var modelos: List<Model> = emptyList()
+    var modelos: List<ModelWithCategory> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()

@@ -10,5 +10,7 @@ data class ModelWithCategory(
     val color: String,
     val medidas: String?,
     val codigo: String?,
-    val category: String
+    val category: String,
+    val proveedor: String,
+    val styles: List<String>
 )

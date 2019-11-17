@@ -33,25 +33,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="44dp"
+                android:text="Nombre"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline13"
                 app:layout_constraintHorizontal_bias="0.551"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/model_imagen"
-                android:text="Nombre" />
+                app:layout_constraintTop_toBottomOf="@+id/model_imagen" />
 
         <TextView
                 android:id="@+id/tvPrecio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Precio($)"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.533"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
-                app:layout_constraintTop_toTopOf="@+id/tvNombre"
-                android:text="Precio($)" />
+                app:layout_constraintTop_toTopOf="@+id/tvNombre" />
 
         <TextView
                 android:id="@+id/tvColor"
@@ -70,22 +70,22 @@
                 android:id="@+id/tvMedidas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Medidas"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvColor"
                 app:layout_constraintEnd_toStartOf="@+id/tvEstilo"
                 app:layout_constraintStart_toEndOf="@+id/tvColor"
                 app:layout_constraintTop_toTopOf="@+id/tvColor"
-                app:layout_constraintVertical_bias="0.0"
-                android:text="Medidas" />
+                app:layout_constraintVertical_bias="0.0" />
 
         <TextView
                 android:id="@+id/tvEstilo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Estilo"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"
-                android:text="Estilo"
                 app:layout_constraintBottom_toBottomOf="@+id/tvMedidas"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline13"
@@ -135,11 +135,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:text="Colocar"
                 app:layout_constraintEnd_toStartOf="@+id/guideline15"
                 app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="@+id/guideline14"
-                app:layout_constraintTop_toBottomOf="@+id/model_descripcion"
-                android:text="Colocar" />
+                app:layout_constraintTop_toBottomOf="@+id/model_descripcion" />
 
         <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline14"
@@ -171,27 +171,28 @@
 
         <TextView
                 android:id="@+id/model_color"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@{viewModel.detallesModelo.color}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline13"
+                app:layout_constraintEnd_toStartOf="@+id/model_medidas"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvColor"
                 tools:text="Amarillo" />
 
         <TextView
                 android:id="@+id/model_medidas"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{viewModel.detallesModelo.medidas}"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:text="@{viewModel.detallesModelo.medidas}"
                 app:layout_constraintBottom_toBottomOf="@+id/model_color"
                 app:layout_constraintEnd_toStartOf="@+id/model_estilo"
-                app:layout_constraintHorizontal_bias="0.466"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/model_color"
                 app:layout_constraintTop_toTopOf="@+id/model_color"
                 app:layout_constraintVertical_bias="1.0"
@@ -199,14 +200,15 @@
 
         <TextView
                 android:id="@+id/model_estilo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.estilosModelo}"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/model_medidas"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline13"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/model_medidas"
                 app:layout_constraintTop_toTopOf="@+id/model_medidas"
                 app:layout_constraintVertical_bias="0.0"
                 tools:text="Vintage" />
@@ -228,12 +230,12 @@
                 android:id="@+id/icNombre"
                 android:layout_width="24dp"
                 android:layout_height="0dp"
+                android:tint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="@+id/tvNombre"
                 app:layout_constraintEnd_toStartOf="@+id/tvNombre"
                 app:layout_constraintTop_toTopOf="@+id/tvNombre"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/writing"
-                android:tint="@color/colorPrimary"/>
+                app:srcCompat="@drawable/writing" />
 
         <ImageView
                 android:id="@+id/icPrecio"

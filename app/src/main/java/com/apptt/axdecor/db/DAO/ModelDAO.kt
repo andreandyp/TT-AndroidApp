@@ -27,9 +27,9 @@ interface ModelDAO {
 
     @Query(
         """
-        SELECT DISTINCT m.*, c.category
-        FROM ModelModel m, ModelHasCategoryModel mc, CategoryModel c
-        WHERE m.id_model = mc.idModel AND mc.idCategory = c.id_category AND c.id_category = :idCategory
+        SELECT DISTINCT m.*, c.category, p.name AS proveedor
+        FROM ModelModel m, ModelHasCategoryModel mc, CategoryModel c, ProviderModel p
+        WHERE m.id_model = mc.idModel AND m.id_provider = p.id_provider AND m.id_model = mc.idModel AND mc.idCategory = c.id_category AND c.id_category = :idCategory
     """
     )
     suspend fun getModelsWithCategory(idCategory: Int): List<ModelWithCategoryModel>

@@ -16,5 +16,6 @@ data class ModelWithCategoryModel(
     @ColumnInfo(name = "color") val color: String,
     @ColumnInfo(name = "medidas") val medidas: String?,
     @ColumnInfo(name = "codigo") val codigo: String?,
-    @ColumnInfo(name = "category") val category: String
+    @ColumnInfo(name = "category") val category: String,
+    @ColumnInfo(name = "proveedor") val proveedor: String
 )

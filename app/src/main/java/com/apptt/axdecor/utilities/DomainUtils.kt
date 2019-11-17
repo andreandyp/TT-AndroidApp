@@ -2,8 +2,8 @@ package com.apptt.axdecor.utilities
 
 import com.apptt.axdecor.db.Entities.ModelModel
 import com.apptt.axdecor.db.Entities.PredefinedStyleModel
-import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 import com.apptt.axdecor.db.Entities.ProviderModel
+import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.domain.Provider
@@ -43,7 +43,7 @@ object DomainUtils {
         )
     }
 
-    fun convertToSingleProvider(provider: ProviderModel):Provider{
+    fun convertToSingleProvider(provider: ProviderModel): Provider {
         return Provider(
             idProvider = provider.idProvider,
             name = provider.name,
@@ -60,8 +60,11 @@ object DomainUtils {
         }
     }
 
-    fun convertToModelWithCategoryDomain(modelo: ModelWithCategoryModel): Model {
-        return Model(
+    fun convertToModelWithCategoryDomain(
+        modelo: ModelWithCategoryModel,
+        estilos: List<PredefinedStyleModel>
+    ): ModelWithCategory {
+        return ModelWithCategory(
             idModel = modelo.idModel,
             name = modelo.name,
             price = modelo.price,
@@ -72,8 +75,8 @@ object DomainUtils {
             medidas = modelo.medidas,
             codigo = modelo.codigo,
             category = modelo.category,
-            styles = emptyList(),
-            idProvider = 0
-            )
+            proveedor = modelo.proveedor,
+            styles = estilos.map { it.style }
+        )
     }
 }

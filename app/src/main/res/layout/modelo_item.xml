@@ -6,7 +6,7 @@
 
         <variable
                 name="modelo"
-                type="com.apptt.axdecor.domain.Model" />
+                type="com.apptt.axdecor.domain.ModelWithCategory" />
     </data>
 
     <ImageView

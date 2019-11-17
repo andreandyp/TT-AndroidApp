@@ -29,7 +29,7 @@ interface APIAxDecorService {
     fun obtenerProveedoresAsync(): Deferred<List<NetworkProvider>>
 
     //Obtiene Modelos
-    @GET("/api/v1.0/paint")
+    @GET("/api/v1.0/paints")
     fun obtenerPinturas(): Deferred<List<PaintModel>>
 
     @GET("/api/v1.0/data")

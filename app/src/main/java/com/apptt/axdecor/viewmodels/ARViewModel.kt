@@ -5,29 +5,33 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.domain.ModelWithCategory
 import kotlinx.coroutines.*
 import java.text.NumberFormat
 import java.util.*
 
 class ARViewModel(application: Application) : AndroidViewModel(application) {
     // Datos del ViewModel
-    private val _listaModelos = MutableLiveData<List<Model>>()
-    val listaModelos: LiveData<List<Model>>
+    private val _listaModelos = MutableLiveData<List<ModelWithCategory>>()
+    val listaModelos: LiveData<List<ModelWithCategory>>
         get() = _listaModelos
 
-    private val _modelosConCategoria = MutableLiveData<MutableList<List<Model>>>()
+    private val _modelosConCategoria = MutableLiveData<MutableList<List<ModelWithCategory>>>()
 
-    private val _verModelo = MutableLiveData<Model>()
-    val verModelo: LiveData<Model>
+    private val _verModelo = MutableLiveData<ModelWithCategory>()
+    val verModelo: LiveData<ModelWithCategory>
         get() = _verModelo
 
-    val modeloAR = MutableLiveData<Model>()
+    val modeloAR = MutableLiveData<ModelWithCategory>()
+    val piso = MutableLiveData<ModelWithCategory>()
 
-    private val _detallesModelo = MutableLiveData<Model>()
-    val detallesModelo: LiveData<Model>
+    private val _detallesModelo = MutableLiveData<ModelWithCategory>()
+    val detallesModelo: LiveData<ModelWithCategory>
         get() = _detallesModelo
 
-    val _modoDecoracion = MutableLiveData<Int>()
+    private val _modoDecoracion = MutableLiveData<Int>()
+    val modoDecoracion: LiveData<Int>
+        get() = _modoDecoracion
 
     // Datos del modelo
     private val _estilosModelo = MutableLiveData<String>()
@@ -70,7 +74,7 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         _listaModelos.value = _modelosConCategoria.value?.get(id)
     }
 
-    fun verDetallesModelo(modelo: Model) {
+    fun verDetallesModelo(modelo: ModelWithCategory) {
         _verModelo.value = modelo
     }
 

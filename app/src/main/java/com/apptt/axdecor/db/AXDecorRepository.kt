@@ -159,11 +159,12 @@ class AXDecorRepository(application: Application) {
         }
     }
 
-    suspend fun getModelsWithCategory(id: Int): List<Model> {
+    suspend fun getModelsWithCategory(id: Int): List<ModelWithCategory> {
         return withContext(Dispatchers.IO) {
             val modelos = modelDAO.getModelsWithCategory(id)
             modelos.map {
-                convertToModelWithCategoryDomain(it)
+                val estilos = modelDAO.viewStylesOfModel(it.idModel)
+                convertToModelWithCategoryDomain(it, estilos)
             }
         }
     }

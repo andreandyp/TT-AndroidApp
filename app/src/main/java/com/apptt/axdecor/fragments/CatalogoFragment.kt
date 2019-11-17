@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,7 +15,6 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CatalogoAdapter
 import com.apptt.axdecor.databinding.CatalogoFragmentBinding
 import com.apptt.axdecor.viewmodels.ARViewModel
-import com.apptt.axdecor.viewmodels.CatalogoViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CatalogoFragment : Fragment() {
@@ -103,6 +101,8 @@ class CatalogoFragment : Fragment() {
 
         viewModel.verModelo.observe(viewLifecycleOwner, Observer { modeloSeleccionado ->
             if (modeloSeleccionado != null) {
+                Log.i("HUEVEO", modeloSeleccionado.fileAR)
+                Log.i("HUEVEO", modeloSeleccionado.file2D)
                 val directions =
                     CatalogoFragmentDirections.actionCatalogoFragmentToVerModeloFragment()
                 this.findNavController().navigate(directions)

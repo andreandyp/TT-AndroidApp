@@ -103,6 +103,23 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             defineModelo(it.fileAR, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
         })
+
+        viewModel.piso.observe(this, androidx.lifecycle.Observer {
+            catalogoFragment?.view?.visibility = View.GONE
+            changeFloorTexture(it.file2D!!, it.idModel)
+            catalogoFragment?.findNavController()?.navigateUp()
+        })
+
+        viewModel.modoDecoracion.observe(this, androidx.lifecycle.Observer {
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            if(it == 1){
+                muestraSugerencia()
+            }
+            if(it == 0) {
+                setDefaultPlane()
+            }
+            arsesion?.setupPlaneFinding(it)
+        })
         animaciones()
     }
 
@@ -396,7 +413,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         Toast.makeText(this, "Imagen Guardada Exitosamente!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun changeFloorTexture() {
+    private fun changeFloorTexture(url: String, id: Int) {
         val sampler = Texture.Sampler.builder()
             .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
             .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
@@ -404,7 +421,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             .build()
 
         val trigrid = Texture.builder()
-            .setSource(this, R.drawable.piso_1)
+            .setSource(this, Uri.parse(url))
             .setSampler(sampler)
             .build()
 
@@ -415,6 +432,12 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 material?.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 100f)
                 material?.setFloat2("uvScale", 1f, 1.19245f)
             }
+        }
+
+        if (modelosInsertados.containsKey(id)) {
+            modelosInsertados[id] = modelosInsertados[id]!!.plus(1)
+        } else {
+            modelosInsertados[id] = 1
         }
     }
 
