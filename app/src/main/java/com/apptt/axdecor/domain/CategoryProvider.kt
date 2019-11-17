@@ -4,5 +4,6 @@ data class CategoryProvider(
     val idCategory: Int,
     val category: String,
     val providers: List<String>,
-    val idProviders: List<Int>
+    val idProviders: List<Int>,
+    val logos: List<String?>
 )

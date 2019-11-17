@@ -15,7 +15,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
-    private val splash = 1000
+    private val splash = 500
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
         scope.launch {
-            /*try {
+            try {
                 val data = repository.getDefaultDataFromInternet()
                 repository.saveDefaultDataFromInternet(data)
                 Toast.makeText(this@SplashActivity, "Datos descargados", Toast.LENGTH_SHORT).show()
@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() {
                 Toast.makeText(this@SplashActivity, "Modelos descargados", Toast.LENGTH_SHORT)  .show()
             } catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
-            }*/
+            }
 
         }
     }

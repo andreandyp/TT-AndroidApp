@@ -21,7 +21,7 @@ interface ProviderDAO {
 
     @Query(
         """
-        SELECT c.id_category, c.category, GROUP_CONCAT(DISTINCT p.name) AS providers, GROUP_CONCAT(DISTINCT p.id_provider) AS idProviders
+        SELECT c.id_category, c.category, GROUP_CONCAT(DISTINCT p.logo) AS logos, GROUP_CONCAT(DISTINCT p.name) AS providers, GROUP_CONCAT(DISTINCT p.id_provider) AS idProviders
         FROM ProviderModel AS p
         JOIN ProviderHasCategoryModel AS pc
         ON p.id_provider = pc.idProvider

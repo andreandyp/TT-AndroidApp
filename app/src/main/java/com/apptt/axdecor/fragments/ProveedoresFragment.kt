@@ -59,36 +59,21 @@ class ProveedoresFragment : Fragment() {
         }
         proveedoresSeleccionados.clear()
         val repository = AXDecorRepository(activity!!.application)
-        val gridIluminacion = GridLayoutManager(activity, 3)
-        val gridMuebles = GridLayoutManager(activity, 3)
-        val gridAdornos = GridLayoutManager(activity, 3)
-        val gridPisos = GridLayoutManager(activity, 3)
-        val gridPinturas = GridLayoutManager(activity, 3)
-        recIluminacion.layoutManager = gridIluminacion
-        recMuebles.layoutManager = gridMuebles
-        recAdornos.layoutManager = gridAdornos
-        recPisos.layoutManager = gridPisos
-        recPinturas.layoutManager = gridPinturas
         val job = Job()
         val scope = CoroutineScope(job + Dispatchers.Main)
         lateinit var proveedores: List<CategoryProvider>
         scope.launch {
             proveedores = repository.getProvidersByCategory()
             recIluminacion.adapter =
-                ProveedoresAdapter(proveedores.get(4), callback)
+                ProveedoresAdapter(proveedores.get(4), callback, context!!)
             recMuebles.adapter =
-                ProveedoresAdapter(proveedores.get(2), callback)
+                ProveedoresAdapter(proveedores.get(2), callback, context!!)
             recAdornos.adapter =
-                ProveedoresAdapter(proveedores.get(0), callback)
+                ProveedoresAdapter(proveedores.get(0), callback, context!!)
             recPisos.adapter =
-                ProveedoresAdapter(proveedores.get(1), callback)
+                ProveedoresAdapter(proveedores.get(1), callback, context!!)
             recPinturas.adapter =
-                ProveedoresAdapter(proveedores.get(3), callback)
+                ProveedoresAdapter(proveedores.get(3), callback, context!!)
         }
-        recIluminacion.visibility = View.VISIBLE
-        recMuebles.visibility = View.VISIBLE
-        recAdornos.visibility = View.VISIBLE
-        recPisos.visibility = View.VISIBLE
-        recPinturas.visibility = View.VISIBLE
     }
 }

@@ -88,7 +88,8 @@ class AXDecorRepository(application: Application) {
                     idCategory = it.idCategory,
                     category = it.category,
                     providers = it.providers.split(","),
-                    idProviders = it.idProviders.split(",").map { id -> id.toInt() }
+                    idProviders = it.idProviders.split(",").map { id -> id.toInt() },
+                    logos = it.logos.split(",")
                 )
             }
         }

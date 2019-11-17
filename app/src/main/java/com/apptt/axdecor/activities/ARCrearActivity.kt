@@ -87,7 +87,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             return
         }
         arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
-        val botonFoto = findViewById<FloatingActionButton>(R.id.btnPhoto)
+        val botonFoto = findViewById<View>(R.id.btnPhoto)
         botonFoto.setOnClickListener { takePhoto() }
         fabCheck.setOnClickListener { muestraCotiza() }
         inicializaNavigationDrawer()
