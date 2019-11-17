@@ -32,19 +32,19 @@ class SplashActivity : AppCompatActivity() {
         val scope = CoroutineScope(job + Dispatchers.Main)
         val repository = AXDecorRepository(application)
         scope.launch {
-            try {
+            /*try {
                 val data = repository.getDefaultDataFromInternet()
                 repository.saveDefaultDataFromInternet(data)
-                //Toast.makeText(this@SplashActivity, "Datos descargados", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SplashActivity, "Datos descargados", Toast.LENGTH_SHORT).show()
                 val providers = repository.getProvidersFromInternet()
                 repository.saveProvidersFromInternet(providers)
-                //Toast.makeText(this@SplashActivity, "Proveedores descargados", Toast.LENGTH_SHORT)   .show()
+                Toast.makeText(this@SplashActivity, "Proveedores descargados", Toast.LENGTH_SHORT)   .show()
                 val models = repository.getModelsFromInternet()
                 repository.saveModelsFromInternet(models)
-                //Toast.makeText(this@SplashActivity, "Modelos descargados", Toast.LENGTH_SHORT)  .show()
+                Toast.makeText(this@SplashActivity, "Modelos descargados", Toast.LENGTH_SHORT)  .show()
             } catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
-            }
+            }*/
 
         }
     }

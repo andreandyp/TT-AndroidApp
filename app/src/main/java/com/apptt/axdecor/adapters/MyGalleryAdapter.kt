@@ -37,6 +37,7 @@ class MyGalleryAdapter(context: Context, list: ArrayList<File>) :
         holder.imagen.setOnClickListener {
             val mIntent = Intent(mContext, FullImageActivity::class.java)
             mIntent.putExtra("Image", mList[holder.adapterPosition].toString())
+            mIntent.putExtra("nameImage",mList[holder.adapterPosition].name)
             mContext.startActivity(mIntent)
         }
     }
