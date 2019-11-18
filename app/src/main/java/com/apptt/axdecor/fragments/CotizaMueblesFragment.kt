@@ -57,7 +57,7 @@ class CotizaMueblesFragment(
             templatePDF.addParagraph("Muestra esta hoja en tu tienda y pide los modelos mostrados.")
             templatePDF.createTable(
                 arrayOf("Código", "Proveedor", "Nombre", "Cantidad", "Precio ($)"),
-                getModelos(),total
+                getModelos(), total
             )
             templatePDF.closeDocument()
             templatePDF.verPDF(activity!!)
@@ -77,9 +77,14 @@ class CotizaMueblesFragment(
         var rows: ArrayList<Array<String>> = ArrayList()
         modelo.forEachIndexed { index, model ->
             runBlocking {
+                val cod: String?
+                if (model.codigo == null)
+                    cod = "No registrado"
+                else
+                    cod = model.codigo
                 rows.add(
                     arrayOf(
-                        model.codigo!!,
+                        cod,
                         repo.getProviderById(model.idProvider).name,
                         model.name,
                         cantidades[model.idModel].toString(),

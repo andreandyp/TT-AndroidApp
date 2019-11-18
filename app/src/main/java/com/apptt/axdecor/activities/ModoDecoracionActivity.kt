@@ -36,7 +36,17 @@ class ModoDecoracionActivity : AppCompatActivity(),
         inicializaNavigationDrawer()
         val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
         acciontv.setText("AXDecor")
-       // secuenciaAnimaciones()
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        if(sharePref.getInt(getString(R.string.anim1_key),0) == 0){
+            secuenciaAnimaciones()
+            with(sharePref.edit()){
+                putInt(getString(R.string.anim1_key),1)
+                commit()
+            }
+        }
     }
 
     private fun inicializaNavigationDrawer() {
@@ -144,6 +154,8 @@ class ModoDecoracionActivity : AppCompatActivity(),
                     .outerCircleColor(R.color.colorSecondary)
                     .id(3)
             )
+        secuencia.considerOuterCircleCanceled(true)
+        secuencia.continueOnCancel(true)
         secuencia.start()
     }
 }

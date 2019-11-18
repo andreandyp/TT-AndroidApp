@@ -57,6 +57,8 @@ class Datos3Fragment : Fragment() {
             putString(getString(R.string.color_key), Personalidad)
             putString(getString(R.string.age_key), Edad)
             putString(getString(R.string.room_key), Habitacion)
+            putInt(getString(R.string.anim1_key),0)
+            putInt(getString(R.string.anim2_key),0)
             commit()
         }
         toSelectModeActivity()
