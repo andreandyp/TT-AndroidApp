@@ -1,7 +1,6 @@
 package com.apptt.axdecor.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.ModelWithCategory
@@ -78,7 +77,7 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         val nf = NumberFormat.getCurrencyInstance(Locale.US)
         _estilosModelo.value = _detallesModelo.value?.styles?.joinToString(", ")
         _precioFormateadoModelo.value = nf.format(_detallesModelo.value?.price?.toDouble() ?: 0.0)
-        _precioFormateadoPintura.value = nf.format(_detallesModelo.value?.price?.toDouble() ?: 0.0)
+        _precioFormateadoPintura.value = nf.format(_detallesPintura.value?.price?.toDouble() ?: 0.0)
     }
 
     override fun onCleared() {

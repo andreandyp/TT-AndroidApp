@@ -2,7 +2,6 @@ package com.apptt.axdecor.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,8 +29,6 @@ class VerModeloFragment : Fragment() {
         val binding = VerModeloFragmentBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
-        //val modelo = VerModeloFragmentArgs.fromBundle(arguments!!).modelo
-
         binding.viewModel = viewModel
 
         if (activity?.javaClass?.simpleName == "CatalogoActivity") {
@@ -42,17 +39,21 @@ class VerModeloFragment : Fragment() {
         binding.btnColocar.setOnClickListener {
             val viewModel = binding.viewModel
             val modeloPoner = viewModel!!.detallesModelo.value
-            viewModel!!.modeloAR.value = modeloPoner
+            if (!modeloPoner?.fileAR.isNullOrBlank()) {
+                viewModel.modeloAR.value = modeloPoner
+            } else {
+                viewModel.piso.value = modeloPoner
+            }
         }
 
         viewModel.detallesModelo.observe(viewLifecycleOwner, Observer { modelo ->
-            if(modelo != null) {
+            if (modelo != null) {
                 viewModel.actualizarPrecio(modelo.price)
             }
         })
 
         viewModel.detallesModelo.observe(viewLifecycleOwner, Observer { modelo ->
-            if(modelo != null) {
+            if (modelo != null) {
                 viewModel.actualizarEstilos(modelo.styles)
             }
         })

@@ -1,12 +1,10 @@
 package com.apptt.axdecor.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.apptt.axdecor.R
 import com.apptt.axdecor.databinding.ModeloItemBinding
@@ -42,35 +40,39 @@ class CatalogoAdapter(
 
     override fun getItemCount() = modelos.size
     override fun getItemViewType(position: Int): Int {
-        return when(modelos[position]) {
+        return when (modelos[position]) {
             is ModelWithCategory -> 0
             else -> 1
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
+        return when (viewType) {
             0 -> {
-                ModelViewHolder(DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    ModelViewHolder.LAYOUT,
-                    parent,
-                    false
-                ))
+                ModelViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        ModelViewHolder.LAYOUT,
+                        parent,
+                        false
+                    )
+                )
             }
             else -> {
-                PaintViewHolder(DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    PaintViewHolder.LAYOUT,
-                    parent,
-                    false
-                ))
+                PaintViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        PaintViewHolder.LAYOUT,
+                        parent,
+                        false
+                    )
+                )
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(modelos[position]) {
+        when (modelos[position]) {
             is ModelWithCategory -> {
                 holder as ModelViewHolder
                 holder.binding.also { binding ->

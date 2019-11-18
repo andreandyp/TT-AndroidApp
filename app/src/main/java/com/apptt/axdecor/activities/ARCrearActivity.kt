@@ -58,13 +58,12 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var barraDummy: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private var arFragment: ArFragment? = null
     private var modelo: ModelRenderable? = null
     private var arsesion: Session? = null
-    private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
     private var mUserRequestedInstall = true
     private lateinit var viewModel: ARViewModel
     private var catalogoFragment: Fragment? = null
@@ -103,11 +102,10 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         fabCatalogo.setOnClickListener {
             // TODO: Esperar a que deje de trackear...
             catalogoAbierto = !catalogoAbierto
-            if(catalogoAbierto) {
+            if (catalogoAbierto) {
                 catalogoFragment?.view?.visibility = View.VISIBLE
                 botonFoto.visibility = View.GONE
-            }
-            else {
+            } else {
                 catalogoFragment?.view?.visibility = View.GONE
                 botonFoto.visibility = View.VISIBLE
             }
@@ -122,7 +120,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
-        // Está en progreso...
         viewModel.piso.observe(this, androidx.lifecycle.Observer {
             catalogoAbierto = false
             catalogoFragment?.view?.visibility = View.GONE
@@ -131,12 +128,20 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
+        viewModel.pinturaAR.observe(this, androidx.lifecycle.Observer { pintura ->
+            catalogoAbierto = false
+            catalogoFragment?.view?.visibility = View.GONE
+            botonFoto.visibility = View.VISIBLE
+            // TODO: Pintar aquí
+            catalogoFragment?.findNavController()?.navigateUp()
+        })
+
         // Al darle a las categorías de la barra de abajo del catálogo, se cambia el plane así como lo tenías
         viewModel.modoDecoracion.observe(this, androidx.lifecycle.Observer {
-            if(it == 1){
+            if (it == 1) {
                 muestraSugerencia()
             }
-            if(it == 0) {
+            if (it == 0) {
                 // Qué onda? Se muestra un piso raro...
                 setDefaultPlane()
             }
@@ -146,10 +151,10 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             getString(R.string.preference_file_key_datos),
             Context.MODE_PRIVATE
         ) ?: return
-        if(sharePref.getInt(getString(R.string.anim2_key),0) == 0){
+        if (sharePref.getInt(getString(R.string.anim2_key), 0) == 0) {
             animaciones()
-            with(sharePref.edit()){
-                putInt(getString(com.apptt.axdecor.R.string.anim2_key),1)
+            with(sharePref.edit()) {
+                putInt(getString(com.apptt.axdecor.R.string.anim2_key), 1)
                 commit()
             }
         }
@@ -212,7 +217,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         val txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
         val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
         txtUser.text = nombre
-        txtHabit.text = "Decorando: " + habitacion
+        txtHabit.text = "Decorando: $habitacion"
         navigationView.setNavigationItemSelectedListener(this)
         drawerLayout.setDrawerListener(toogle)
         toogle.syncState()
@@ -284,7 +289,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 }
             }
         } catch (e: UnavailableUserDeclinedInstallationException) {
-            Toast.makeText(this, "Error:" + e, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
             return
         }
 

@@ -1,9 +1,7 @@
 package com.apptt.axdecor.fragments
 
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +31,9 @@ class CatalogoFragment : Fragment() {
     }
 
     private val catalogoAdapter = CatalogoAdapter {
-        if(it is ModelWithCategory) {
+        if (it is ModelWithCategory) {
             viewModel.verDetallesModelo(it)
-        }
-        else {
+        } else {
             viewModel.verDetallesPintura(it as Paint)
         }
     }
@@ -116,7 +113,7 @@ class CatalogoFragment : Fragment() {
         })
 
         viewModel.verPintura.observe(viewLifecycleOwner, Observer {
-            if(it != null) {
+            if (it != null) {
                 val directions =
                     CatalogoFragmentDirections.actionCatalogoFragmentToVerPinturaFragment()
                 this.findNavController().navigate(directions)

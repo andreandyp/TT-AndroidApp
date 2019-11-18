@@ -8,7 +8,8 @@
         <variable
                 name="viewModel"
                 type="com.apptt.axdecor.viewmodels.ARViewModel" />
-        <import type="android.graphics.Color"/>
+
+        <import type="android.graphics.Color" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
