@@ -34,6 +34,8 @@
     <string name="room_key">room_key</string>
     <string name="providers_key">providers_key</string>
     <string name="style_key">style_key</string>
+    <string name="anim1_key">anim1_key</string>
+    <string name="anim2_key">anim2_key</string>
 
     <string name="FAQ">Preguntas Frecuentes</string>
     <string name="Pregunta1">¿Diseño vs decoración?</string>

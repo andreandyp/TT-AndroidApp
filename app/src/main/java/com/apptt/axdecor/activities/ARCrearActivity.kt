@@ -142,7 +142,17 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             arsesion?.setupPlaneFinding(it)
         })
-        //animaciones()
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        if(sharePref.getInt(getString(R.string.anim2_key),0) == 0){
+            animaciones()
+            with(sharePref.edit()){
+                putInt(getString(com.apptt.axdecor.R.string.anim2_key),1)
+                commit()
+            }
+        }
     }
 
     private fun muestraCotiza() {
@@ -527,8 +537,23 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     .targetRadius(55)
                     .outerCircleAlpha(0.96f)
                     .outerCircleColor(R.color.verdeCheck)
-                    .id(3)
+                    .id(3),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.fabCatalogo),
+                    "Escoge tu modelo y colocalo",
+                    "Mira todos los modelos disponibles dentro de nuestro catálogo de modelos. Combina estilos y modelos hasta crear la decoración que más te agrade."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorAccent)
+                    .id(4)
             )
+        secuencia.considerOuterCircleCanceled(true)
+        secuencia.continueOnCancel(true)
         secuencia.start()
     }
 }
