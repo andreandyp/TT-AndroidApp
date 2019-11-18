@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Model(
     val idModel: Int,
     val name: String,
-    val fileAR: String,
+    val fileAR: String?,
     val price: String,
     val description: String,
     val file2D: String,

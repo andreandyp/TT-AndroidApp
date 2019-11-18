@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 data class NetworkModel(
     val idModel: Int,
     val name: String,
-    val fileAR: String,
+    val fileAR: String?,
     val price: String,
     val color: String,
     val description: String,

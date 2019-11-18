@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 data class ModelModel(
     @ColumnInfo(name = "id_model") @PrimaryKey @NonNull val idModel: Int,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "fileAR") val fileAR: String,
+    @ColumnInfo(name = "fileAR") val fileAR: String?,
     @ColumnInfo(name = "price") val price: String,
     @ColumnInfo(name = "description") val description: String,
     @ColumnInfo(name = "file2D") val file2D: String,
