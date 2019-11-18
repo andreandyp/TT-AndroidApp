@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.apptt.axdecor.R
-import com.apptt.axdecor.Utilities.TemplatePDF
+import com.apptt.axdecor.utilities.TemplatePDF
 import com.apptt.axdecor.adapters.CotizaMueblesAdapter
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.Model
