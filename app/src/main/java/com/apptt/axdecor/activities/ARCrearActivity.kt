@@ -1,6 +1,5 @@
 package com.apptt.axdecor.activities
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,7 +16,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -59,7 +57,6 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var barraDummy: BottomNavigationView
@@ -118,14 +115,18 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
+            catalogoAbierto = false
             catalogoFragment?.view?.visibility = View.GONE
+            botonFoto.visibility = View.VISIBLE
             defineModelo(it.fileAR, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
         // Está en progreso...
         viewModel.piso.observe(this, androidx.lifecycle.Observer {
+            catalogoAbierto = false
             catalogoFragment?.view?.visibility = View.GONE
+            botonFoto.visibility = View.VISIBLE
             changeFloorTexture(it.file2D!!, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
         })
@@ -141,7 +142,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             }
             arsesion?.setupPlaneFinding(it)
         })
-        animaciones()
+        //animaciones()
     }
 
     private fun muestraCotiza() {

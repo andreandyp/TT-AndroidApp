@@ -36,7 +36,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
         inicializaNavigationDrawer()
         val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
         acciontv.setText("AXDecor")
-        secuenciaAnimaciones()
+       // secuenciaAnimaciones()
     }
 
     private fun inicializaNavigationDrawer() {
