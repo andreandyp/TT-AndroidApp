@@ -4,30 +4,40 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.apptt.axdecor.db.AXDecorRepository
-import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.domain.ModelWithCategory
-import kotlinx.coroutines.*
+import com.apptt.axdecor.domain.Paint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
 
 class ARViewModel(application: Application) : AndroidViewModel(application) {
     // Datos del ViewModel
-    private val _listaModelos = MutableLiveData<List<ModelWithCategory>>()
-    val listaModelos: LiveData<List<ModelWithCategory>>
+    private val _listaModelos = MutableLiveData<List<Any>>()
+    val listaModelos: LiveData<List<Any>>
         get() = _listaModelos
 
-    private val _modelosConCategoria = MutableLiveData<MutableList<List<ModelWithCategory>>>()
+    private val _modelosConCategoria = MutableLiveData<MutableList<List<Any>>>()
 
     private val _verModelo = MutableLiveData<ModelWithCategory>()
     val verModelo: LiveData<ModelWithCategory>
         get() = _verModelo
 
+    private val _verPintura = MutableLiveData<Paint>()
+    val verPintura: LiveData<Paint> = _verPintura
+
     val modeloAR = MutableLiveData<ModelWithCategory>()
     val piso = MutableLiveData<ModelWithCategory>()
+    val pinturaAR = MutableLiveData<Paint>()
 
     private val _detallesModelo = MutableLiveData<ModelWithCategory>()
     val detallesModelo: LiveData<ModelWithCategory>
         get() = _detallesModelo
+
+    private val _detallesPintura = MutableLiveData<Paint>()
+    val detallesPintura: LiveData<Paint> = _detallesPintura
 
     private val _modoDecoracion = MutableLiveData<Int>()
     val modoDecoracion: LiveData<Int>
@@ -39,8 +49,10 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         get() = _estilosModelo
 
     private val _precioFormateadoModelo = MutableLiveData<String>()
-    val precioFormateadoModelo: LiveData<String>
-        get() = _precioFormateadoModelo
+    val precioFormateadoModelo: LiveData<String> = _precioFormateadoModelo
+
+    private val _precioFormateadoPintura = MutableLiveData<String>()
+    val precioFormateadoPintura: LiveData<String> = _precioFormateadoPintura
 
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -50,13 +62,14 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             _modelosConCategoria.value = mutableListOf()
+            val lista = _modelosConCategoria.value
             for (id in 1..5) {
-                val lista = _modelosConCategoria.value
                 val d = axDecorRepository.getModelsWithCategory(id)
                 lista!!.add(d)
             }
+            val pinturas = axDecorRepository.getPaints()
+            lista!![3] = pinturas
             _listaModelos.value = _modelosConCategoria.value?.get(4)
-
 
         }
 
@@ -65,6 +78,7 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         val nf = NumberFormat.getCurrencyInstance(Locale.US)
         _estilosModelo.value = _detallesModelo.value?.styles?.joinToString(", ")
         _precioFormateadoModelo.value = nf.format(_detallesModelo.value?.price?.toDouble() ?: 0.0)
+        _precioFormateadoPintura.value = nf.format(_detallesModelo.value?.price?.toDouble() ?: 0.0)
     }
 
     override fun onCleared() {
@@ -80,9 +94,18 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         _verModelo.value = modelo
     }
 
-    fun verDetallesModeloComplete(){
+    fun verDetallesModeloComplete() {
         _detallesModelo.value = _verModelo.value
         _verModelo.value = null
+    }
+
+    fun verDetallesPintura(pintura: Paint) {
+        _verPintura.value = pintura
+    }
+
+    fun verDetallesPinturaComplete() {
+        _detallesPintura.value = _verPintura.value
+        _verPintura.value = null
     }
 
     fun actualizarPrecio(precio: String) {

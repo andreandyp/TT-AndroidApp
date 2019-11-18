@@ -8,10 +8,7 @@ import com.apptt.axdecor.db.DAO.PaintDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.PaintModel
 import com.apptt.axdecor.db.queries.ModelProviderCategory
-import com.apptt.axdecor.domain.CategoryProvider
-import com.apptt.axdecor.domain.Model
-import com.apptt.axdecor.domain.Provider
-import com.apptt.axdecor.domain.ModelWithCategory
+import com.apptt.axdecor.domain.*
 import com.apptt.axdecor.network.*
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
@@ -180,5 +177,22 @@ class AXDecorRepository(application: Application) {
     suspend fun savePaintFromInternet(paintsNetwork: List<NetworkPaint>) {
         val pinturasDB = convertToPaintModel(paintsNetwork)
         paintDAO.insertPaint(*pinturasDB)
+    }
+
+    suspend fun getPaints(): List<Paint> {
+        val paintsDB = paintDAO.getPaints()
+        return paintsDB.map {
+            Paint(
+                idPaint = it.idPaint,
+                name = it.name,
+                vendorCode = it.vendorCode,
+                hexCode = it.hexCode,
+                rgbCode = it.rgbCode,
+                price = it.price,
+                presentacion = it.presentacion,
+                idProvider = it.idProvider,
+                provider = it.proveedor
+            )
+        }
     }
 }

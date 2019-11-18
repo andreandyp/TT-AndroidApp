@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="paint"
+                type="com.apptt.axdecor.domain.Paint"/>
+        <import type="android.graphics.Color"/>
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true">
+
+        <ImageView
+                android:id="@+id/imagen_modelo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:background="@{Color.parseColor(paint.hexCode)}"
+                android:padding="2dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@color/colorPrimary" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{paint.name}"
+                app:layout_constraintBottom_toBottomOf="@+id/imagen_modelo"
+                app:layout_constraintEnd_toEndOf="@+id/imagen_modelo"
+                app:layout_constraintStart_toStartOf="@+id/imagen_modelo"
+                app:layout_constraintTop_toTopOf="@+id/imagen_modelo"
+                tools:text="Colorín" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

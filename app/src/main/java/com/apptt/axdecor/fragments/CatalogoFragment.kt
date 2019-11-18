@@ -1,6 +1,7 @@
 package com.apptt.axdecor.fragments
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CatalogoAdapter
 import com.apptt.axdecor.databinding.CatalogoFragmentBinding
+import com.apptt.axdecor.domain.ModelWithCategory
+import com.apptt.axdecor.domain.Paint
 import com.apptt.axdecor.viewmodels.ARViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -30,7 +33,12 @@ class CatalogoFragment : Fragment() {
     }
 
     private val catalogoAdapter = CatalogoAdapter {
-        viewModel.verDetallesModelo(it)
+        if(it is ModelWithCategory) {
+            viewModel.verDetallesModelo(it)
+        }
+        else {
+            viewModel.verDetallesPintura(it as Paint)
+        }
     }
 
     override fun onCreateView(
@@ -100,12 +108,19 @@ class CatalogoFragment : Fragment() {
 
         viewModel.verModelo.observe(viewLifecycleOwner, Observer { modeloSeleccionado ->
             if (modeloSeleccionado != null) {
-                Log.i("HUEVEO", modeloSeleccionado.fileAR)
-                Log.i("HUEVEO", modeloSeleccionado.file2D)
                 val directions =
                     CatalogoFragmentDirections.actionCatalogoFragmentToVerModeloFragment()
                 this.findNavController().navigate(directions)
                 viewModel.verDetallesModeloComplete()
+            }
+        })
+
+        viewModel.verPintura.observe(viewLifecycleOwner, Observer {
+            if(it != null) {
+                val directions =
+                    CatalogoFragmentDirections.actionCatalogoFragmentToVerPinturaFragment()
+                this.findNavController().navigate(directions)
+                viewModel.verDetallesPinturaComplete()
             }
         })
     }

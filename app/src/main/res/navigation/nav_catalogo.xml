@@ -15,10 +15,19 @@
                 android:id="@+id/action_catalogoFragment_to_verModeloFragment"
                 app:destination="@id/verModeloFragment"
                 app:popUpTo="@+id/catalogoFragment" />
+        <action
+                android:id="@+id/action_catalogoFragment_to_verPinturaFragment"
+                app:destination="@id/verPinturaFragment"
+                app:popUpTo="@+id/catalogoFragment" />
     </fragment>
     <fragment
             android:id="@+id/verModeloFragment"
             android:name="com.apptt.axdecor.fragments.VerModeloFragment"
             android:label="VerModeloFragment"
             tools:layout="@layout/ver_modelo_fragment"/>
+    <fragment
+            android:id="@+id/verPinturaFragment"
+            android:name="com.apptt.axdecor.fragments.VerPinturaFragment"
+            android:label="fragment_ver_pintura"
+            tools:layout="@layout/fragment_ver_pintura" />
 </navigation>
