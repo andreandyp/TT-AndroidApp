@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
+import com.apptt.axdecor.db.DAO.PaintDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.*
 import com.apptt.axdecor.db.queries.ModelProviderCategory
@@ -33,6 +34,7 @@ abstract class AXDecorDatabase : RoomDatabase() {
     abstract fun modelDAO(): ModelDAO
     abstract fun providerDAO(): ProviderDAO
     abstract fun dataDAO(): DataDAO
+    abstract fun paintDAO(): PaintDAO
 
     companion object {
         @Volatile

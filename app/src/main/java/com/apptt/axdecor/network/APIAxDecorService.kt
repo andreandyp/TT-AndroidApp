@@ -30,7 +30,7 @@ interface APIAxDecorService {
 
     //Obtiene Modelos
     @GET("/api/v1.0/paints")
-    fun obtenerPinturas(): Deferred<List<PaintModel>>
+    fun obtenerPinturasAsync(): Deferred<List<NetworkPaint>>
 
     @GET("/api/v1.0/data")
     fun obtenerDatosAsync(): Deferred<NetworkDataContainer>

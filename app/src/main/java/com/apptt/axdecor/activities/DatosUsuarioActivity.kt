@@ -18,7 +18,7 @@ class DatosUsuarioActivity : AppCompatActivity() {
         }
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA), 1
         )
     }
 }

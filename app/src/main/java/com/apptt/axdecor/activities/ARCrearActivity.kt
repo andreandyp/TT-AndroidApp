@@ -1,5 +1,6 @@
 package com.apptt.axdecor.activities
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -70,6 +72,8 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private lateinit var viewModel: ARViewModel
     private var catalogoFragment: Fragment? = null
     private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
+    private lateinit var fabCatalogo: FloatingActionButton
+    private var catalogoAbierto = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,6 +101,21 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         barraDummy.visibility = View.INVISIBLE
 
+        catalogoFragment?.view?.visibility = View.GONE
+        fabCatalogo = findViewById(R.id.fabCatalogo)
+        fabCatalogo.setOnClickListener {
+            // TODO: Esperar a que deje de trackear...
+            catalogoAbierto = !catalogoAbierto
+            if(catalogoAbierto) {
+                catalogoFragment?.view?.visibility = View.VISIBLE
+                botonFoto.visibility = View.GONE
+            }
+            else {
+                catalogoFragment?.view?.visibility = View.GONE
+                botonFoto.visibility = View.VISIBLE
+            }
+
+        }
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
             catalogoFragment?.view?.visibility = View.GONE
@@ -104,18 +123,20 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
+        // Está en progreso...
         viewModel.piso.observe(this, androidx.lifecycle.Observer {
             catalogoFragment?.view?.visibility = View.GONE
             changeFloorTexture(it.file2D!!, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
+        // Al darle a las categorías de la barra de abajo del catálogo, se cambia el plane así como lo tenías
         viewModel.modoDecoracion.observe(this, androidx.lifecycle.Observer {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
             if(it == 1){
                 muestraSugerencia()
             }
             if(it == 0) {
+                // Qué onda? Se muestra un piso raro...
                 setDefaultPlane()
             }
             arsesion?.setupPlaneFinding(it)
@@ -238,7 +259,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onResume() {
         super.onResume()
-        //TODO Comprobar permisos de la camara
         //Asegurarse que Google Play Sevices para AR esta instalado y actualizado
         try {
             if (arsesion == null) {
@@ -320,7 +340,6 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 modelosInsertados[id] = 1
             }
 
-            catalogoFragment?.view?.visibility = View.VISIBLE
             mod.setOnTapListener { _, _ ->
                 btnRemove.visibility = View.VISIBLE
                 btnRemove.setOnClickListener {

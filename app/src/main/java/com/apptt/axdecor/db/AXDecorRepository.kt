@@ -4,16 +4,15 @@ import android.app.Application
 import android.util.Log
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
+import com.apptt.axdecor.db.DAO.PaintDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
+import com.apptt.axdecor.db.Entities.PaintModel
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.CategoryProvider
 import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.domain.Provider
 import com.apptt.axdecor.domain.ModelWithCategory
-import com.apptt.axdecor.network.AXDecorAPI
-import com.apptt.axdecor.network.NetworkDataContainer
-import com.apptt.axdecor.network.NetworkModel
-import com.apptt.axdecor.network.NetworkProvider
+import com.apptt.axdecor.network.*
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
@@ -25,6 +24,7 @@ import com.apptt.axdecor.utilities.ModelNetworkUtils.convertToModelModel
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelCategories
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelStyles
 import com.apptt.axdecor.utilities.ModelNetworkUtils.extractModelTypes
+import com.apptt.axdecor.utilities.PaintNetworkUtils.convertToPaintModel
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.convertToProviderModel
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractProviderCategories
 import com.apptt.axdecor.utilities.ProviderNetworkUtils.extractSocialNetworks
@@ -36,12 +36,14 @@ class AXDecorRepository(application: Application) {
     private val modelDAO: ModelDAO
     private val providerDAO: ProviderDAO
     private val dataDAO: DataDAO
+    private val paintDAO: PaintDAO
 
     init {
         val db = AXDecorDatabase.getDatabase(application)
         modelDAO = db.modelDAO()
         providerDAO = db.providerDAO()
         dataDAO = db.dataDAO()
+        paintDAO = db.paintDAO()
     }
 
     suspend fun getModelsFromInternet(): List<NetworkModel> {
@@ -167,5 +169,16 @@ class AXDecorRepository(application: Application) {
                 convertToModelWithCategoryDomain(it, estilos)
             }
         }
+    }
+
+    suspend fun getPaintsFromInternet(): List<NetworkPaint> {
+        return withContext(Dispatchers.IO) {
+            AXDecorAPI.retrofitService.obtenerPinturasAsync().await()
+        }
+    }
+
+    suspend fun savePaintFromInternet(paintsNetwork: List<NetworkPaint>) {
+        val pinturasDB = convertToPaintModel(paintsNetwork)
+        paintDAO.insertPaint(*pinturasDB)
     }
 }

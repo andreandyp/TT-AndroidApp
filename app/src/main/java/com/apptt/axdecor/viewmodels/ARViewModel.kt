@@ -56,6 +56,8 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
                 lista!!.add(d)
             }
             _listaModelos.value = _modelosConCategoria.value?.get(4)
+
+
         }
 
         _modoDecoracion.value = 0

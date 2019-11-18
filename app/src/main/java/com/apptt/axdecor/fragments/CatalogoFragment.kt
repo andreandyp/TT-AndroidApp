@@ -76,7 +76,6 @@ class CatalogoFragment : Fragment() {
                 R.id.itemColores -> {
                     viewModel.cambiarModoDecoracion(1)
                     viewModel.verModelosConCategoria(3)
-                    //muestraSugerencia()
                     true
                 }
                 else -> false

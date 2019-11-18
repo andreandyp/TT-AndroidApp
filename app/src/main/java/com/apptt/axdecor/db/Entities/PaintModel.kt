@@ -12,6 +12,9 @@ data class PaintModel(
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "vendor_code") val vendorCode: String,
     @ColumnInfo(name = "rgb_code") val rgbCode: String,
+    @ColumnInfo(name = "hex_code") val hexCode: String,
+    @ColumnInfo(name = "presentacion") val presentacion: String,
+    @ColumnInfo(name = "price") val price: String,
     @ForeignKey(
         entity = ProviderModel::class,
         parentColumns = ["id_provider"],

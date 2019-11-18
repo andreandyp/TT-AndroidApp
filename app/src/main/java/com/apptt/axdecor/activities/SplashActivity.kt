@@ -42,6 +42,9 @@ class SplashActivity : AppCompatActivity() {
                 val models = repository.getModelsFromInternet()
                 repository.saveModelsFromInternet(models)
                 Toast.makeText(this@SplashActivity, "Modelos descargados", Toast.LENGTH_SHORT)  .show()
+                val paints = repository.getPaintsFromInternet()
+                repository.savePaintFromInternet(paints)
+                Toast.makeText(this@SplashActivity, "Pinturas descargados", Toast.LENGTH_SHORT)  .show()
             } catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
             }
