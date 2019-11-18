@@ -103,7 +103,7 @@ class ARCrearActivity() : AppCompatActivity(), NavigationView.OnNavigationItemSe
             defineModelo(it.fileAR, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
         })
-        animaciones()
+        //animaciones()
     }
 
     private fun muestraCotiza() {
