@@ -41,6 +41,23 @@ interface ModelDAO {
     )
     suspend fun getModelsWithCategory(idCategory: Int, idType: Int): List<ModelWithCategoryModel>
 
+    @Query("""
+        SELECT DISTINCT m.*, c.category, p.name AS proveedor
+        FROM ModelModel m, ModelHasCategoryModel mc, ModelHasTypeModel mt, ModelHasPredefinedStyleModel ms, TypeModel t, CategoryModel c, ProviderModel p, PredefinedStyleModel s
+        WHERE m.id_model = mc.idModel
+            AND m.id_provider = p.id_provider
+            AND m.id_model = mc.idModel
+            AND mc.idCategory = c.id_category
+            AND c.id_category = :idCategory
+            AND m.id_model = mt.idModel
+            AND mt.idType = t.id_type
+            AND t.id_type = :idType
+            AND m.id_model = ms.idModel
+            AND ms.idPredefinedStyle = s.id_predefined_style
+            AND s.id_predefined_style = :idPredefinedStyle
+    """)
+    suspend fun getModelsWithStyle(idCategory: Int, idType: Int, idPredefinedStyle: Int): List<ModelWithCategoryModel>
+
     @Query("DELETE FROM ModelModel")
     suspend fun deleteAllModels()
 
