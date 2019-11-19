@@ -35,6 +35,8 @@ interface APIAxDecorService {
     @GET("/api/v1.0/data")
     fun obtenerDatosAsync(): Deferred<NetworkDataContainer>
 
+    @GET("/api/v1.0/scenes")
+    fun obtenerEscenasAsync(): Deferred<NetworkARScene>
 }
 
 object AXDecorAPI {

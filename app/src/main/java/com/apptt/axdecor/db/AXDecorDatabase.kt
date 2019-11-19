@@ -9,13 +9,13 @@ import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.PaintDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
 import com.apptt.axdecor.db.Entities.*
-import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 import com.apptt.axdecor.db.queries.PaintsWithProviderModel
 
 @Database(
     entities = [
-        ARScene::class,
+        ARSceneModel::class,
+        ARSceneHasModelModel::class,
         CategoryModel::class,
         ModelHasCategoryModel::class,
         ModelHasPredefinedStyleModel::class,
