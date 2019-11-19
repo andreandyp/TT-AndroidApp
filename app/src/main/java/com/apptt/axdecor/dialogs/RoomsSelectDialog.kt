@@ -19,19 +19,19 @@ class RoomsSelectDialog(clase:Class<Any>) : DialogFragment() {
                 .setItems(R.array.Habitaciones, DialogInterface.OnClickListener { _ , which ->
                     when (which) {
                         0 -> {
-                            updateRoom("Baño")
+                            updateRoom("Baño", 1)
                         }
                         1 -> {
-                            updateRoom("Cocina")
+                            updateRoom("Cocina", 5)
                         }
                         2 -> {
-                            updateRoom("Comedor")
+                            updateRoom("Comedor", 3)
                         }
                         3 -> {
-                            updateRoom("Recamara")
+                            updateRoom("Recamara", 2)
                         }
                         4 -> {
-                            updateRoom("Sala")
+                            updateRoom("Sala", 4)
                         }
                     }
                 })
@@ -39,13 +39,14 @@ class RoomsSelectDialog(clase:Class<Any>) : DialogFragment() {
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-    private fun updateRoom(Room: String) {
+    private fun updateRoom(Room: String, idType: Int) {
         val sharePref = activity?.getSharedPreferences(
             getString(R.string.preference_file_key_datos),
             Context.MODE_PRIVATE
         ) ?: return
         with(sharePref.edit()) {
             putString(getString(R.string.room_key), Room)
+            putInt(getString(R.string.id_room_key), idType)
             commit()
         }
         activity?.finish()

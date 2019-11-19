@@ -184,7 +184,6 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
 
     override fun onResume() {
         super.onResume()
-        //TODO Comprobar permisos de la camara
         //Asegurarse que Google Play Sevices para AR esta instalado y actualizado
         try {
             if (arsesion == null) {
