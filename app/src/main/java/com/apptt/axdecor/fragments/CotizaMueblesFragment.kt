@@ -4,22 +4,20 @@ package com.apptt.axdecor.fragments
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.StrictMode
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-
 import com.apptt.axdecor.R
-import com.apptt.axdecor.utilities.TemplatePDF
 import com.apptt.axdecor.adapters.CotizaMueblesAdapter
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.Model
+import com.apptt.axdecor.utilities.TemplatePDF
 import kotlinx.android.synthetic.main.fragment_cotiza_muebles.*
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 class CotizaMueblesFragment(
     private val modelo: MutableList<Model>,

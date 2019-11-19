@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.ModoDecoracionActivity
 import com.apptt.axdecor.adapters.ProveedoresAdapter

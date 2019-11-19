@@ -26,24 +26,24 @@ class Datos3Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val args3 = Datos3FragmentArgs.fromBundle(arguments!!)
         imBaño.setOnClickListener {
-            saveDatosUsuario("Baño", args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(1, args3.nombre, args3.edad, args3.personalidad)
         }
         imCocina.setOnClickListener {
-            saveDatosUsuario("Cocina", args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(5, args3.nombre, args3.edad, args3.personalidad)
         }
         imRecamara.setOnClickListener {
-            saveDatosUsuario("Recamara", args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(2, args3.nombre, args3.edad, args3.personalidad)
         }
         imComedor.setOnClickListener {
-            saveDatosUsuario("Comedor", args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(3, args3.nombre, args3.edad, args3.personalidad)
         }
         imSala.setOnClickListener {
-            saveDatosUsuario("Sala", args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(4, args3.nombre, args3.edad, args3.personalidad)
         }
     }
 
     private fun saveDatosUsuario(
-        Habitacion: String,
+        Habitacion: Int,
         Nombre: String,
         Edad: String,
         Personalidad: String
@@ -56,7 +56,7 @@ class Datos3Fragment : Fragment() {
             putString(getString(R.string.user_Name), Nombre)
             putString(getString(R.string.color_key), Personalidad)
             putString(getString(R.string.age_key), Edad)
-            putString(getString(R.string.room_key), Habitacion)
+            putInt(getString(R.string.room_key), Habitacion)
             putInt(getString(R.string.anim1_key),0)
             putInt(getString(R.string.anim2_key),0)
             commit()

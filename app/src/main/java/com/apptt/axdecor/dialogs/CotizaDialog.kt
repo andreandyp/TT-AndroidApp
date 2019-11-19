@@ -9,7 +9,7 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.CotizacionesActivity
 import com.apptt.axdecor.activities.GaleriaActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.util.HashMap
+import java.util.*
 
 class CotizaDialog(private val modelosCotizar: HashMap<Int, Int>) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
