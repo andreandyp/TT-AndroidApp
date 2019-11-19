@@ -126,7 +126,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
     private fun secuenciaAnimaciones() {
         val secuencia = TapTargetSequence(this)
             .targets(
-                TapTarget.forView(findViewById(R.id.imgMenu),"Navega a través de la app", "Mira tus fotos, cambia el modo de decoraión u observa el catálogo de modelos que tenemos para ti.")
+                TapTarget.forView(findViewById(R.id.imgMenu),"Navega a través de la app", "Mira tus fotos, cambia el modo de decoración u observa el catálogo de modelos que tenemos para ti.")
                     .cancelable(false)
                     .transparentTarget(true)
                     .targetCircleColor(R.color.colorAccent)
@@ -135,7 +135,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
                     .outerCircleAlpha(0.96f)
                     .outerCircleColor(R.color.colorPrimary)
                     .id(1),
-                TapTarget.forView(findViewById<ImageView>(R.id.imgCrear),"Crea tu propio estilo", "Se libre! Inserta modelos por categoría a tu gusto y haz tu decoración deseada.")
+                TapTarget.forView(findViewById<ImageView>(R.id.imgCrear),"Crea tu propio estilo", "¡Sé libre! Inserta modelos por categoría a tu gusto y haz tu decoración deseada.")
                     .cancelable(false)
                     .transparentTarget(true)
                     .targetCircleColor(R.color.colorAccent)
@@ -144,7 +144,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
                     .outerCircleAlpha(0.96f)
                     .outerCircleColor(R.color.colorPrimary)
                     .id(2),
-                TapTarget.forView(findViewById<ImageView>(R.id.imgElegir),"Elige un estilo", "Checa los estilo de moda y elige uno para decorar tu espacio.")
+                TapTarget.forView(findViewById<ImageView>(R.id.imgElegir),"Elige un estilo", "Checa los estilos de moda y elige uno para decorar tu espacio.")
                     .cancelable(false)
                     .transparentTarget(true)
                     .targetCircleColor(R.color.colorAccent)

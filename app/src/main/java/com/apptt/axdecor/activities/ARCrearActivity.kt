@@ -97,18 +97,19 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         catalogoFragment?.view?.visibility = View.GONE
         fabCatalogo = findViewById(R.id.fabCatalogo)
-        var flagCatalogo = 0
-        arFragment?.arSceneView?.scene?.addOnUpdateListener {
+        // Deshabilitado temporalmente por bug
+        /*arFragment?.arSceneView?.scene?.addOnUpdateListener {
             val arframe = arFragment?.arSceneView?.arFrame
             val tracks = arframe?.getUpdatedTrackables(Plane::class.java)
             tracks?.forEach {
-                if (it.trackingState == TrackingState.TRACKING && flagCatalogo == 0) {
+                if (it.trackingState == TrackingState.TRACKING && !catalogoAbierto) {
                     arFragment?.planeDiscoveryController?.hide()
                     catalogoFragment?.view?.visibility = View.VISIBLE
-                    flagCatalogo = 1
+                    botonFoto.visibility = View.GONE
+                    catalogoAbierto = true
                 }
             }
-        }
+        }*/
 
         fabCatalogo.setOnClickListener {
             catalogoAbierto = !catalogoAbierto
@@ -119,7 +120,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 catalogoFragment?.view?.visibility = View.GONE
                 botonFoto.visibility = View.VISIBLE
             }
-
         }
 
         viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
@@ -127,6 +127,9 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             catalogoFragment?.view?.visibility = View.GONE
             botonFoto.visibility = View.VISIBLE
             defineModelo(it.fileAR, it.idModel)
+            val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
+            toast.setGravity(Gravity.TOP, 0, 250)
+            toast.show()
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
@@ -303,10 +306,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.TOP, 0, 250)
-        toast.show()
     }
 
     private fun Session.setupPlaneFinding(mode: Int) {
@@ -517,7 +516,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .targets(
                 TapTarget.forView(
                     findViewById(R.id.barraDummy),
-                    "Elige lo que te gusta!",
+                    "¡Elige lo que te gusta!",
                     "Selecciona una categoría y mira el catálogo de modelos diponibles. RECUERDA: Pulsa sobre un modelo y oprime el botón 'Colocar' para seleccionarlo."
                 )
                     .cancelable(false)
@@ -530,7 +529,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     .id(1),
                 TapTarget.forView(
                     findViewById<FloatingActionButton>(R.id.btnPhoto),
-                    "Que no se te vaya este diseño!",
+                    "¡Que no se te vaya este diseño!",
                     "Toma una captura y guardalo en la galería para poder compartirlo :D"
                 )
                     .cancelable(false)
@@ -556,7 +555,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     .id(3),
                 TapTarget.forView(
                     findViewById<FloatingActionButton>(R.id.fabCatalogo),
-                    "Escoge tu modelo y colocalo",
+                    "Escoge tu modelo y colócalo",
                     "Mira todos los modelos disponibles dentro de nuestro catálogo de modelos. Combina estilos y modelos hasta crear la decoración que más te agrade."
                 )
                     .cancelable(false)
