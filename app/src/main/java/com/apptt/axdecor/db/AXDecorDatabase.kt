@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.apptt.axdecor.db.DAO.DataDAO
-import com.apptt.axdecor.db.DAO.ModelDAO
-import com.apptt.axdecor.db.DAO.PaintDAO
-import com.apptt.axdecor.db.DAO.ProviderDAO
+import com.apptt.axdecor.db.DAO.*
 import com.apptt.axdecor.db.Entities.*
 import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 import com.apptt.axdecor.db.queries.PaintsWithProviderModel
@@ -37,6 +34,7 @@ abstract class AXDecorDatabase : RoomDatabase() {
     abstract fun providerDAO(): ProviderDAO
     abstract fun dataDAO(): DataDAO
     abstract fun paintDAO(): PaintDAO
+    abstract fun sceneDAO(): ARSceneDAO
 
     companion object {
         @Volatile

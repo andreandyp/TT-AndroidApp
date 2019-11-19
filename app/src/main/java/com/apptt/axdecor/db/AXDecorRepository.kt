@@ -1,13 +1,12 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
-import com.apptt.axdecor.db.DAO.DataDAO
-import com.apptt.axdecor.db.DAO.ModelDAO
-import com.apptt.axdecor.db.DAO.PaintDAO
-import com.apptt.axdecor.db.DAO.ProviderDAO
+import com.apptt.axdecor.db.DAO.*
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.*
 import com.apptt.axdecor.network.*
+import com.apptt.axdecor.utilities.ARSceneUtils.convertToARSceneModel
+import com.apptt.axdecor.utilities.ARSceneUtils.extractModelsFromScene
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullCategories
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullStyles
 import com.apptt.axdecor.utilities.DataNetworkUtils.extractFullTypes
@@ -32,6 +31,7 @@ class AXDecorRepository(application: Application) {
     private val providerDAO: ProviderDAO
     private val dataDAO: DataDAO
     private val paintDAO: PaintDAO
+    private val sceneDAO: ARSceneDAO
 
     init {
         val db = AXDecorDatabase.getDatabase(application)
@@ -39,6 +39,7 @@ class AXDecorRepository(application: Application) {
         providerDAO = db.providerDAO()
         dataDAO = db.dataDAO()
         paintDAO = db.paintDAO()
+        sceneDAO = db.sceneDAO()
     }
 
     suspend fun getModelsFromInternet(): List<NetworkModel> {
@@ -172,9 +173,11 @@ class AXDecorRepository(application: Application) {
         }
     }
 
-    suspend fun savePaintFromInternet(paintsNetwork: List<NetworkPaint>) {
-        val pinturasDB = convertToPaintModel(paintsNetwork)
-        paintDAO.insertPaint(*pinturasDB)
+    suspend fun savePaintsFromInternet(paintsNetwork: List<NetworkPaint>) {
+        withContext(Dispatchers.IO) {
+            val pinturasDB = convertToPaintModel(paintsNetwork)
+            paintDAO.insertPaint(*pinturasDB)
+        }
     }
 
     suspend fun getPaints(): List<Paint> {
@@ -191,6 +194,24 @@ class AXDecorRepository(application: Application) {
                 idProvider = it.idProvider,
                 provider = it.proveedor
             )
+        }
+    }
+
+    suspend fun getScenesFromInternet(): List<NetworkARScene> {
+        return withContext(Dispatchers.IO) {
+            AXDecorAPI.retrofitService.obtenerEscenasAsync().await()
+        }
+    }
+
+    suspend fun saveScenesFromInternet(scenesNetwork: List<NetworkARScene>) {
+        withContext(Dispatchers.IO) {
+            val escenasDB = convertToARSceneModel(scenesNetwork)
+            sceneDAO.insertScenes(*escenasDB)
+
+            scenesNetwork.forEach {
+                val modelos = extractModelsFromScene(it.models, it.idARScene)
+                sceneDAO.addModels(*modelos)
+            }
         }
     }
 }

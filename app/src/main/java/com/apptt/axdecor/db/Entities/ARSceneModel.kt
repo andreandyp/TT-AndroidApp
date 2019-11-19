@@ -31,7 +31,5 @@ data class ARSceneModel(
         childColumns = ["id_predefined_style"],
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE
-    ) val idPredefinedStyle: Int,
-    @ColumnInfo(name = "id_user")
-    val idUser: Int
+    ) val idPredefinedStyle: Int
 )

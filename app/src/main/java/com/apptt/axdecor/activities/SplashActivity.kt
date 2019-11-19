@@ -14,7 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
-    private val splash = 500
+    private val splash = 750
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +37,20 @@ class SplashActivity : AppCompatActivity() {
                 Toast.makeText(this@SplashActivity, "Datos descargados", Toast.LENGTH_SHORT).show()
                 val providers = repository.getProvidersFromInternet()
                 repository.saveProvidersFromInternet(providers)
-                Toast.makeText(this@SplashActivity, "Proveedores descargados", Toast.LENGTH_SHORT)   .show()
+                Toast.makeText(this@SplashActivity, "Proveedores descargados", Toast.LENGTH_SHORT)
+                    .show()
                 val models = repository.getModelsFromInternet()
                 repository.saveModelsFromInternet(models)
-                Toast.makeText(this@SplashActivity, "Modelos descargados", Toast.LENGTH_SHORT)  .show()
+                Toast.makeText(this@SplashActivity, "Modelos descargados", Toast.LENGTH_SHORT)
+                    .show()
                 val paints = repository.getPaintsFromInternet()
-                repository.savePaintFromInternet(paints)
-                Toast.makeText(this@SplashActivity, "Pinturas descargados", Toast.LENGTH_SHORT)  .show()
+                repository.savePaintsFromInternet(paints)
+                Toast.makeText(this@SplashActivity, "Pinturas descargados", Toast.LENGTH_SHORT)
+                    .show()
+                val scenes = repository.getScenesFromInternet()
+                repository.saveScenesFromInternet(scenes)
+                Toast.makeText(this@SplashActivity, "Escenas descargados", Toast.LENGTH_SHORT)
+                    .show()
             } catch (e: Exception) {
                 Toast.makeText(this@SplashActivity, e.toString(), Toast.LENGTH_LONG).show()
             }
