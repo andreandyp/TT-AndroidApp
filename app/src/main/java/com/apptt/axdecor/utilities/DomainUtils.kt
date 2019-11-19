@@ -1,11 +1,13 @@
 package com.apptt.axdecor.utilities
 
 import com.apptt.axdecor.db.Entities.ModelModel
+import com.apptt.axdecor.db.Entities.PaintModel
 import com.apptt.axdecor.db.Entities.PredefinedStyleModel
 import com.apptt.axdecor.db.Entities.ProviderModel
 import com.apptt.axdecor.db.queries.ModelWithCategoryModel
 import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.domain.ModelWithCategory
+import com.apptt.axdecor.domain.Paint
 import com.apptt.axdecor.domain.Provider
 
 object DomainUtils {
@@ -51,6 +53,21 @@ object DomainUtils {
             rango = provider.rango,
             razonSocial = provider.razonSocial,
             rfc = provider.rfc
+        )
+    }
+
+
+    fun convertToSinglePaint(paint:PaintModel) : Paint{
+        return Paint(
+            idPaint = paint.idPaint,
+            name = paint.name,
+            vendorCode = paint.vendorCode,
+            rgbCode = paint.rgbCode,
+            hexCode = paint.hexCode,
+            presentacion = paint.presentacion,
+            price = paint.price,
+            idProvider = paint.idProvider,
+            provider = ""
         )
     }
 

@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.apptt.axdecor.R
+import com.apptt.axdecor.adapters.ContactoPinturaAdapter
 import com.apptt.axdecor.adapters.ContactosAdapter
 import com.apptt.axdecor.db.queries.ModelProviderCategory
+import com.apptt.axdecor.domain.Provider
+import com.apptt.axdecor.domain.Store
 import kotlinx.android.synthetic.main.fragment_contacto_proveedores.*
 
-class ContactoProveedoresFragment(private val tiendas: MutableList<MutableList<ModelProviderCategory>>) :
+class ContactoProveedoresFragment(private val tiendas: MutableList<MutableList<ModelProviderCategory>>, private val pintProv:List<Store>?) :
     Fragment() {
 
     override fun onCreateView(
@@ -53,12 +56,14 @@ class ContactoProveedoresFragment(private val tiendas: MutableList<MutableList<M
             recPisos.visibility = View.VISIBLE
 
         }
-        if(tiendas[3].size > 0){
-            val gridPinturas = GridLayoutManager(activity, 1)
-            recPinturas.layoutManager = gridPinturas
-            recPinturas.adapter = ContactosAdapter(activity!!, tiendas[3])
-            tvPinturas.visibility = View.VISIBLE
-            recPinturas.visibility = View.VISIBLE
+        if (pintProv != null) {
+            if(pintProv.isNotEmpty()){
+                val gridPinturas = GridLayoutManager(activity, 1)
+                recPinturas.layoutManager = gridPinturas
+                recPinturas.adapter = ContactoPinturaAdapter(activity!!, pintProv)
+                tvPinturas.visibility = View.VISIBLE
+                recPinturas.visibility = View.VISIBLE
+            }
         }
     }
 

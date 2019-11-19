@@ -71,6 +71,22 @@ class AXDecorRepository(application: Application) {
         }
     }
 
+    suspend fun getStoresbyProviderId(idProvider: Int) : List<Store> {
+        val lista = providerDAO.getStoresbyProviderId(idProvider)
+        return withContext(Dispatchers.IO){
+            lista.map {
+                Store(
+                    id_store = it.id_store,
+                    email = it.email,
+                    address = it.address,
+                    id_provider = it.id_provider,
+                    phone = it.phone,
+                    logo = it.logo
+                )
+            }
+        }
+    }
+
     suspend fun getProviderByCategoryModel(): List<ModelProviderCategory> {
         return withContext(Dispatchers.IO) {
             providerDAO.getProviderByCategoryModel()

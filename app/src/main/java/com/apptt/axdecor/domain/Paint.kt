@@ -2,6 +2,7 @@ package com.apptt.axdecor.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 @Parcelize
 data class Paint(
@@ -13,5 +14,5 @@ data class Paint(
     val presentacion: String,
     val price: String,
     val idProvider: Int,
-    val provider: String
+    val provider: String?
 ) : Parcelable
