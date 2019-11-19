@@ -219,15 +219,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             Context.MODE_PRIVATE
         ) ?: return
         val nombre = sharePref.getString(getString(R.string.user_Name), "")
-        val IDhabitacion = sharePref.getInt(getString(R.string.room_key), 1)
-        var habitacion = "Habitacion"
-        when(IDhabitacion){
-            1 -> {habitacion = "Baño"}
-            2 -> {habitacion = "Recámara"}
-            3 -> {habitacion = "Comedor"}
-            4 -> {habitacion = "Sala"}
-            5 -> {habitacion = "Cocina"}
-        }
+        val habitacion = sharePref.getString(getString(R.string.room_key), "")
         drawerLayout = findViewById(R.id.drawerLayout)
         val toogle = ActionBarDrawerToggle(this, drawerLayout, R.string.abre, R.string.cierra)
         val botonMenu = findViewById<ImageView>(R.id.imgMenu)
@@ -236,7 +228,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         val txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
         val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
         txtUser.text = nombre
-        txtHabit.text = "Decorando: $habitacion"
+        txtHabit.text = "Decorando: ${habitacion}"
         navigationView.setNavigationItemSelectedListener(this)
         drawerLayout.setDrawerListener(toogle)
         toogle.syncState()

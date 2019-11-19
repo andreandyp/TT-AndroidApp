@@ -2,6 +2,7 @@ package com.apptt.axdecor.fragments
 
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.apptt.axdecor.R
+import com.apptt.axdecor.activities.TutorialConceptosActivity
 import com.apptt.axdecor.databinding.FragmentConceptosBinding
 import com.apptt.axdecor.viewmodels.ConceptosViewModel
 import pl.bclogic.pulsator4droid.library.PulsatorLayout
@@ -38,7 +40,8 @@ class ConceptosFragment : Fragment() {
         )
 
         binding.siguienteFragmento.setOnClickListener {
-            it.findNavController().navigate(ConceptosFragmentDirections.actionConceptosFragmentToProveedoresFragment())
+            val inten = Intent(activity?.applicationContext, TutorialConceptosActivity::class.java)
+            startActivity(inten)
         }
 
         conceptosViewModel = ViewModelProviders.of(this).get(ConceptosViewModel::class.java)

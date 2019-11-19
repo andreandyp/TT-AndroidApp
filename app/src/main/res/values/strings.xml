@@ -32,6 +32,7 @@
     <string name="age_key">age_key</string>
     <string name="color_key">color_key</string>
     <string name="room_key">room_key</string>
+    <string name="id_room_key">id_room_key</string>
     <string name="providers_key">providers_key</string>
     <string name="style_key">style_key</string>
     <string name="anim1_key">anim1_key</string>

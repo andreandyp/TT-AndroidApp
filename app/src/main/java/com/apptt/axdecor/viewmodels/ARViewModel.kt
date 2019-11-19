@@ -65,11 +65,8 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
             application.getString(R.string.preference_file_key_datos),
             Context.MODE_PRIVATE
         )
-        // TODO: Aquí explota. Cambia el argumento de getString por la nueva llave.
-        // Sí, el getString es de application
 
-        //val habitacion = sharePref.getInt(application.getString(R.string.room_key), 0)
-        val habitacion = 0
+        val habitacion = sharePref.getInt(application.getString(R.string.id_room_key), 0)
         viewModelScope.launch {
             _modelosConCategoria.value = mutableListOf()
             val lista = _modelosConCategoria.value

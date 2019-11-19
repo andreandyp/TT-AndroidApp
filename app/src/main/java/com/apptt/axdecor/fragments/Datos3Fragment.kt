@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.TutorialConceptosActivity
 import kotlinx.android.synthetic.main.fragment_datos3.*
@@ -24,48 +25,34 @@ class Datos3Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args3 = Datos3FragmentArgs.fromBundle(arguments!!)
         imBaño.setOnClickListener {
-            saveDatosUsuario(1, args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(1,"Baño")
         }
         imCocina.setOnClickListener {
-            saveDatosUsuario(5, args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(5,"Cocina")
         }
         imRecamara.setOnClickListener {
-            saveDatosUsuario(2, args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(2,"Recámara")
         }
         imComedor.setOnClickListener {
-            saveDatosUsuario(3, args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(3,"Comedor")
         }
         imSala.setOnClickListener {
-            saveDatosUsuario(4, args3.nombre, args3.edad, args3.personalidad)
+            saveDatosUsuario(4,"Sala")
         }
     }
 
-    private fun saveDatosUsuario(
-        Habitacion: Int,
-        Nombre: String,
-        Edad: String,
-        Personalidad: String
-    ) {
+    private fun saveDatosUsuario(idHabitacion: Int,nombrehabitacion:String) {
         val sharPref = activity?.getSharedPreferences(
             getString(R.string.preference_file_key_datos),
             Context.MODE_PRIVATE
         ) ?: return
         with(sharPref.edit()) {
-            putString(getString(R.string.user_Name), Nombre)
-            putString(getString(R.string.color_key), Personalidad)
-            putString(getString(R.string.age_key), Edad)
-            putInt(getString(R.string.room_key), Habitacion)
-            putInt(getString(R.string.anim1_key),0)
-            putInt(getString(R.string.anim2_key),0)
+            putInt(getString(R.string.id_room_key), idHabitacion)
+            putString(getString(R.string.room_key), nombrehabitacion)
             commit()
         }
-        toSelectModeActivity()
+        view!!.findNavController().navigate(Datos3FragmentDirections.actionDatos3FragmentToProveedoresFragment())
     }
 
-    private fun toSelectModeActivity() {
-        val inten = Intent(activity?.applicationContext, TutorialConceptosActivity::class.java)
-        startActivity(inten)
-    }
 }

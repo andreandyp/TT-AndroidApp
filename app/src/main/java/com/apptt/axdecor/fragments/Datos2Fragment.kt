@@ -1,6 +1,7 @@
 package com.apptt.axdecor.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -44,12 +45,20 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener {
                 Snackbar.make(btnSiguiente, "Parece que olvidas algo.", Snackbar.LENGTH_SHORT)
                     .show()
             } else {
+                val sharPref = activity?.getSharedPreferences(
+                    getString(R.string.preference_file_key_datos),
+                    Context.MODE_PRIVATE
+                ) ?: return@setOnClickListener
+                with(sharPref.edit()) {
+                    putString(getString(R.string.user_Name), args.nombre)
+                    putString(getString(R.string.color_key), spnColores.selectedItem.toString())
+                    putString(getString(R.string.age_key), args.edad)
+                    putInt(getString(R.string.anim1_key),0)
+                    putInt(getString(R.string.anim2_key),0)
+                    commit()
+                }
                 it.findNavController().navigate(
-                    Datos2FragmentDirections.actionDatos2FragmentToDatos3Fragment(
-                        args.edad,
-                        args.nombre,
-                        spnColores.selectedItem.toString()
-                    )
+                    Datos2FragmentDirections.actionDatos2FragmentToBienvenidaConceptosFragment()
                 )
             }
         }

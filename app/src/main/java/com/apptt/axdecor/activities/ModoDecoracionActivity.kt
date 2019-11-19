@@ -64,7 +64,7 @@ class ModoDecoracionActivity : AppCompatActivity(),
         val txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
         val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
         txtUser.text = nombre
-        txtHabit.text = "Decorando: " + habitacion
+        txtHabit.text = "Decorando: ${habitacion}"
         navigationView.setNavigationItemSelectedListener(this)
         drawerLayout.setDrawerListener(toogle)
         toogle.syncState()
