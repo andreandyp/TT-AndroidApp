@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 data class ARSceneModel(
     @ColumnInfo(name = "id_arscene") @PrimaryKey @NonNull val idARScene: Int,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "name") val imagen: String,
+    @ColumnInfo(name = "imagen") val imagen: String,
     @ForeignKey(
         entity = ProviderModel::class,
         parentColumns = ["id_provider"],
