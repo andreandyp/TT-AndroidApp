@@ -1,7 +1,9 @@
 package com.apptt.axdecor.viewmodels
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
+import com.apptt.axdecor.R
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.domain.Paint
@@ -59,9 +61,15 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
     private val axDecorRepository = AXDecorRepository(application)
 
     init {
-        // TODO: Obtener el valor de la habitación desde las preferencias
-        //val sharedPref = application.getSharedPreferences(getInt())
-        val habitacion = 1
+        val sharePref = application.getSharedPreferences(
+            application.getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        )
+        // TODO: Aquí explota. Cambia el argumento de getString por la nueva llave.
+        // Sí, el getString es de application
+
+        //val habitacion = sharePref.getInt(application.getString(R.string.room_key), 0)
+        val habitacion = 0
         viewModelScope.launch {
             _modelosConCategoria.value = mutableListOf()
             val lista = _modelosConCategoria.value
