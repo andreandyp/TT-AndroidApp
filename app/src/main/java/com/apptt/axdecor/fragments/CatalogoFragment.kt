@@ -99,6 +99,11 @@ class CatalogoFragment : Fragment() {
 
         viewModel.listaModelos.observe(viewLifecycleOwner, Observer {
             it?.apply {
+                if (it.isEmpty()) {
+                    binding.nada.visibility = View.VISIBLE
+                } else {
+                    binding.nada.visibility = View.GONE
+                }
                 catalogoAdapter.modelos = it
             }
         })

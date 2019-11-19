@@ -1,7 +1,9 @@
 package com.apptt.axdecor.viewmodels
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
+import com.apptt.axdecor.R
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.domain.Paint
@@ -59,11 +61,14 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
     private val axDecorRepository = AXDecorRepository(application)
 
     init {
+        // TODO: Obtener el valor de la habitación desde las preferencias
+        //val sharedPref = application.getSharedPreferences(getInt())
+        val habitacion = 0
         viewModelScope.launch {
             _modelosConCategoria.value = mutableListOf()
             val lista = _modelosConCategoria.value
             for (id in 1..5) {
-                val d = axDecorRepository.getModelsWithCategory(id)
+                val d = axDecorRepository.getModelsWithCategory(id, habitacion)
                 lista!!.add(d)
             }
             val pinturas = axDecorRepository.getPaints()

@@ -1,12 +1,10 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
-import android.util.Log
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.PaintDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
-import com.apptt.axdecor.db.Entities.PaintModel
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.*
 import com.apptt.axdecor.network.*
@@ -73,8 +71,8 @@ class AXDecorRepository(application: Application) {
         }
     }
 
-    suspend fun getProviderByCategoryModel(): List<ModelProviderCategory>{
-        return withContext(Dispatchers.IO){
+    suspend fun getProviderByCategoryModel(): List<ModelProviderCategory> {
+        return withContext(Dispatchers.IO) {
             providerDAO.getProviderByCategoryModel()
         }
     }
@@ -158,9 +156,9 @@ class AXDecorRepository(application: Application) {
         }
     }
 
-    suspend fun getModelsWithCategory(id: Int): List<ModelWithCategory> {
+    suspend fun getModelsWithCategory(idCategory: Int, idType: Int): List<ModelWithCategory> {
         return withContext(Dispatchers.IO) {
-            val modelos = modelDAO.getModelsWithCategory(id)
+            val modelos = modelDAO.getModelsWithCategory(idCategory, idType)
             modelos.map {
                 val estilos = modelDAO.viewStylesOfModel(it.idModel)
                 convertToModelWithCategoryDomain(it, estilos)

@@ -28,11 +28,18 @@ interface ModelDAO {
     @Query(
         """
         SELECT DISTINCT m.*, c.category, p.name AS proveedor
-        FROM ModelModel m, ModelHasCategoryModel mc, CategoryModel c, ProviderModel p
-        WHERE m.id_model = mc.idModel AND m.id_provider = p.id_provider AND m.id_model = mc.idModel AND mc.idCategory = c.id_category AND c.id_category = :idCategory
+        FROM ModelModel m, ModelHasCategoryModel mc, ModelHasTypeModel mt, TypeModel t, CategoryModel c, ProviderModel p
+        WHERE m.id_model = mc.idModel
+            AND m.id_provider = p.id_provider
+            AND m.id_model = mc.idModel
+            AND mc.idCategory = c.id_category
+            AND c.id_category = :idCategory
+            AND m.id_model = mt.idModel
+            AND mt.idType = t.id_type
+            AND t.id_type = :idType
     """
     )
-    suspend fun getModelsWithCategory(idCategory: Int): List<ModelWithCategoryModel>
+    suspend fun getModelsWithCategory(idCategory: Int, idType: Int): List<ModelWithCategoryModel>
 
     @Query("DELETE FROM ModelModel")
     suspend fun deleteAllModels()
