@@ -38,9 +38,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textview.MaterialTextView
-import com.google.ar.core.ArCoreApk
-import com.google.ar.core.Config
-import com.google.ar.core.Session
+import com.google.ar.core.*
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.assets.RenderableSource
@@ -99,8 +97,20 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         catalogoFragment?.view?.visibility = View.GONE
         fabCatalogo = findViewById(R.id.fabCatalogo)
+        var flagCatalogo = 0
+        arFragment?.arSceneView?.scene?.addOnUpdateListener {
+            val arframe = arFragment?.arSceneView?.arFrame
+            val tracks = arframe?.getUpdatedTrackables(Plane::class.java)
+            tracks?.forEach {
+                if (it.trackingState == TrackingState.TRACKING && flagCatalogo == 0) {
+                    arFragment?.planeDiscoveryController?.hide()
+                    catalogoFragment?.view?.visibility = View.VISIBLE
+                    flagCatalogo = 1
+                }
+            }
+        }
+
         fabCatalogo.setOnClickListener {
-            // TODO: Esperar a que deje de trackear...
             catalogoAbierto = !catalogoAbierto
             if (catalogoAbierto) {
                 catalogoFragment?.view?.visibility = View.VISIBLE
@@ -154,10 +164,11 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         if (sharePref.getInt(getString(R.string.anim2_key), 0) == 0) {
             animaciones()
             with(sharePref.edit()) {
-                putInt(getString(com.apptt.axdecor.R.string.anim2_key), 1)
+                putInt(getString(R.string.anim2_key), 1)
                 commit()
             }
         }
+
     }
 
     private fun muestraCotiza() {
@@ -208,7 +219,15 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             Context.MODE_PRIVATE
         ) ?: return
         val nombre = sharePref.getString(getString(R.string.user_Name), "")
-        val habitacion = sharePref.getString(getString(R.string.room_key), "")
+        val IDhabitacion = sharePref.getInt(getString(R.string.room_key), 1)
+        var habitacion = "Habitacion"
+        when(IDhabitacion){
+            1 -> {habitacion = "Baño"}
+            2 -> {habitacion = "Recámara"}
+            3 -> {habitacion = "Comedor"}
+            4 -> {habitacion = "Sala"}
+            5 -> {habitacion = "Cocina"}
+        }
         drawerLayout = findViewById(R.id.drawerLayout)
         val toogle = ActionBarDrawerToggle(this, drawerLayout, R.string.abre, R.string.cierra)
         val botonMenu = findViewById<ImageView>(R.id.imgMenu)

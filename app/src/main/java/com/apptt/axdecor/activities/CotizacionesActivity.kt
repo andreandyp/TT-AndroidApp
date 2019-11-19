@@ -2,17 +2,16 @@ package com.apptt.axdecor.activities
 
 import android.os.Bundle
 import android.widget.ImageView
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CotizacionesPagerAdapter
 import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.Model
-import com.apptt.axdecor.domain.Provider
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.runBlocking
 
 class CotizacionesActivity : AppCompatActivity() {
 

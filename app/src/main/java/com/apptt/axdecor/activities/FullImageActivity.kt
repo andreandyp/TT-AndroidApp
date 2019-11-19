@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.drawToBitmap
 import com.apptt.axdecor.R
 import kotlinx.android.synthetic.main.activity_full_image.*

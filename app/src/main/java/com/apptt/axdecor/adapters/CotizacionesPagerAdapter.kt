@@ -6,10 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.Model
-import com.apptt.axdecor.domain.Provider
 import com.apptt.axdecor.fragments.ContactoProveedoresFragment
 import com.apptt.axdecor.fragments.CotizaMueblesFragment
-import com.apptt.axdecor.fragments.CotizaPisosFragment
 
 class CotizacionesPagerAdapter(
     private val context: Context,

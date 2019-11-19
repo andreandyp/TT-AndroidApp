@@ -1,12 +1,10 @@
 package com.apptt.axdecor.db
 
 import android.app.Application
-import android.util.Log
 import com.apptt.axdecor.db.DAO.DataDAO
 import com.apptt.axdecor.db.DAO.ModelDAO
 import com.apptt.axdecor.db.DAO.PaintDAO
 import com.apptt.axdecor.db.DAO.ProviderDAO
-import com.apptt.axdecor.db.Entities.PaintModel
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.*
 import com.apptt.axdecor.network.*
