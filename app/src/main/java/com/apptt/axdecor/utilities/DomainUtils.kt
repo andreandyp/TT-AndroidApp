@@ -93,7 +93,8 @@ object DomainUtils {
             codigo = modelo.codigo,
             category = modelo.category,
             proveedor = modelo.proveedor,
-            styles = estilos.map { it.style }
+            styles = estilos.map { it.style },
+            idProvider = modelo.idProvider
         )
     }
 }

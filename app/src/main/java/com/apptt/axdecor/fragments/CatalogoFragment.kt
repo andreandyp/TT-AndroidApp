@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.CatalogoAdapter
+import com.apptt.axdecor.adapters.ProveedorCatalogoAdapter
 import com.apptt.axdecor.databinding.CatalogoFragmentBinding
 import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.domain.Paint
@@ -38,6 +39,10 @@ class CatalogoFragment : Fragment() {
         }
     }
 
+    private val proveedorCatalogoAdapter = ProveedorCatalogoAdapter {
+        viewModel.verMueblesDe(it.idProvider)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +57,7 @@ class CatalogoFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.arViewModel = viewModel
         binding.catalogo.adapter = catalogoAdapter
+        binding.rcProveedores.adapter = proveedorCatalogoAdapter
 
         bottomNavigate = binding.bottomNav
 
@@ -105,6 +111,12 @@ class CatalogoFragment : Fragment() {
                     binding.nada.visibility = View.GONE
                 }
                 catalogoAdapter.modelos = it
+            }
+        })
+
+        viewModel.listaProveedores.observe(viewLifecycleOwner, Observer {
+            it?.apply {
+                proveedorCatalogoAdapter.proveedores = it
             }
         })
 

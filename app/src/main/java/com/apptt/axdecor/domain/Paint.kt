@@ -2,7 +2,6 @@ package com.apptt.axdecor.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
 
 @Parcelize
 data class Paint(

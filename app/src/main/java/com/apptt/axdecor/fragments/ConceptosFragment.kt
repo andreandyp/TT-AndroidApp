@@ -14,7 +14,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.apptt.axdecor.R
 import com.apptt.axdecor.activities.TutorialConceptosActivity

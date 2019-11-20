@@ -5,8 +5,10 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.apptt.axdecor.R
 import com.apptt.axdecor.db.AXDecorRepository
+import com.apptt.axdecor.domain.CategoryProvider
 import com.apptt.axdecor.domain.ModelWithCategory
 import com.apptt.axdecor.domain.Paint
+import com.apptt.axdecor.domain.ProveedorCatalogo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -60,6 +62,14 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
 
     private val axDecorRepository = AXDecorRepository(application)
 
+    private val _listaProveedores = MutableLiveData<List<ProveedorCatalogo>>()
+    val listaProveedores: LiveData<List<ProveedorCatalogo>> = _listaProveedores
+
+    private lateinit var proveedores: List<CategoryProvider>
+    private lateinit var proveedoresNombre : List<String>
+    private lateinit var proveedoresIds : List<Int>
+    private var listaModelosConCategoria: List<Any>? = null
+
     init {
         val sharePref = application.getSharedPreferences(
             application.getString(R.string.preference_file_key_datos),
@@ -68,6 +78,7 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
 
         val habitacion = sharePref.getInt(application.getString(R.string.id_room_key), 0)
         viewModelScope.launch {
+            proveedores = axDecorRepository.getProvidersByCategory()
             _modelosConCategoria.value = mutableListOf()
             val lista = _modelosConCategoria.value
             for (id in 1..5) {
@@ -76,8 +87,19 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
             }
             val pinturas = axDecorRepository.getPaints()
             lista!![3] = pinturas
-            _listaModelos.value = _modelosConCategoria.value?.get(4)
 
+            val listaProvs = mutableListOf<ProveedorCatalogo>()
+
+            proveedoresIds = proveedores[4].idProviders
+            proveedoresNombre = proveedores[4].providers
+            for(i in proveedoresIds.indices) {
+                listaProvs.add(
+                    ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
+                )
+            }
+            listaModelosConCategoria = _modelosConCategoria.value?.get(4)
+            _listaModelos.value = listaModelosConCategoria
+            _listaProveedores.value = listaProvs
         }
 
         _modoDecoracion.value = 0
@@ -94,7 +116,17 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun verModelosConCategoria(id: Int) {
-        _listaModelos.value = _modelosConCategoria.value?.get(id)
+        proveedoresNombre = proveedores[id].providers
+        proveedoresIds = proveedores[id].idProviders
+        val listaProvs = mutableListOf<ProveedorCatalogo>()
+        for(i in proveedoresIds.indices) {
+            listaProvs.add(
+                ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
+            )
+        }
+        listaModelosConCategoria = _modelosConCategoria.value?.get(id)
+        _listaModelos.value = listaModelosConCategoria
+        _listaProveedores.value = listaProvs
     }
 
     fun verDetallesModelo(modelo: ModelWithCategory) {
@@ -136,5 +168,23 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
 
     fun cambiarModoDecoracion(modo: Int) {
         _modoDecoracion.value = modo
+    }
+
+    fun verMueblesDe(idProvider: Int) {
+        val modelosNuevos = listaModelosConCategoria
+        if(modelosNuevos!!.isNotEmpty()) {
+            _listaModelos.value = modelosNuevos.filter {
+
+                if(it is Paint) {
+                    it.idProvider == idProvider
+                }
+                else {
+                    it as ModelWithCategory
+                    it.idProvider == idProvider
+                }
+
+            }
+        }
+
     }
 }

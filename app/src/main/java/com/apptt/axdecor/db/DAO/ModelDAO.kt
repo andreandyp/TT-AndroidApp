@@ -27,7 +27,7 @@ interface ModelDAO {
 
     @Query(
         """
-        SELECT DISTINCT m.*, c.category, p.name AS proveedor
+        SELECT DISTINCT m.*, c.category, p.name AS proveedor, p.id_provider
         FROM ModelModel m, ModelHasCategoryModel mc, ModelHasTypeModel mt, TypeModel t, CategoryModel c, ProviderModel p
         WHERE m.id_model = mc.idModel
             AND m.id_provider = p.id_provider

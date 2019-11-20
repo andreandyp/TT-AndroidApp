@@ -3,7 +3,6 @@ package com.apptt.axdecor.fragments
 
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

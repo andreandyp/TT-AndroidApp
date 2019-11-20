@@ -11,7 +11,6 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.adapters.ContactoPinturaAdapter
 import com.apptt.axdecor.adapters.ContactosAdapter
 import com.apptt.axdecor.db.queries.ModelProviderCategory
-import com.apptt.axdecor.domain.Provider
 import com.apptt.axdecor.domain.Store
 import kotlinx.android.synthetic.main.fragment_contacto_proveedores.*
 

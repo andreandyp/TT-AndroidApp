@@ -10,7 +10,6 @@ import com.apptt.axdecor.db.AXDecorRepository
 import com.apptt.axdecor.db.queries.ModelProviderCategory
 import com.apptt.axdecor.domain.Model
 import com.apptt.axdecor.domain.Paint
-import com.apptt.axdecor.domain.Provider
 import com.apptt.axdecor.domain.Store
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.app_bar.*

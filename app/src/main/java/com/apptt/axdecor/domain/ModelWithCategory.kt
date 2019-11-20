@@ -12,5 +12,6 @@ data class ModelWithCategory(
     val codigo: String?,
     val category: String,
     val proveedor: String,
-    val styles: List<String>
+    val styles: List<String>,
+    val idProvider: Int
 )

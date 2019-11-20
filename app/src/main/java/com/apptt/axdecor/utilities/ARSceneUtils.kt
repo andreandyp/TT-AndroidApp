@@ -2,7 +2,6 @@ package com.apptt.axdecor.utilities
 
 import com.apptt.axdecor.db.Entities.ARSceneHasModelModel
 import com.apptt.axdecor.db.Entities.ARSceneModel
-import com.apptt.axdecor.db.Entities.ModelModel
 import com.apptt.axdecor.network.NetworkARScene
 import com.apptt.axdecor.network.NetworkModelScene
 

@@ -29,7 +29,7 @@ interface ProviderDAO {
         JOIN CategoryModel AS c
         ON pc.idCategory = c.id_category
         GROUP BY c.category, c.id_category
-        ORDER BY c.id_category
+        ORDER BY c.id_category, idProviders
     """
     )
     suspend fun getProvidersByCategory(): List<CategoryProviderModel>
