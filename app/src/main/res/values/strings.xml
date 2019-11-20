@@ -35,6 +35,7 @@
     <string name="id_room_key">id_room_key</string>
     <string name="providers_key">providers_key</string>
     <string name="style_key">style_key</string>
+    <string name="id_style_key">style_key</string>
     <string name="anim1_key">anim1_key</string>
     <string name="anim2_key">anim2_key</string>
 

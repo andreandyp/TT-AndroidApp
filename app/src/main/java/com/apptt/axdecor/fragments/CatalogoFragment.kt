@@ -27,7 +27,7 @@ class CatalogoFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProviders.of(activity, ARViewModel.Factory(activity.application))
+        ViewModelProviders.of(activity, ARViewModel.Factory(activity.application, 0))
             .get(ARViewModel::class.java)
     }
 

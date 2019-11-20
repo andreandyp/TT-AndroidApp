@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,12 +20,21 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.apptt.axdecor.R
+import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
+import com.apptt.axdecor.domain.Paint
+import com.apptt.axdecor.fragments.ConceptosFragment
 import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
+import com.apptt.axdecor.fragments.ProveedoresFragment
 import com.apptt.axdecor.utilities.ARCoreUtils
+import com.apptt.axdecor.viewmodels.ARViewModel
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -51,73 +60,163 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    lateinit var bottomNavigate: BottomNavigationView
+    lateinit var barraDummy: BottomNavigationView
     private lateinit var drawerLayout: DrawerLayout
     private var arFragment: ArFragment? = null
     private var modelo: ModelRenderable? = null
     private var arsesion: Session? = null
-    private var modoPlano = 0 // 0 - Horizontal, 1 - Vertical
-    private val Lampara_asset =
-        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/lamp%20(1).glb?alt=media&token=c7c5a764-4912-4f5e-ac12-4546d09db5ce"
-    private val espejo_asset =
-        "https://firebasestorage.googleapis.com/v0/b/axdecortt.appspot.com/o/espejo_1.glb?alt=media&token=3848d06d-2bf4-473e-bf20-d76194a3f4e2"
     private var mUserRequestedInstall = true
+    private lateinit var viewModel: ARViewModel
+    private var catalogoFragment: Fragment? = null
+    private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
+    private var pinturaInsertada: Paint? = null
+    private lateinit var fabCatalogo: FloatingActionButton
+    private var catalogoAbierto = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharePref = this.getSharedPreferences(
+            getString(R.string.preference_file_key_datos),
+            Context.MODE_PRIVATE
+        ) ?: return
+        val estilo = sharePref.getInt(getString(R.string.id_style_key), 0)
+        viewModel = ViewModelProviders.of(this, ARViewModel.Factory(application, estilo))
+            .get(ARViewModel::class.java)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.navigation_drawer)
         val stub = findViewById<ViewStub>(R.id.stub)
-        stub.layoutResource = R.layout.activity_arelegir
+        stub.layoutResource = R.layout.activity_arcrear
         stub.inflate()
         val acciontv = findViewById<MaterialTextView>(R.id.tvTituloAccion)
-        acciontv.setText("Elegir Estilo")
+        acciontv.text = "Elegir Estilo"
         if (!ARCoreUtils.checkIsSupportedDeviceOrFinish(this)) {
             return
         }
-        val botonFoto = findViewById<FloatingActionButton>(R.id.btnPhoto)
         arFragment = supportFragmentManager.findFragmentById(R.id.ar_fragment) as ArFragment?
+        val botonFoto = findViewById<View>(R.id.btnPhoto)
         botonFoto.setOnClickListener { takePhoto() }
+        fabCheck.setOnClickListener { muestraCotiza() }
         inicializaNavigationDrawer()
-        navegacionDeCatalogos()
-    }
 
-    private fun navegacionDeCatalogos() {
-        bottomNavigate.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.itemLamparas -> {
-                    setDefaultPlane()
-                    arsesion?.setupPlaneFinding(0)
-                    defineMOdelo(Lampara_asset)
-                    Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.itemMuebles -> {
-                    setDefaultPlane()
-                    arsesion?.setupPlaneFinding(0)
-                    Toast.makeText(this, "Muebles", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.itemPisos -> {
-                    Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show()
-                    arsesion?.setupPlaneFinding(0)
-                    changeFloorTexture()
-                    true
+        catalogoFragment = supportFragmentManager.findFragmentById(R.id.catalogo_ra)
+        barraDummy = findViewById(R.id.barraDummy)
 
+        barraDummy.visibility = View.INVISIBLE
+
+        catalogoFragment?.view?.visibility = View.GONE
+        fabCatalogo = findViewById(R.id.fabCatalogo)
+        // Deshabilitado temporalmente por bug
+        /*arFragment?.arSceneView?.scene?.addOnUpdateListener {
+            val arframe = arFragment?.arSceneView?.arFrame
+            val tracks = arframe?.getUpdatedTrackables(Plane::class.java)
+            tracks?.forEach {
+                if (it.trackingState == TrackingState.TRACKING && !catalogoAbierto) {
+                    arFragment?.planeDiscoveryController?.hide()
+                    catalogoFragment?.view?.visibility = View.VISIBLE
+                    botonFoto.visibility = View.GONE
+                    catalogoAbierto = true
                 }
-                R.id.itemAdornos -> {
-                    defineMOdelo(espejo_asset)
-                    arsesion?.setupPlaneFinding(2)
-                    Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.itemColores -> {
-                    Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show()
-                    arsesion?.setupPlaneFinding(1)
-                    muestraSugerencia()
-                    true
-                }
-                else -> false
+            }
+        }*/
+
+        fabCatalogo.setOnClickListener {
+            catalogoAbierto = !catalogoAbierto
+            it as ImageView
+            if (catalogoAbierto) {
+                catalogoFragment?.view?.visibility = View.VISIBLE
+                botonFoto.visibility = View.GONE
+                it.setImageResource(R.drawable.borraobjeto)
+            } else {
+                catalogoFragment?.view?.visibility = View.GONE
+                botonFoto.visibility = View.VISIBLE
+                it.setImageResource(android.R.drawable.ic_input_add)
             }
         }
+
+        viewModel.modeloAR.observe(this, androidx.lifecycle.Observer {
+            catalogoAbierto = false
+            catalogoFragment?.view?.visibility = View.GONE
+            botonFoto.visibility = View.VISIBLE
+            fabCatalogo.setImageResource(android.R.drawable.ic_input_add)
+            defineModelo(it.fileAR, it.idModel)
+            val toast =
+                Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
+            toast.setGravity(Gravity.TOP, 0, 250)
+            toast.show()
+            catalogoFragment?.findNavController()?.navigateUp()
+        })
+
+        viewModel.piso.observe(this, androidx.lifecycle.Observer {
+            catalogoAbierto = false
+            catalogoFragment?.view?.visibility = View.GONE
+            botonFoto.visibility = View.VISIBLE
+            fabCatalogo.setImageResource(android.R.drawable.ic_input_add)
+            changeFloorTexture(it.file2D!!, it.idModel)
+            catalogoFragment?.findNavController()?.navigateUp()
+        })
+
+        viewModel.pinturaAR.observe(this, androidx.lifecycle.Observer { pintura ->
+            catalogoAbierto = false
+            catalogoFragment?.view?.visibility = View.GONE
+            botonFoto.visibility = View.VISIBLE
+            fabCatalogo.setImageResource(android.R.drawable.ic_input_add)
+            pinturaInsertada = pintura
+            pintarPared(pintura.hexCode)
+            catalogoFragment?.findNavController()?.navigateUp()
+        })
+
+        // Al darle a las categorías de la barra de abajo del catálogo, se cambia el plane así como lo tenías
+        viewModel.modoDecoracion.observe(this, androidx.lifecycle.Observer {
+            if (it == 1) {
+                muestraSugerencia() //Pinturas
+            }
+            if (it == 0) {
+                setDefaultPlane()
+            }
+            arsesion?.setupPlaneFinding(it)
+        })
+
+        if (sharePref.getInt(getString(R.string.anim2_key), 0) == 0) {
+            animaciones()
+            with(sharePref.edit()) {
+                putInt(getString(R.string.anim2_key), 1)
+                commit()
+            }
+        }
+
+    }
+
+    private fun pintarPared(hexCode: String) {
+        val sampler = Texture.Sampler.builder()
+            .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+            .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
+            .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+            .build()
+
+        val trigrid = Texture.builder()
+            .setSource(creaBitmap(hexCode))
+            .setSampler(sampler)
+            .build()
+
+        arFragment?.arSceneView?.scene?.addOnUpdateListener {
+            val planeRenderer = arFragment?.arSceneView?.planeRenderer
+            planeRenderer?.material?.thenAcceptBoth(trigrid) { material: Material?, texture: Texture? ->
+                material?.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
+                material?.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 50f)
+            }
+        }
+        arsesion?.setupPlaneFinding(1)
+    }
+
+    private fun creaBitmap(color: String): Bitmap {
+        val bitmap = Bitmap.createBitmap(512, 512, Bitmap.Config.ARGB_8888)
+        bitmap.eraseColor(Color.parseColor(color))
+        return bitmap
+    }
+
+    private fun muestraCotiza() {
+        CotizaDialog(modelosInsertados,pinturaInsertada).show(supportFragmentManager, "Cotizacion")
     }
 
     private fun inicializaNavigationDrawer() {
@@ -135,9 +234,7 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val txtUser = headervIew.findViewById<TextView>(R.id.tvNombre)
         val txtHabit = headervIew.findViewById<TextView>(R.id.tvHabitacion)
         txtUser.text = nombre
-        txtHabit.text = "Decorando: " + habitacion
-        bottomNavigate = findViewById(R.id.bottomNav)
-        bottomNavigate.visibility = View.VISIBLE
+        txtHabit.text = "Decorando: ${habitacion}"
         navigationView.setNavigationItemSelectedListener(this)
         drawerLayout.setDrawerListener(toogle)
         toogle.syncState()
@@ -149,7 +246,7 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.itemModo -> {
-                val mInt = Intent(this,ModoDecoracionActivity::class.java)
+                val mInt = Intent(this, ModoDecoracionActivity::class.java)
                 startActivity(mInt)
             }
             R.id.itemPreguntas -> {
@@ -158,17 +255,28 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             R.id.itemhabitacion -> {
                 openDialogRooms()
             }
-            R.id.itemContacto -> {
-                Toast.makeText(this, "Contacto", Toast.LENGTH_SHORT).show()
+            R.id.itemCatalogo -> {
+                val mInt = Intent(this, CatalogoActivity::class.java)
+                startActivity(mInt)
+            }
+            R.id.itemGaleria -> {
+                val mInt = Intent(this, GaleriaActivity::class.java)
+                startActivity(mInt)
+            }
+            R.id.itemTutorial -> {
+                navigateToFragment(ConceptosFragment())
+            }
+            R.id.itemProveedores -> {
+                navigateToFragment(ProveedoresFragment())
             }
             R.id.itemContacto -> {
                 navigateToFragment(ContactoFragment())
             }
         }
-        bottomNavigate.visibility = View.INVISIBLE
         btnPhoto.visibility = View.INVISIBLE
-        barraProgeso.visibility = View.INVISIBLE
+        barraProgeso.visibility = View.GONE
         btnRemove.visibility = View.INVISIBLE
+        fabCheck.visibility = View.INVISIBLE
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
@@ -190,7 +298,6 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 when (ArCoreApk.getInstance().requestInstall(this, mUserRequestedInstall)) {
                     ArCoreApk.InstallStatus.INSTALLED -> {
                         arsesion = Session(this)
-                        arsesion?.setupPlaneFinding(0)
                     }
                     ArCoreApk.InstallStatus.INSTALL_REQUESTED -> {
                         mUserRequestedInstall = false
@@ -198,14 +305,9 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 }
             }
         } catch (e: UnavailableUserDeclinedInstallationException) {
-            Toast.makeText(this, "Error:" + e, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Error: $e", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.TOP, 0, 250)
-        toast.show()
-        defineMOdelo(Lampara_asset)
     }
 
     private fun Session.setupPlaneFinding(mode: Int) {
@@ -220,7 +322,7 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         arFragment?.arSceneView?.setupSession(this)
     }
 
-    private fun defineMOdelo(modelURL: String) {
+    private fun defineModelo(modelURL: String, id: Int) {
         barraProgeso.visibility = View.VISIBLE
         ModelRenderable.builder()
             .setSource(
@@ -229,7 +331,7 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     Uri.parse(modelURL),
                     RenderableSource.SourceType.GLB
                 )
-                    .setScale(0.4f)
+                    //.setScale(0.4f)
                     .setRecenterMode(RenderableSource.RecenterMode.ROOT)
                     .build()
             )
@@ -237,7 +339,7 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .build()
             .thenAccept { renderable ->
                 modelo = renderable
-                barraProgeso.visibility = View.INVISIBLE
+                barraProgeso.visibility = View.GONE
             }
             .exceptionally {
                 val toast =
@@ -254,11 +356,18 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             val anchor = hitResult.createAnchor()
             val anchorNode = AnchorNode(anchor)
             anchorNode.setParent(arFragment?.arSceneView?.scene)
+            anchorNode.name = id.toString()
             //Crear transformable y añadir a Anchor
             val mod = TransformableNode(arFragment?.transformationSystem)
             mod.setParent(anchorNode)
             mod.renderable = modelo
             mod.select()
+            if (modelosInsertados.containsKey(id)) {
+                modelosInsertados[id] = modelosInsertados[id]!!.plus(1)
+            } else {
+                modelosInsertados[id] = 1
+            }
+
             mod.setOnTapListener { _, _ ->
                 btnRemove.visibility = View.VISIBLE
                 btnRemove.setOnClickListener {
@@ -269,13 +378,27 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     }
 
     private fun openDialogRooms() {
-        RoomsSelectDialog(ARElegirActivity().javaClass).show(supportFragmentManager, "Selecciona Habitacion")
+        RoomsSelectDialog(ARCrearActivity().javaClass).show(
+            supportFragmentManager,
+            "Selecciona Habitacion"
+        )
     }
 
     private fun removeObject(nodo: AnchorNode) {
         arFragment?.arSceneView?.scene?.removeChild(nodo)
         nodo.anchor?.detach()
         nodo.setParent(null)
+        val modeloEliminar = modelosInsertados[nodo.name.toInt()]
+
+        if (modeloEliminar!! > 0) {
+            modelosInsertados[nodo.name.toInt()] =
+                modelosInsertados[nodo.name.toInt()]!!.toInt() - 1
+            if (modelosInsertados[nodo.name.toInt()] == 0) {
+                modelosInsertados.remove(nodo.name.toInt())
+            }
+        } else {
+            modelosInsertados.remove(nodo.name.toInt())
+        }
         Toast.makeText(this, "Objeto Removido", Toast.LENGTH_SHORT).show()
         btnRemove.visibility = View.INVISIBLE
     }
@@ -307,7 +430,6 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             outputStream.flush()
             outputStream.close()
         } catch (ex: IOException) {
-            Log.i("ERRORPHOTO", ex.toString())
             throw IOException("Fallo al guardar ", ex)
         }
     }
@@ -324,7 +446,6 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                     saveBitmapToDisk(bitmap, filename)
                 } catch (e: IOException) {
                     val toast = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
-                    Log.i("ERRORPHOTO", e.printStackTrace().toString())
                     toast.show()
                     return@request
                 }
@@ -334,10 +455,10 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
             handlerThread.quitSafely()
         }, Handler(handlerThread.looper))
-
+        Toast.makeText(this, "Imagen Guardada Exitosamente!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun changeFloorTexture() {
+    private fun changeFloorTexture(url: String, id: Int) {
         val sampler = Texture.Sampler.builder()
             .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
             .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
@@ -345,7 +466,7 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .build()
 
         val trigrid = Texture.builder()
-            .setSource(this, R.drawable.piso_1)
+            .setSource(this, Uri.parse(url))
             .setSampler(sampler)
             .build()
 
@@ -357,6 +478,12 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 material?.setFloat2("uvScale", 1f, 1.19245f)
             }
         }
+
+        if (modelosInsertados.containsKey(id)) {
+            modelosInsertados[id] = modelosInsertados[id]!!.plus(1)
+        } else {
+            modelosInsertados[id] = 1
+        }
     }
 
     private fun setDefaultPlane() {
@@ -364,14 +491,14 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
             .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
             .build()
-
         Texture.builder()
-            .setSource(this, R.drawable.floordiffuse)
+            .setSource(this, R.drawable.circle)
             .setSampler(sample)
             .build()
             .thenAccept { texture ->
                 arFragment?.arSceneView?.planeRenderer?.material?.thenAccept { material ->
                     material.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
+                    material.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 10f)
                 }
             }
     }
@@ -385,5 +512,64 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         SugerenciaPinturaDialog(colorUser!!).show(supportFragmentManager, "Sugerencia")
     }
 
+    private fun animaciones() {
+        val secuencia = TapTargetSequence(this)
+            .targets(
+                TapTarget.forView(
+                    findViewById(R.id.barraDummy),
+                    "¡Elige lo que te gusta!",
+                    "Selecciona una categoría y mira el catálogo de modelos diponibles. RECUERDA: Pulsa sobre un modelo y oprime el botón 'Colocar' para seleccionarlo."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(25)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(1),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.btnPhoto),
+                    "¡Que no se te vaya este diseño!",
+                    "Toma una captura y guardalo en la galería para poder compartirlo :D"
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorPrimary)
+                    .id(2),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.fabCheck),
+                    "¿Terminaste tu decoración?",
+                    "Elige ver tus capturas realizadas o hacer la cotización de tu decoración."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.verdeCheck)
+                    .id(3),
+                TapTarget.forView(
+                    findViewById<FloatingActionButton>(R.id.fabCatalogo),
+                    "Escoge tu modelo y colócalo",
+                    "Mira todos los modelos disponibles dentro de nuestro catálogo de modelos. Combina estilos y modelos hasta crear la decoración que más te agrade."
+                )
+                    .cancelable(false)
+                    .transparentTarget(true)
+                    .targetCircleColor(R.color.colorAccent)
+                    .drawShadow(true)
+                    .targetRadius(55)
+                    .outerCircleAlpha(0.96f)
+                    .outerCircleColor(R.color.colorAccent)
+                    .id(4)
+            )
+        secuencia.considerOuterCircleCanceled(true)
+        secuencia.continueOnCancel(true)
+        secuencia.start()
+    }
 }
-

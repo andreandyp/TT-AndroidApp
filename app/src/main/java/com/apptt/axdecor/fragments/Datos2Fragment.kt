@@ -3,7 +3,6 @@ package com.apptt.axdecor.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,8 +52,8 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener {
                     putString(getString(R.string.user_Name), args.nombre)
                     putString(getString(R.string.color_key), spnColores.selectedItem.toString())
                     putString(getString(R.string.age_key), args.edad)
-                    putInt(getString(R.string.anim1_key),0)
-                    putInt(getString(R.string.anim2_key),0)
+                    putInt(getString(R.string.anim1_key), 0)
+                    putInt(getString(R.string.anim2_key), 0)
                     commit()
                 }
                 it.findNavController().navigate(
@@ -65,7 +64,6 @@ class Datos2Fragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        Log.i("posicion", p2.toString())
         when (p2) {
             0 -> {
                 imColores.setImageResource(R.drawable.pantone)

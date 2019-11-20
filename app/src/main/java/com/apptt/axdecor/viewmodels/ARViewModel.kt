@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
 
-class ARViewModel(application: Application) : AndroidViewModel(application) {
+class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(application) {
     // Datos del ViewModel
     private val _listaModelos = MutableLiveData<List<Any>>()
     val listaModelos: LiveData<List<Any>>
@@ -66,8 +66,8 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
     val listaProveedores: LiveData<List<ProveedorCatalogo>> = _listaProveedores
 
     private lateinit var proveedores: List<CategoryProvider>
-    private lateinit var proveedoresNombre : List<String>
-    private lateinit var proveedoresIds : List<Int>
+    private lateinit var proveedoresNombre: List<String>
+    private lateinit var proveedoresIds: List<Int>
     private var listaModelosConCategoria: List<Any>? = null
 
     init {
@@ -78,28 +78,56 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
 
         val habitacion = sharePref.getInt(application.getString(R.string.id_room_key), 0)
         viewModelScope.launch {
-            proveedores = axDecorRepository.getProvidersByCategory()
-            _modelosConCategoria.value = mutableListOf()
-            val lista = _modelosConCategoria.value
-            for (id in 1..5) {
-                val d = axDecorRepository.getModelsWithCategory(id, habitacion)
-                lista!!.add(d)
-            }
-            val pinturas = axDecorRepository.getPaints()
-            lista!![3] = pinturas
+            if (estilo == 0) {
+                proveedores = axDecorRepository.getProvidersByCategory()
+                _modelosConCategoria.value = mutableListOf()
+                val lista = _modelosConCategoria.value
+                for (id in 1..5) {
+                    val d = axDecorRepository.getModelsWithCategory(id, habitacion)
+                    lista!!.add(d)
+                }
+                val pinturas = axDecorRepository.getPaints()
+                lista!![3] = pinturas
 
-            val listaProvs = mutableListOf<ProveedorCatalogo>()
+                val listaProvs = mutableListOf<ProveedorCatalogo>()
 
-            proveedoresIds = proveedores[4].idProviders
-            proveedoresNombre = proveedores[4].providers
-            for(i in proveedoresIds.indices) {
-                listaProvs.add(
-                    ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
-                )
+                proveedoresIds = proveedores[4].idProviders
+                proveedoresNombre = proveedores[4].providers
+                for (i in proveedoresIds.indices) {
+                    listaProvs.add(
+                        ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
+                    )
+                }
+                listaModelosConCategoria = _modelosConCategoria.value?.get(4)
+                _listaModelos.value = listaModelosConCategoria
+                _listaProveedores.value = listaProvs
+            } else {
+                proveedores = axDecorRepository.getProvidersByCategory()
+                _modelosConCategoria.value = mutableListOf()
+                val lista = _modelosConCategoria.value
+                for (id in 1..5) {
+                    val modis = axDecorRepository.getModelsWithCategory(id, habitacion)
+                    val d = modis.filter {
+                        estilo in it.idStyles
+                    }
+                    lista!!.add(d)
+                }
+                val pinturas = axDecorRepository.getPaints()
+                lista!![3] = pinturas
+
+                val listaProvs = mutableListOf<ProveedorCatalogo>()
+
+                proveedoresIds = proveedores[4].idProviders
+                proveedoresNombre = proveedores[4].providers
+                for (i in proveedoresIds.indices) {
+                    listaProvs.add(
+                        ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
+                    )
+                }
+                listaModelosConCategoria = _modelosConCategoria.value?.get(4)
+                _listaModelos.value = listaModelosConCategoria
+                _listaProveedores.value = listaProvs
             }
-            listaModelosConCategoria = _modelosConCategoria.value?.get(4)
-            _listaModelos.value = listaModelosConCategoria
-            _listaProveedores.value = listaProvs
         }
 
         _modoDecoracion.value = 0
@@ -119,7 +147,7 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         proveedoresNombre = proveedores[id].providers
         proveedoresIds = proveedores[id].idProviders
         val listaProvs = mutableListOf<ProveedorCatalogo>()
-        for(i in proveedoresIds.indices) {
+        for (i in proveedoresIds.indices) {
             listaProvs.add(
                 ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
             )
@@ -156,11 +184,11 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
         _estilosModelo.value = estilos.joinToString(", ")
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val estilo: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ARViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return ARViewModel(app) as T
+                return ARViewModel(app, estilo) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
@@ -172,13 +200,12 @@ class ARViewModel(application: Application) : AndroidViewModel(application) {
 
     fun verMueblesDe(idProvider: Int) {
         val modelosNuevos = listaModelosConCategoria
-        if(modelosNuevos!!.isNotEmpty()) {
+        if (modelosNuevos!!.isNotEmpty()) {
             _listaModelos.value = modelosNuevos.filter {
 
-                if(it is Paint) {
+                if (it is Paint) {
                     it.idProvider == idProvider
-                }
-                else {
+                } else {
                     it as ModelWithCategory
                     it.idProvider == idProvider
                 }

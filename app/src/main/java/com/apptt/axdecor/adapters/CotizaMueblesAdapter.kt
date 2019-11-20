@@ -2,7 +2,6 @@ package com.apptt.axdecor.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,6 @@ class CotizaMueblesAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        Log.i("TESTCOTIZA","Posicion: " + position + " " + modelos[position].name + modelos[position].price)
         Glide.with(mcontext)
             .load(modelos[position].file2D)
             .apply(RequestOptions().placeholder(R.drawable.loading).error(R.drawable.no))

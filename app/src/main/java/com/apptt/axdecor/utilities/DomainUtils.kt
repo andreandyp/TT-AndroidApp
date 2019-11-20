@@ -94,6 +94,7 @@ object DomainUtils {
             category = modelo.category,
             proveedor = modelo.proveedor,
             styles = estilos.map { it.style },
+            idStyles = estilos.map { it.idPredefinedStyle },
             idProvider = modelo.idProvider
         )
     }

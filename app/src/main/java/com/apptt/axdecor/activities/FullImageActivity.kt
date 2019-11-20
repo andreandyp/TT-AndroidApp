@@ -8,7 +8,6 @@ import android.graphics.ColorMatrixColorFilter
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -77,7 +76,6 @@ class FullImageActivity : AppCompatActivity() {
                 muestraCarga(0)
             } catch (e: IOException) {
                 val toast = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
-                Log.i("ERRORPHOTO", e.printStackTrace().toString())
                 toast.show()
             }
         }
@@ -122,7 +120,6 @@ class FullImageActivity : AppCompatActivity() {
             outputStream.flush()
             outputStream.close()
         } catch (ex: IOException) {
-            Log.i("ERRORPHOTO", ex.toString())
             throw IOException("Fallo al guardar ", ex)
         }
     }

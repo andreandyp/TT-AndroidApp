@@ -23,7 +23,7 @@ class CotizacionesActivity : AppCompatActivity() {
         val pintura = intent.extras?.getParcelable<Paint>("pintura")
         var pinturaProvs: List<Store> = listOf()
         val repository = AXDecorRepository(this.application)
-        if(pintura != null){
+        if (pintura != null) {
             runBlocking {
                 pinturaProvs = repository.getStoresbyProviderId(pintura!!.idProvider)
             }
@@ -31,7 +31,15 @@ class CotizacionesActivity : AppCompatActivity() {
         val modelos = getDataModels(cantidades)
         val proveedores = getProvidersCategoryFromModels(modelos)
         val cotizacionesPagerAdapter =
-            CotizacionesPagerAdapter(this, supportFragmentManager, cantidades, modelos, proveedores, pintura, pinturaProvs)
+            CotizacionesPagerAdapter(
+                this,
+                supportFragmentManager,
+                cantidades,
+                modelos,
+                proveedores,
+                pintura,
+                pinturaProvs
+            )
         val viewPager: ViewPager = findViewById(R.id.view_pager)
         viewPager.adapter = cotizacionesPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)

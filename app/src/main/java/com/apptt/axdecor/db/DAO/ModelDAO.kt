@@ -41,7 +41,8 @@ interface ModelDAO {
     )
     suspend fun getModelsWithCategory(idCategory: Int, idType: Int): List<ModelWithCategoryModel>
 
-    @Query("""
+    @Query(
+        """
         SELECT DISTINCT m.*, c.category, p.name AS proveedor
         FROM ModelModel m, ModelHasCategoryModel mc, ModelHasTypeModel mt, ModelHasPredefinedStyleModel ms, TypeModel t, CategoryModel c, ProviderModel p, PredefinedStyleModel s
         WHERE m.id_model = mc.idModel
@@ -55,8 +56,13 @@ interface ModelDAO {
             AND m.id_model = ms.idModel
             AND ms.idPredefinedStyle = s.id_predefined_style
             AND s.id_predefined_style = :idPredefinedStyle
-    """)
-    suspend fun getModelsWithStyle(idCategory: Int, idType: Int, idPredefinedStyle: Int): List<ModelWithCategoryModel>
+    """
+    )
+    suspend fun getModelsWithStyle(
+        idCategory: Int,
+        idType: Int,
+        idPredefinedStyle: Int
+    ): List<ModelWithCategoryModel>
 
     @Query("DELETE FROM ModelModel")
     suspend fun deleteAllModels()

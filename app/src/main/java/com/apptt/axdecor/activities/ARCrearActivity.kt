@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -76,7 +75,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this, ARViewModel.Factory(application))
+        viewModel = ViewModelProviders.of(this, ARViewModel.Factory(application, 0))
             .get(ARViewModel::class.java)
 
         super.onCreate(savedInstanceState)
@@ -215,7 +214,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun muestraCotiza() {
-        CotizaDialog(modelosInsertados,pinturaInsertada).show(supportFragmentManager, "Cotizacion")
+        CotizaDialog(modelosInsertados, pinturaInsertada).show(supportFragmentManager, "Cotizacion")
     }
 
     private fun inicializaNavigationDrawer() {
@@ -429,7 +428,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             outputStream.flush()
             outputStream.close()
         } catch (ex: IOException) {
-            Log.i("ERRORPHOTO", ex.toString())
             throw IOException("Fallo al guardar ", ex)
         }
     }
@@ -446,7 +444,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                     saveBitmapToDisk(bitmap, filename)
                 } catch (e: IOException) {
                     val toast = Toast.makeText(this, e.toString(), Toast.LENGTH_LONG)
-                    Log.i("ERRORPHOTO", e.printStackTrace().toString())
                     toast.show()
                     return@request
                 }
