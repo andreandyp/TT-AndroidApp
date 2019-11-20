@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -26,6 +27,7 @@ import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
+import com.apptt.axdecor.domain.Paint
 import com.apptt.axdecor.fragments.ConceptosFragment
 import com.apptt.axdecor.fragments.ContactoFragment
 import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
@@ -66,6 +68,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     private lateinit var viewModel: ARViewModel
     private var catalogoFragment: Fragment? = null
     private var modelosInsertados: HashMap<Int, Int> = hashMapOf()
+    private var pinturaInsertada: Paint? = null
     private lateinit var fabCatalogo: FloatingActionButton
     private var catalogoAbierto = false
 
@@ -127,7 +130,8 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             catalogoFragment?.view?.visibility = View.GONE
             botonFoto.visibility = View.VISIBLE
             defineModelo(it.fileAR, it.idModel)
-            val toast = Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
+            val toast =
+                Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
             toast.setGravity(Gravity.TOP, 0, 250)
             toast.show()
             catalogoFragment?.findNavController()?.navigateUp()
@@ -146,16 +150,17 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             catalogoFragment?.view?.visibility = View.GONE
             botonFoto.visibility = View.VISIBLE
             // TODO: Pintar aquí
+            pinturaInsertada = pintura
+            pintarPared(pintura.hexCode)
             catalogoFragment?.findNavController()?.navigateUp()
         })
 
         // Al darle a las categorías de la barra de abajo del catálogo, se cambia el plane así como lo tenías
         viewModel.modoDecoracion.observe(this, androidx.lifecycle.Observer {
             if (it == 1) {
-                muestraSugerencia()
+                muestraSugerencia() //Pinturas
             }
             if (it == 0) {
-                // Qué onda? Se muestra un piso raro...
                 setDefaultPlane()
             }
             arsesion?.setupPlaneFinding(it)
@@ -174,46 +179,36 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     }
 
-    private fun muestraCotiza() {
-        CotizaDialog(modelosInsertados).show(supportFragmentManager, "Cotizacion")
+    private fun pintarPared(hexCode: String) {
+        val sampler = Texture.Sampler.builder()
+            .setMinFilter(Texture.Sampler.MinFilter.LINEAR)
+            .setMagFilter(Texture.Sampler.MagFilter.LINEAR)
+            .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
+            .build()
+
+        val trigrid = Texture.builder()
+            .setSource(creaBitmap(hexCode))
+            .setSampler(sampler)
+            .build()
+
+        arFragment?.arSceneView?.scene?.addOnUpdateListener {
+            val planeRenderer = arFragment?.arSceneView?.planeRenderer
+            planeRenderer?.material?.thenAcceptBoth(trigrid) { material: Material?, texture: Texture? ->
+                material?.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
+                material?.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 50f)
+            }
+        }
+        arsesion?.setupPlaneFinding(1)
     }
 
-    private fun navegacionDeCatalogos() {
-        /*bottomNavigate.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.itemLamparas -> {
-                    setDefaultPlane()
-                    arsesion?.setupPlaneFinding(0)
-                    Toast.makeText(this, "Lamparas", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.itemMuebles -> {
-                    setDefaultPlane()
-                    arsesion?.setupPlaneFinding(0)
-                    Toast.makeText(this, "Muebles", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.itemPisos -> {
-                    Toast.makeText(this, "Pisos", Toast.LENGTH_SHORT).show()
-                    arsesion?.setupPlaneFinding(0)
-                    changeFloorTexture()
-                    true
+    private fun creaBitmap(color: String): Bitmap {
+        val bitmap = Bitmap.createBitmap(512, 512, Bitmap.Config.ARGB_8888)
+        bitmap.eraseColor(Color.parseColor(color))
+        return bitmap
+    }
 
-                }
-                R.id.itemAdornos -> {
-                    arsesion?.setupPlaneFinding(2)
-                    Toast.makeText(this, "Adornos", Toast.LENGTH_SHORT).show()
-                    true
-                }
-                R.id.itemColores -> {
-                    Toast.makeText(this, "Colores", Toast.LENGTH_SHORT).show()
-                    arsesion?.setupPlaneFinding(1)
-                    muestraSugerencia()
-                    true
-                }
-                else -> false
-            }
-        }*/
+    private fun muestraCotiza() {
+        CotizaDialog(modelosInsertados,pinturaInsertada).show(supportFragmentManager, "Cotizacion")
     }
 
     private fun inicializaNavigationDrawer() {
@@ -295,7 +290,6 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 when (ArCoreApk.getInstance().requestInstall(this, mUserRequestedInstall)) {
                     ArCoreApk.InstallStatus.INSTALLED -> {
                         arsesion = Session(this)
-                        arsesion?.setupPlaneFinding(0)
                     }
                     ArCoreApk.InstallStatus.INSTALL_REQUESTED -> {
                         mUserRequestedInstall = false
@@ -492,12 +486,13 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             .setWrapMode(Texture.Sampler.WrapMode.REPEAT)
             .build()
         Texture.builder()
-            .setSource(this, R.drawable.floordiffuse)
+            .setSource(this, R.drawable.circle)
             .setSampler(sample)
             .build()
             .thenAccept { texture ->
                 arFragment?.arSceneView?.planeRenderer?.material?.thenAccept { material ->
                     material.setTexture(PlaneRenderer.MATERIAL_TEXTURE, texture)
+                    material.setFloat(PlaneRenderer.MATERIAL_SPOTLIGHT_RADIUS, 10f)
                 }
             }
     }

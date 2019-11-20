@@ -15,4 +15,8 @@ interface PaintDAO {
             FROM PaintModel pa, ProviderModel p
             WHERE pa.idProvider = p.id_provider""")
     suspend fun getPaints(): List<PaintsWithProviderModel>
+
+
+    @Query("SELECT * FROM PaintModel where id_paint = :id")
+    suspend fun getPaintById(id: Int): PaintModel
 }

@@ -10,6 +10,7 @@ import com.apptt.axdecor.db.Entities.SocialNetworkModel
 import com.apptt.axdecor.db.Entities.StoreModel
 import com.apptt.axdecor.db.queries.CategoryProviderModel
 import com.apptt.axdecor.db.queries.ModelProviderCategory
+import com.apptt.axdecor.domain.Store
 
 @Dao
 interface ProviderDAO {
@@ -41,6 +42,9 @@ interface ProviderDAO {
             """
     )
     suspend fun getProviderByCategoryModel(): List<ModelProviderCategory>
+
+    @Query("SELECT b.*,a.logo FROM ProviderModel as a,StoreModel as b WHERE a.id_provider = b.id_provider AND a.id_provider = :idProvider")
+    suspend fun getStoresbyProviderId(idProvider:Int):List<Store>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProvider(vararg provider: ProviderModel)
