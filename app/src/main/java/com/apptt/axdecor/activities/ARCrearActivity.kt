@@ -116,12 +116,15 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         fabCatalogo.setOnClickListener {
             catalogoAbierto = !catalogoAbierto
+            it as ImageView
             if (catalogoAbierto) {
                 catalogoFragment?.view?.visibility = View.VISIBLE
                 botonFoto.visibility = View.GONE
+                it.setImageResource(R.drawable.borraobjeto)
             } else {
                 catalogoFragment?.view?.visibility = View.GONE
                 botonFoto.visibility = View.VISIBLE
+                it.setImageResource(android.R.drawable.ic_input_add)
             }
         }
 
@@ -129,6 +132,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             catalogoAbierto = false
             catalogoFragment?.view?.visibility = View.GONE
             botonFoto.visibility = View.VISIBLE
+            fabCatalogo.setImageResource(android.R.drawable.ic_input_add)
             defineModelo(it.fileAR, it.idModel)
             val toast =
                 Toast.makeText(this, "Toque el sitio para colocar elemento.", Toast.LENGTH_LONG)
@@ -141,6 +145,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             catalogoAbierto = false
             catalogoFragment?.view?.visibility = View.GONE
             botonFoto.visibility = View.VISIBLE
+            fabCatalogo.setImageResource(android.R.drawable.ic_input_add)
             changeFloorTexture(it.file2D!!, it.idModel)
             catalogoFragment?.findNavController()?.navigateUp()
         })
@@ -149,7 +154,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             catalogoAbierto = false
             catalogoFragment?.view?.visibility = View.GONE
             botonFoto.visibility = View.VISIBLE
-            // TODO: Pintar aquí
+            fabCatalogo.setImageResource(android.R.drawable.ic_input_add)
             pinturaInsertada = pintura
             pintarPared(pintura.hexCode)
             catalogoFragment?.findNavController()?.navigateUp()

@@ -116,7 +116,7 @@
                 app:backgroundTint="@color/colorAccent"
                 app:layout_constraintBottom_toTopOf="@+id/barraDummy"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/catalogo"
+                app:srcCompat="@android:drawable/ic_input_add"
                 app:tint="@color/fondo" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
