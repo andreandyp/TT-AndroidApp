@@ -32,6 +32,10 @@
                 android:icon="@drawable/lightbulb"
                 android:title="Ver tutorial de conceptos" />
         <item
+                android:id="@+id/itemContactoProv"
+                android:icon="@drawable/catalogo"
+                android:title="Contacto con proveedores" />
+        <item
                 android:id="@+id/itemContacto"
                 android:icon="@drawable/support"
                 android:title="Contacto" />
