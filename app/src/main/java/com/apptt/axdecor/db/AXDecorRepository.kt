@@ -230,4 +230,19 @@ class AXDecorRepository(application: Application) {
             }
         }
     }
+
+    suspend fun getAllProviders():List<Provider>{
+        val lista = providerDAO.getAllProviders()
+        return lista.map {
+            Provider(
+                idProvider = it.idProvider,
+                name = it.name,
+                rfc = it.rfc,
+                razonSocial = it.razonSocial,
+                rango = it.rango,
+                persona = it.persona
+            )
+        }
+    }
+
 }

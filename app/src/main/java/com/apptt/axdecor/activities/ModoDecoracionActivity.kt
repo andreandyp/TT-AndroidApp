@@ -15,10 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.apptt.axdecor.R
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
-import com.apptt.axdecor.fragments.ConceptosFragment
-import com.apptt.axdecor.fragments.ContactoFragment
-import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
-import com.apptt.axdecor.fragments.ProveedoresFragment
+import com.apptt.axdecor.fragments.*
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.material.navigation.NavigationView
@@ -78,7 +75,6 @@ class ModoDecoracionActivity : AppCompatActivity(),
             R.id.itemModo -> {
                 val mInt = Intent(this, ModoDecoracionActivity::class.java)
                 startActivity(mInt)
-                finish()
             }
             R.id.itemPreguntas -> {
                 navigateToFragment(PreguntasFrecuentesFragment())
@@ -102,6 +98,9 @@ class ModoDecoracionActivity : AppCompatActivity(),
             }
             R.id.itemContacto -> {
                 navigateToFragment(ContactoFragment())
+            }
+            R.id.itemContactoProv -> {
+                navigateToFragment(ListaProveedoresFragment())
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

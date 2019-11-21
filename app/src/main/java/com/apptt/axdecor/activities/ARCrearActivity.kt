@@ -275,6 +275,7 @@ class ARCrearActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         barraProgeso.visibility = View.GONE
         btnRemove.visibility = View.INVISIBLE
         fabCheck.visibility = View.INVISIBLE
+        fabCatalogo.visibility = View.INVISIBLE
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }

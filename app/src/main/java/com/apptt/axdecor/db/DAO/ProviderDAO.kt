@@ -15,7 +15,7 @@ import com.apptt.axdecor.domain.Store
 @Dao
 interface ProviderDAO {
     @Query("SELECT * FROM ProviderModel ORDER BY name")
-    fun getAllProviders(): List<ProviderModel>
+    suspend fun getAllProviders(): List<ProviderModel>
 
     @Query("SELECT * FROM ProviderModel where id_provider = :id")
     suspend fun getProviderById(id: Int): ProviderModel

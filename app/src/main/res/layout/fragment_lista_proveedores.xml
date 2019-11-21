@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/fondo"
         tools:context=".fragments.ListaProveedoresFragment">
 
     <TextView
@@ -21,9 +22,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recProveedores"
-            android:layout_width="409dp"
-            android:layout_height="681dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +32,11 @@
 
     <Spinner
             android:id="@+id/spnProveedores"
+            style="@android:style/Widget.Material.Light.Spinner"
             android:layout_width="385dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitulo" />

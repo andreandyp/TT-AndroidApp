@@ -27,10 +27,7 @@ import com.apptt.axdecor.dialogs.CotizaDialog
 import com.apptt.axdecor.dialogs.RoomsSelectDialog
 import com.apptt.axdecor.dialogs.SugerenciaPinturaDialog
 import com.apptt.axdecor.domain.Paint
-import com.apptt.axdecor.fragments.ConceptosFragment
-import com.apptt.axdecor.fragments.ContactoFragment
-import com.apptt.axdecor.fragments.PreguntasFrecuentesFragment
-import com.apptt.axdecor.fragments.ProveedoresFragment
+import com.apptt.axdecor.fragments.*
 import com.apptt.axdecor.utilities.ARCoreUtils
 import com.apptt.axdecor.viewmodels.ARViewModel
 import com.getkeepsafe.taptargetview.TapTarget
@@ -271,6 +268,9 @@ class ARElegirActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
             R.id.itemContacto -> {
                 navigateToFragment(ContactoFragment())
+            }
+            R.id.itemContactoProv -> {
+                navigateToFragment(ListaProveedoresFragment())
             }
         }
         btnPhoto.visibility = View.INVISIBLE
