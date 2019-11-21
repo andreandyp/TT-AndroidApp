@@ -44,7 +44,7 @@ class VerPinturaFragment : Fragment() {
 
         viewModel.detallesPintura.observe(viewLifecycleOwner, Observer { pintura ->
             if (pintura != null) {
-                viewModel.actualizarPrecio(pintura.price)
+                viewModel.actualizarPrecioPintura(pintura.price)
             }
         })
         return binding.root
