@@ -2,6 +2,7 @@ package com.apptt.axdecor.viewmodels
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.*
 import com.apptt.axdecor.R
 import com.apptt.axdecor.db.AXDecorRepository
@@ -69,6 +70,7 @@ class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(
     private lateinit var proveedoresNombre: List<String>
     private lateinit var proveedoresIds: List<Int>
     private var listaModelosConCategoria: List<Any>? = null
+    private val favs = mutableMapOf<Int, MutableList<String>>()
 
     init {
         val sharePref = application.getSharedPreferences(
@@ -77,6 +79,30 @@ class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(
         )
 
         val habitacion = sharePref.getInt(application.getString(R.string.id_room_key), 0)
+        val lista = sharePref.getStringSet(application.getString(R.string.providers_key), setOf(""))?.toList()
+        favs[0] = mutableListOf<String>()
+        favs[1] = mutableListOf<String>()
+        favs[2] = mutableListOf<String>()
+        favs[3] = mutableListOf<String>()
+        favs[4] = mutableListOf<String>()
+        lista!!.forEach {
+            if(it.endsWith("1")) {
+                favs[0]!!.add(it.slice(0 until it.indexOf(",")))
+            }
+            if(it.endsWith("2")) {
+                favs[1]!!.add(it.slice(0 until it.indexOf(",")))
+            }
+            if(it.endsWith("3")) {
+                favs[2]!!.add(it.slice(0 until it.indexOf(",")))
+            }
+            if(it.endsWith("4")) {
+                favs[3]!!.add(it.slice(0 until it.indexOf(",")))
+            }
+            if(it.endsWith("5")) {
+                favs[4]!!.add(it.slice(0 until it.indexOf(",")))
+            }
+        }
+
         viewModelScope.launch {
             if (estilo == 0) {
                 proveedores = axDecorRepository.getProvidersByCategory()
@@ -89,7 +115,7 @@ class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(
                 val pinturas = axDecorRepository.getPaints()
                 lista!![3] = pinturas
 
-                val listaProvs = mutableListOf<ProveedorCatalogo>()
+                var listaProvs = mutableListOf<ProveedorCatalogo>()
 
                 proveedoresIds = proveedores[4].idProviders
                 proveedoresNombre = proveedores[4].providers
@@ -97,6 +123,23 @@ class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(
                     listaProvs.add(
                         ProveedorCatalogo(proveedoresIds[i], proveedoresNombre[i])
                     )
+                }
+                for(i in 0..4) {
+                    val incluidos = listaProvs.filter {
+                        favs[i]!!.contains(it.idProvider.toString())
+                    }.toMutableList()
+
+                    val noIncluidos = listaProvs.filter {
+                        !favs[i]!!.contains(it.idProvider.toString())
+                    }.toMutableList()
+
+                    listaProvs.clear()
+                    listaProvs.addAll(incluidos)
+                    listaProvs.addAll(noIncluidos)
+                    Log.i("SI", i.toString())
+                    Log.i("SI", favs[i].toString())
+                    Log.i("SI", incluidos.toString())
+                    Log.i("SI", listaProvs.toString())
                 }
                 listaModelosConCategoria = _modelosConCategoria.value?.get(4)
                 _listaModelos.value = listaModelosConCategoria
@@ -115,7 +158,7 @@ class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(
                 val pinturas = axDecorRepository.getPaints()
                 lista!![3] = pinturas
 
-                val listaProvs = mutableListOf<ProveedorCatalogo>()
+                var listaProvs = mutableListOf<ProveedorCatalogo>()
 
                 proveedoresIds = proveedores[4].idProviders
                 proveedoresNombre = proveedores[4].providers
@@ -178,6 +221,11 @@ class ARViewModel(application: Application, val estilo: Int) : AndroidViewModel(
     fun actualizarPrecio(precio: String) {
         val nf = NumberFormat.getCurrencyInstance(Locale.US)
         _precioFormateadoModelo.value = nf.format(precio.toDouble())
+    }
+
+    fun actualizarPrecioPintura(precio: String) {
+        val nf = NumberFormat.getCurrencyInstance(Locale.US)
+        _precioFormateadoPintura.value = nf.format(precio.toDouble())
     }
 
     fun actualizarEstilos(estilos: List<String>) {
